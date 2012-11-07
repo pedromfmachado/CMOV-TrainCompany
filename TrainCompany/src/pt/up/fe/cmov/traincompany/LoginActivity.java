@@ -39,7 +39,7 @@ public class LoginActivity extends Activity {
 				values.put("[user_login][email]", email);
 				values.put("[user_login][password]", password);
 				
-				String response = HTTPMessage.POST(R.string.server_address + "/users/sign_in.json", values);
+				String response = HTTPMessage.POST(getString(R.string.server_address) + "users/sign_in.json", values);
 				
 				Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
 			}

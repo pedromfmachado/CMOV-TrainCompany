@@ -26,7 +26,7 @@ public class HTTPMessage {
 			String result = "";
 		    // Create a new HttpClient and Post Header
 		    HttpClient httpclient = new DefaultHttpClient();
-		    HttpPost httppost = new HttpPost("http://www.yoursite.com/script.php");
+		    HttpPost httppost = new HttpPost(server);
 
 		    try {
 		        // Add your data
