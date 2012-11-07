@@ -6,6 +6,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="password_label">Password</string>
     <string name="login_button">Login</string>
-    <string name="server_address">http://cmov-apiserver.heroku.com/api/</string>
+    <string name="server_address">http://cmov-apiserver.herokuapp.com/api/</string>
 
 </resources>
