@@ -1,7 +1,9 @@
 package pt.up.fe.cmov.traincompany;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import Requests.AsyncPost;
@@ -69,39 +71,58 @@ public class RegistrationActivity extends Activity {
 
 			if(!values.containsValue("")){
 
-				loading = ProgressDialog.show(RegistrationActivity.this, "", "Registering user...");
-				new AsyncPost(register_path, values, new ResponseCommand() {
+				if(password.equals(password_confirm)){
 
-					public void onError(ERROR_TYPE error) {
+					loading = ProgressDialog.show(RegistrationActivity.this, "", "Registering user...");
+					new AsyncPost(register_path, values, new ResponseCommand() {
 
-						loading.dismiss();
-						UI.showErrorDialog(RegistrationActivity.this,
-								R.string.message_connection_error, R.string.button_ok);
-					}
+						public void onError(ERROR_TYPE error) {
 
-					public void onResultReceived(Object... results) {
-						
-						loading.dismiss();
-						
-						JSONObject json = (JSONObject)results[0];
-
-						Log.i("response",json.toString());
-						
-						boolean success = json.optBoolean("success");
-						if(success){
-							
-							Toast.makeText(RegistrationActivity.this, "User registered successfully!", Toast.LENGTH_LONG).show();
-							finish();
+							loading.dismiss();
+							UI.showErrorDialog(RegistrationActivity.this,
+									R.string.message_connection_error, R.string.button_ok);
 						}
-						else{
 
-							Toast.makeText(RegistrationActivity.this, "Fields are not correctly filled", Toast.LENGTH_LONG).show();
+						public void onResultReceived(Object... results) {
+
+							loading.dismiss();
+
+							JSONObject json = (JSONObject)results[0];
+
+							Log.i("response",json.toString());
+
+							boolean success = json.optBoolean("success");
+							if(success){
+
+								Toast.makeText(RegistrationActivity.this, "User registered successfully!", Toast.LENGTH_LONG).show();
+								finish();
+							}
+							else{
+
+								String errors = "";
+								JSONObject errors_json = json.optJSONObject("errors");
+								Iterator<?> errors_itr = errors_json.keys();
+								while(errors_itr.hasNext()){
+									
+									String key = errors_itr.next().toString();
+									try {
+										errors += "- " + key + errors_json.getJSONArray(key).getString(0) + "\n";
+										
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+								
+								Toast.makeText(RegistrationActivity.this, errors, Toast.LENGTH_LONG).show();
+								//Toast.makeText(RegistrationActivity.this, "Fields are not correctly filled", Toast.LENGTH_LONG).show();
+							}
 						}
-					}
 
-				}).execute();
-				
-
+					}).execute();
+				}
+				else
+					Toast.makeText(RegistrationActivity.this, "Passwords must match", Toast.LENGTH_LONG).show();
 			}
 			else
 				Toast.makeText(RegistrationActivity.this, "Every field must be filled", Toast.LENGTH_LONG).show();
