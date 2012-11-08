@@ -91,7 +91,7 @@ public class RegistrationActivity extends Activity {
 						if(success){
 							
 							Toast.makeText(RegistrationActivity.this, "User registered successfully!", Toast.LENGTH_LONG).show();
-							//TODO: start main menu activity
+							finish();
 						}
 						else{
 
