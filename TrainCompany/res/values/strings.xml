@@ -17,6 +17,16 @@
     <string name="label_ccvalidity">Credit Card Validity</string>
     <string name="button_register">Register</string>
     <string name="message_connection_error">Connection Error</string>
-    <string name="button_ok">Ok</string>
+    <string name="button_ok">OK</string> 
+    <string name="txt_username">Username</string>
+    <string name="txt_team">Team</string>
+    <string name="aboutOption">About</string>
+    <string name="txt_stations">Stations</string>
+    <string name="txt_profile">Profile</string>
+    <string name="txt_lines">Lines</string>
+    <string name="txt_trips">Trips</string>
+    <string name="txt_reservations">Reservations</string>
+    <string name="txt_reserve">Reserve</string>
+
 
 </resources>
