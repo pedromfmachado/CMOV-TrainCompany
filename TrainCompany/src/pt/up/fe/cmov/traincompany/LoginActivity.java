@@ -2,7 +2,6 @@ package pt.up.fe.cmov.traincompany;
 
 import java.util.HashMap;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import Requests.AsyncPost;
@@ -43,11 +42,12 @@ public class LoginActivity extends Activity {
 			String email = ((EditText)findViewById(R.id.etEmail)).getText().toString();
 			String password = ((EditText)findViewById(R.id.etPassword)).getText().toString();
 			String login_path = getString(R.string.server_address)+"users/sign_in.json";
+			
+			HashMap<String, String> values = new HashMap<String, String>(2);
+			values.put("[user_login][email]", email);
+			values.put("[user_login][password]", password);
 
-			if(email.trim().length() != 0 && password.trim().length() != 0){
-				HashMap<String, String> values = new HashMap<String, String>(2);
-				values.put("[user_login][email]", email);
-				values.put("[user_login][password]", password);
+			if(!values.containsValue("")){
 
 				loading = ProgressDialog.show(LoginActivity.this, "", "Loging in...");
 				new AsyncPost(login_path, values, new ResponseCommand() {
