@@ -20,14 +20,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class RegistrationActivity extends Activity {
+public class Registration extends Activity {
 
 	ProgressDialog loading;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_registration);
+		setContentView(R.layout.registration);
 
 		findViewById(R.id.btRegister).setOnClickListener(registerListener);
 	}
@@ -73,13 +73,13 @@ public class RegistrationActivity extends Activity {
 
 				if(password.equals(password_confirm)){
 
-					loading = ProgressDialog.show(RegistrationActivity.this, "", "Registering user...");
+					loading = ProgressDialog.show(Registration.this, "", "Registering user...");
 					new AsyncPost(register_path, values, new ResponseCommand() {
 
 						public void onError(ERROR_TYPE error) {
 
 							loading.dismiss();
-							UI.showErrorDialog(RegistrationActivity.this,
+							UI.showErrorDialog(Registration.this,
 									R.string.message_connection_error, R.string.button_ok);
 						}
 
@@ -94,7 +94,7 @@ public class RegistrationActivity extends Activity {
 							boolean success = json.optBoolean("success");
 							if(success){
 
-								Toast.makeText(RegistrationActivity.this, "User registered successfully!", Toast.LENGTH_LONG).show();
+								Toast.makeText(Registration.this, "User registered successfully!", Toast.LENGTH_LONG).show();
 								finish();
 							}
 							else{
@@ -114,7 +114,7 @@ public class RegistrationActivity extends Activity {
 									}
 								}
 								
-								Toast.makeText(RegistrationActivity.this, errors, Toast.LENGTH_LONG).show();
+								Toast.makeText(Registration.this, errors, Toast.LENGTH_LONG).show();
 								//Toast.makeText(RegistrationActivity.this, "Fields are not correctly filled", Toast.LENGTH_LONG).show();
 							}
 						}
@@ -122,10 +122,10 @@ public class RegistrationActivity extends Activity {
 					}).execute();
 				}
 				else
-					Toast.makeText(RegistrationActivity.this, "Passwords must match", Toast.LENGTH_LONG).show();
+					Toast.makeText(Registration.this, "Passwords must match", Toast.LENGTH_LONG).show();
 			}
 			else
-				Toast.makeText(RegistrationActivity.this, "Every field must be filled", Toast.LENGTH_LONG).show();
+				Toast.makeText(Registration.this, "Every field must be filled", Toast.LENGTH_LONG).show();
 
 		}
 	};

@@ -23,7 +23,7 @@ public class HTTPRequest {
 	
 	public static JSONObject POST(String server, HashMap<String, String> values) throws JSONException{
 		
-			JSONObject result = new JSONObject();
+			JSONObject result = null;
 		    // Create a new HttpClient and Post Header
 		    HttpClient httpclient = new DefaultHttpClient();
 		    HttpPost httppost = new HttpPost(server);
