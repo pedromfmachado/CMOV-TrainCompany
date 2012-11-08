@@ -1,11 +1,20 @@
 <resources>
 
     <string name="app_name">TrainCompany</string>
-    <string name="email_label">Email</string>
+    <string name="label_email">Email</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="password_label">Password</string>
-    <string name="login_button">Login</string>
+    <string name="label_password">Password</string>
+    <string name="button_login">Login</string>
     <string name="server_address">http://cmov-apiserver.herokuapp.com/api/</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="label_name">Name</string>
+    <string name="label_address">Address</string>
+    <string name="label_password_confirm">Password Confirmation</string>
+    <string name="label_cctype">Credit Card Type</string>
+    <string name="label_ccnumber">Credit Card Number</string>
+    <string name="label_ccvalidity">Credit Card Validity</string>
+    <string name="button_register">Register</string>
 
 </resources>

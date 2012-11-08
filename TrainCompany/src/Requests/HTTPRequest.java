@@ -1,4 +1,4 @@
-package pt.up.fe.cmov.traincompany;
+package Requests;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,14 +16,14 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import android.util.Log;
-
-public class HTTPMessage {
+public class HTTPRequest {
 	
-	public static String POST(String server, HashMap<String, String> values){
+	public static JSONObject POST(String server, HashMap<String, String> values) throws JSONException{
 		
-			String result = "";
+			JSONObject result = new JSONObject();
 		    // Create a new HttpClient and Post Header
 		    HttpClient httpclient = new DefaultHttpClient();
 		    HttpPost httppost = new HttpPost(server);
@@ -51,9 +51,7 @@ public class HTTPMessage {
 	                str.append(line + "\n");
 	            }
 	            in.close();
-	            result = str.toString();
-	            
-	        	Log.w("key + value", result);
+	            result = new JSONObject(str.toString());
 		        
 		    } catch (ClientProtocolException e) {
 		        // TODO Auto-generated catch block
