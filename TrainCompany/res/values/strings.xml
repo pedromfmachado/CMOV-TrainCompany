@@ -16,5 +16,7 @@
     <string name="label_ccnumber">Credit Card Number</string>
     <string name="label_ccvalidity">Credit Card Validity</string>
     <string name="button_register">Register</string>
+    <string name="message_connection_error">Connection Error</string>
+    <string name="button_ok">Ok</string>
 
 </resources>
