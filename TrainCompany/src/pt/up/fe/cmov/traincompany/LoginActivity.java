@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,8 +45,8 @@ public class LoginActivity extends Activity {
 			String login_path = getString(R.string.server_address)+"users/sign_in.json";
 			
 			HashMap<String, String> values = new HashMap<String, String>(2);
-			values.put("[user_login][email]", email);
-			values.put("[user_login][password]", password);
+			values.put("[user_login][email]", email.trim());
+			values.put("[user_login][password]", password.trim());
 
 			if(!values.containsValue("")){
 

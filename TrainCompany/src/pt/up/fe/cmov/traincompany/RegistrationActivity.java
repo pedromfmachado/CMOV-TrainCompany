@@ -10,6 +10,7 @@ import Utils.UI;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,14 +56,14 @@ public class RegistrationActivity extends Activity {
 			String ccvalidity = year + "-" + month + "-" + day;
 
 			HashMap<String, String> values = new HashMap<String, String>();
-			values.put("[user][name]", name);
-			values.put("[user][address]", address);
-			values.put("[user][email]", email);
+			values.put("[user][name]", name.trim());
+			values.put("[user][address]", address.trim());
+			values.put("[user][email]", email.trim());
 			values.put("[user][password]", password);
 			values.put("[user][password_confirm]", password_confirm);
-			values.put("[user][cctype]", cctype);
-			values.put("[user][ccnumber]", ccnumber);
-			values.put("[user][ccvalidity]", ccvalidity);
+			values.put("[user][cctype]", cctype.trim());
+			values.put("[user][ccnumber]", ccnumber.trim());
+			values.put("[user][ccvalidity]", ccvalidity.trim());
 
 			String register_path = getString(R.string.server_address)+"users.json";
 
@@ -83,6 +84,9 @@ public class RegistrationActivity extends Activity {
 						loading.dismiss();
 						
 						JSONObject json = (JSONObject)results[0];
+
+						Log.i("response",json.toString());
+						
 						boolean success = json.optBoolean("success");
 						if(success){
 							
