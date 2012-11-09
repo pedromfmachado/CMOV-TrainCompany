@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LineView extends Activity{
+public class TripView extends Activity{
 
 	ProgressDialog loading;
 
@@ -36,32 +36,37 @@ public class LineView extends Activity{
 		
 		((TextView)findViewById(R.id.title)).setText(name);
 
-		String server = getString(R.string.server_address) + "lines/" + id;
+		String server = getString(R.string.server_address) + "trips/" + id;
 
-		loading = ProgressDialog.show(LineView.this, "", "Loading lines " + name);
+		loading = ProgressDialog.show(TripView.this, "", "Loading trip " + name);
 		new AsyncGet(server, new HashMap<String,String>(), new ResponseCommand() {
 
 			public void onResultReceived(Object... results) {
 
 				if(results[0] == null || ((String)results[0]).equals("")){
 
-					Toast.makeText(LineView.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
+					Toast.makeText(TripView.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
 					return;
 				}
 
 				try{
 					
 					JSONObject json = new JSONObject((String)results[0]);
-					JSONArray jsonArray = json.getJSONArray("stations");
+					JSONArray jsonArray = json.getJSONArray("times");
 
 					for(int i = 0; i < jsonArray.length(); i++){
-
-						nomes.add(jsonArray.getJSONObject(i).getString("name"));
-						ids.add(jsonArray.getJSONObject(i).getString("id"));
-						descriptions.add("");
+						
+						JSONObject station = jsonArray.getJSONObject(i).getJSONObject("station");
+						String name = station.getString("name");
+						String id = station.getString("id");
+						String time = jsonArray.getJSONObject(i).getString("time");
+						
+						nomes.add(name);
+						ids.add(id);
+						descriptions.add(time);
 					}
 					
-					ListAdapter adapter = new ListAdapter(LineView.this, nomes, descriptions);
+					ListAdapter adapter = new ListAdapter(TripView.this, nomes, descriptions);
 
 					ListView list = (ListView) findViewById(R.id.list);
 					list.setAdapter(adapter);
@@ -78,7 +83,7 @@ public class LineView extends Activity{
 			public void onError(ERROR_TYPE error) {
 
 				loading.dismiss();
-				Toast.makeText(LineView.this, "Undefined error", Toast.LENGTH_LONG).show();
+				Toast.makeText(TripView.this, "Undefined error", Toast.LENGTH_LONG).show();
 
 			}
 		}).execute();

@@ -71,6 +71,7 @@
             android:label="@string/label_trips" >
         </activity>
         <activity android:name=".LineView" android:label="@string/app_name"></activity>
+        <activity android:name=".TripView"></activity>
     </application>
 
 </manifest>

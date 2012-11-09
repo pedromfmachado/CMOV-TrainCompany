@@ -1,16 +1,13 @@
 package pt.up.fe.cmov.traincompany;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import Requests.AsyncGet;
 import Requests.ResponseCommand;
-import Utils.Utils;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -59,11 +56,12 @@ public class Trips extends Activity{
 						
 						String departure = json.getJSONObject(i).getString("departure_station");
 						String arrival = json.getJSONObject(i).getString("arrival_station");
-						JSONObject trip = json.getJSONObject(i).getJSONObject("trip");
+						String time = json.getJSONObject(i).getString("time");
+						String id = json.getJSONObject(i).getString("id");
 						
 						names.add(departure + " - " + arrival);
-						ids.add(trip.getString("id"));
-						descriptions.add(Utils.parseTime(trip.getString("beginTime")));
+						ids.add(id);
+						descriptions.add(time);
 					}
 					
 					ListAdapter adapter = new ListAdapter(Trips.this, names, descriptions);
@@ -75,25 +73,22 @@ public class Trips extends Activity{
 						public void onItemClick(AdapterView<?> parent,
 								View view, int position, long id) {
 
-							Intent intent = new Intent(Trips.this, LineView.class);
+							Intent intent = new Intent(Trips.this, TripView.class);
 							intent.putExtra("id", ids.get(position));
 							intent.putExtra("name", names.get(position));
 							startActivity(intent);
 						}
 					});
 					
-					loading.dismiss();
 					
 				}
 				catch(JSONException e){
 					
 					e.printStackTrace();
-				} catch (ParseException e) {
-					
-					e.printStackTrace();
-				}
+				} 
 
 
+				loading.dismiss();
 			}
 
 			public void onError(ERROR_TYPE error) {
