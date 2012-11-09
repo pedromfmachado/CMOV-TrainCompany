@@ -149,7 +149,12 @@ public class DatabaseAdapter {
 		values.put("ccnumber", ccnumber);
 		values.put("ccvalidity", ccvalidity.toString());
 		return database.update("User", values, "token = \""+ token + "\"", null);
-
+	}
+	
+	public boolean checkUserOnDB(){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		Cursor c = database.rawQuery("SELECT * FROM User", null);
+		return c.getCount() > 0;
 	}
 	
 	public String getToken(String email){

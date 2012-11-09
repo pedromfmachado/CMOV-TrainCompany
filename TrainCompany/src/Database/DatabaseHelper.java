@@ -27,7 +27,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		database.execSQL(DATABASE_CREATE_USER);
 
 		android.util.Log.d("debug", "database created!");
-		//TODO add new tables here
 	}
 
 	@Override
