@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_weight="0.5"
-                android:text="@string/txt_lines" />
+                android:text="@string/label_lines" />
 
             <Button
                 android:id="@+id/button1"
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_weight="0.5"
-                android:text="@string/txt_trips" />
+                android:text="@string/label_trips" />
         </TableRow>
 
         <TableRow
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_weight="0.5"
-                android:text="@string/txt_reservations" />
+                android:text="@string/label_reservations" />
 
             <Button
                 android:id="@+id/button4"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_weight="0.5"
-                android:text="@string/txt_reserve" />
+                android:text="@string/label_reserve" />
         </TableRow>
 
     </TableLayout>

@@ -36,15 +36,15 @@
         </activity>
         <activity
             android:name=".Lines"
-            android:label="@string/txt_lines" >
+            android:label="@string/label_lines" >
         </activity>
         <activity
             android:name=".Stations"
-            android:label="@string/txt_stations" >
+            android:label="@string/label_stations" >
         </activity>
         <activity
             android:name=".About"
-            android:label="@string/aboutOption" >
+            android:label="@string/label_about" >
         </activity>
         <activity
             android:name=".MainMenu"
@@ -52,23 +52,23 @@
         </activity>
         <activity
             android:name=".Reservation"
-            android:label="@string/txt_reservation" >
+            android:label="@string/label_reservation" >
         </activity>
         <activity
             android:name=".Reservations"
-            android:label="@string/txt_reservations" >
+            android:label="@string/label_reservations" >
         </activity>
         <activity
             android:name=".Make_Reservation"
-            android:label="@string/txt_reserve" >
+            android:label="@string/label_reserve" >
         </activity>
         <activity
             android:name=".Profile"
-            android:label="@string/txt_profile" >
+            android:label="@string/label_profile" >
         </activity>
         <activity
             android:name=".Trips"
-            android:label="@string/txt_trips" >
+            android:label="@string/label_trips" >
         </activity>
         <activity android:name=".LineView" android:label="@string/app_name"></activity>
     </application>
