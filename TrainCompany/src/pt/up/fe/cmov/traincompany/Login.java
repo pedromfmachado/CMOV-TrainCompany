@@ -68,7 +68,6 @@ public class Login extends Activity {
 
 				public void onError(ERROR_TYPE error) {
 
-					loading.dismiss();
 					Toast.makeText(Login.this, "Login Error", Toast.LENGTH_LONG).show();
 				}
 
@@ -77,8 +76,6 @@ public class Login extends Activity {
 
 						if(results[0] == null || ((String)results[0]).equals("")){
 
-
-							loading.dismiss();
 							Toast.makeText(Login.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
 							return;
 						}
@@ -98,7 +95,6 @@ public class Login extends Activity {
 								Global.datasource.clearUsers();
 								Global.datasource.createUser(name, email, token);
 								
-								loading.dismiss();
 								Toast.makeText(Login.this, "Logged in successfully!", Toast.LENGTH_LONG).show();
 
 								// Open Main Menu
@@ -111,6 +107,8 @@ public class Login extends Activity {
 								loading.dismiss();
 								Toast.makeText(Login.this, "Wrong email or password", Toast.LENGTH_LONG).show();
 							}
+							
+							loading.dismiss();
 
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block

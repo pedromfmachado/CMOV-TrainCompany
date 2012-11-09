@@ -75,7 +75,6 @@ public class Lines extends Activity{
 						}
 					});
 					
-					loading.dismiss();
 					
 				}
 				catch(JSONException e){
@@ -83,6 +82,7 @@ public class Lines extends Activity{
 					e.printStackTrace();
 				}
 
+				loading.dismiss();
 
 			}
 

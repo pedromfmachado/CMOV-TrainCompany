@@ -5,55 +5,50 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical" >
-
-    <TableLayout
+
+    <TableRow
+        android:id="@+id/tableRow1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <Button
+            android:id="@+id/btLines"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="0.5"
+            android:text="@string/label_lines" />
+
+        <Button
+            android:id="@+id/btTrips"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="0.5"
+            android:text="@string/label_trips" />
 
-            <Button
-                android:id="@+id/btLines"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_weight="0.5"
-                android:text="@string/label_lines" />
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_weight="0.5"
-                android:text="@string/label_trips" />
-        </TableRow>
+    </TableRow>
 
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_weight="0.5"
-                android:text="@string/label_reservations" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="0.5"
+            android:text="Button" />
 
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_weight="0.5"
-                android:text="@string/label_reserve" />
-        </TableRow>
-
-    </TableLayout>
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="0.5"
+            android:text="Button" />
+    </TableRow>
 
 </LinearLayout>
