@@ -16,7 +16,7 @@ public class MainMenu extends Activity {
         setContentView(R.layout.menu);
         
         findViewById(R.id.btLines).setOnClickListener(linesListener);
-        
+        findViewById(R.id.btTrips).setOnClickListener(tripsListener);
     }
     
     @Override
@@ -30,6 +30,15 @@ public class MainMenu extends Activity {
 		public void onClick(View v) {
 			
 			Intent intent = new Intent(MainMenu.this, Lines.class);
+			startActivity(intent);
+		}
+	};
+	
+	OnClickListener tripsListener = new OnClickListener() {
+		
+		public void onClick(View v) {
+			
+			Intent intent = new Intent(MainMenu.this, Trips.class);
 			startActivity(intent);
 		}
 	};
