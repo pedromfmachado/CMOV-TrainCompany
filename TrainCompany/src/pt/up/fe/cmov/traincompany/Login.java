@@ -5,6 +5,8 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import Database.DatabaseAdapter;
+
 import Requests.AsyncPost;
 import Requests.ResponseCommand;
 import android.app.Activity;
@@ -20,11 +22,20 @@ import android.widget.Toast;
 public class Login extends Activity {
 
 	ProgressDialog loading;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		Global.datasource = new DatabaseAdapter(getApplicationContext());
+		
+		if(Global.datasource.checkUserOnDB()){
+			
+			Intent intent = new Intent(Login.this, MainMenu.class);
+			startActivity(intent);
+			finish();
+		}
 
 		findViewById(R.id.btLogin).setOnClickListener(loginListener);
 		findViewById(R.id.btRegister).setOnClickListener(registerListener);
@@ -79,8 +90,9 @@ public class Login extends Activity {
 
 							boolean success = json.optBoolean("success");
 							if(success){
-
-
+								
+								
+								
 								loading.dismiss();
 								Toast.makeText(Login.this, "Logged in successfully!", Toast.LENGTH_LONG).show();
 
