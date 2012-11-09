@@ -90,8 +90,13 @@ public class Login extends Activity {
 
 							boolean success = json.optBoolean("success");
 							if(success){
+
+								String name = json.getString("name");
+								String email = json.getString("email");
+								String token = json.getString("auth_token");
 								
-								
+								Global.datasource.clearUsers();
+								Global.datasource.createUser(name, email, token);
 								
 								loading.dismiss();
 								Toast.makeText(Login.this, "Logged in successfully!", Toast.LENGTH_LONG).show();

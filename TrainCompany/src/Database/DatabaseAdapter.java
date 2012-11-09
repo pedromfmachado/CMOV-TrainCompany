@@ -4,11 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
 import java.util.ArrayList;
 
 import pt.up.fe.cmov.traincompany.Reservation;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -49,7 +47,7 @@ public class DatabaseAdapter {
 		return null;
 	}
 	
-	private long createReservation(Integer Reservation_id, Integer uuid, Integer User_id, Integer Trip_id, Integer departureStation_id, Integer arrivalStation_id){
+	public long createReservation(Integer Reservation_id, Integer uuid, Integer User_id, Integer Trip_id, Integer departureStation_id, Integer arrivalStation_id){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -64,7 +62,7 @@ public class DatabaseAdapter {
 		return database.insert("Reservation", null, values);
 	}
 	
-	private long updateReservation(String token, Integer Reservation_id, Integer uuid, Integer User_id, Integer Trip_id, Integer departureStation_id, Integer arrivalStation_id){
+	public long updateReservation(String token, Integer Reservation_id, Integer uuid, Integer User_id, Integer Trip_id, Integer departureStation_id, Integer arrivalStation_id){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("Reservation_id", Reservation_id);
@@ -114,7 +112,7 @@ public class DatabaseAdapter {
 
 	}
 	
-	private long createUser(String name, String email, String token){
+	public long createUser(String name, String email, String token){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -126,7 +124,7 @@ public class DatabaseAdapter {
 		return database.insert("User", null, values);
 	}
 	
-	private long updateUser(String name, String email, String token){
+	public long updateUser(String name, String email, String token){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("name", name);
@@ -160,7 +158,7 @@ public class DatabaseAdapter {
 	
 	public void clearUsers(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
-		database.rawQuery("DELETE * FROM User", null);
+		database.delete("User", null, null);
 	}
 	
 }
