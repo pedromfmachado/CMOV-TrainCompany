@@ -25,6 +25,7 @@
     <string name="txt_profile">Profile</string>
     <string name="txt_lines">Lines</string>
     <string name="txt_trips">Trips</string>
+    <string name="txt_reservation">Reservation</string>
     <string name="txt_reservations">Reservations</string>
     <string name="txt_reserve">Reserve</string>
 
