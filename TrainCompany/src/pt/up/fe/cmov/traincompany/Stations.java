@@ -37,7 +37,7 @@ public class Stations extends Activity{
 
 		String server = getString(R.string.server_address) + "stations";
 
-		loading = ProgressDialog.show(Stations.this, "", "Loading lines");
+		loading = ProgressDialog.show(Stations.this, "", "Loading stations");
 		new AsyncGet(server, new HashMap<String,String>(), new ResponseCommand() {
 
 			public void onResultReceived(Object... results) {
