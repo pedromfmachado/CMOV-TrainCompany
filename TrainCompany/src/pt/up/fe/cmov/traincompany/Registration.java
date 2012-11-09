@@ -87,35 +87,42 @@ public class Registration extends Activity {
 
 							loading.dismiss();
 
-							JSONObject json = (JSONObject)results[0];
+							if(results[0] == null || ((String)results[0]).equals("")){
 
-							Log.i("response",json.toString());
-
-							boolean success = json.optBoolean("success");
-							if(success){
-
-								Toast.makeText(Registration.this, "User registered successfully!", Toast.LENGTH_LONG).show();
-								finish();
+								Toast.makeText(Registration.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
+								return;
 							}
-							else{
 
-								String errors = "";
-								JSONObject errors_json = json.optJSONObject("errors");
-								Iterator<?> errors_itr = errors_json.keys();
-								while(errors_itr.hasNext()){
-									
-									String key = errors_itr.next().toString();
-									try {
-										errors += "- " + key + errors_json.getJSONArray(key).getString(0) + "\n";
-										
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
+							try{
+								JSONObject json = new JSONObject((String)results[0]);
+
+								Log.i("response",json.toString());
+
+								boolean success = json.optBoolean("success");
+								if(success){
+
+									Toast.makeText(Registration.this, "User registered successfully!", Toast.LENGTH_LONG).show();
+									finish();
 								}
+								else{
+
+									String errors = "";
+									JSONObject errors_json = json.optJSONObject("errors");
+									Iterator<?> errors_itr = errors_json.keys();
+									while(errors_itr.hasNext()){
+
+										String key = errors_itr.next().toString();
+										errors += "- " + key + errors_json.getJSONArray(key).getString(0) + "\n";
+
+									}
+
+									Toast.makeText(Registration.this, errors, Toast.LENGTH_LONG).show();
+									//Toast.makeText(RegistrationActivity.this, "Fields are not correctly filled", Toast.LENGTH_LONG).show();
+								}
+							}
+							catch(JSONException e){
 								
-								Toast.makeText(Registration.this, errors, Toast.LENGTH_LONG).show();
-								//Toast.makeText(RegistrationActivity.this, "Fields are not correctly filled", Toast.LENGTH_LONG).show();
+								e.printStackTrace();
 							}
 						}
 

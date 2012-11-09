@@ -2,6 +2,7 @@ package pt.up.fe.cmov.traincompany;
 
 import java.util.HashMap;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import Requests.AsyncPost;
@@ -61,38 +62,48 @@ public class Login extends Activity {
 				}
 
 				public void onResultReceived(Object... results) {
-
-					loading.dismiss();
-
 					if(results.length > 0){
 
-						JSONObject json = (JSONObject)results[0];
-						if(json == null){
+						if(results[0] == null || ((String)results[0]).equals("")){
 
+
+							loading.dismiss();
 							Toast.makeText(Login.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
 							return;
 						}
-						
-						boolean success = json.optBoolean("success");
-						if(success){
 
-							Toast.makeText(Login.this, "Logged in successfully!", Toast.LENGTH_LONG).show();
+						JSONObject json;
+						try {
+							
+							json = new JSONObject((String)results[0]);
 
-							// Open Main Menu
-							Intent intent = new Intent(Login.this, MainMenu.class);
-							startActivity(intent);
-							finish();
-						}
-						else{
+							boolean success = json.optBoolean("success");
+							if(success){
 
-							Toast.makeText(Login.this, "Wrong email or password", Toast.LENGTH_LONG).show();
+
+								loading.dismiss();
+								Toast.makeText(Login.this, "Logged in successfully!", Toast.LENGTH_LONG).show();
+
+								// Open Main Menu
+								Intent intent = new Intent(Login.this, MainMenu.class);
+								startActivity(intent);
+								finish();
+							}
+							else{
+
+								loading.dismiss();
+								Toast.makeText(Login.this, "Wrong email or password", Toast.LENGTH_LONG).show();
+							}
+
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 					}
 				}
 
 
 			}).execute();
-
 
 		}
 	};

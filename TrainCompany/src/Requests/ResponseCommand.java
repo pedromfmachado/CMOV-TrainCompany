@@ -8,7 +8,7 @@ package Requests;
  * onResultReceived
  * </p>
  * <p>
- * Thank you, Rui Araujo. {@see <a href="http://goo.gl/kx4kC">SiFEUPMobile
+ * Thank you, Rui Araújo. {@see <a href="http://goo.gl/kx4kC">SiFEUPMobile
  * Response Command</a>}
  * </p>
  * 

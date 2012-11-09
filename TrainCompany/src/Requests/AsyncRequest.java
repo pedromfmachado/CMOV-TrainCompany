@@ -15,9 +15,7 @@ import android.os.AsyncTask;
  * </p>
  * 
  * @author Filipe Carvalho <ei08076@fe.up.pt>
- * @author João Alves <ei08083@fe.up.pt>
- * @author Tiago Pereira <ei08023@fe.up.pt>
- * @author Vítor Santos <ei09076@fe.up.pt>
+ * @author Pedro Machado <ei07074@fe.up.pt>
  * 
  */
 public abstract class AsyncRequest extends
@@ -43,6 +41,7 @@ public abstract class AsyncRequest extends
 			command.onResultReceived(this.result);
 			return;
 		}
+		
 		command.onError(error);
 	}
 

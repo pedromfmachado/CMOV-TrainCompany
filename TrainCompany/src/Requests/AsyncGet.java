@@ -13,12 +13,12 @@ import Requests.ResponseCommand.ERROR_TYPE;
  * @author Pedro Machado <ei07074@fe.up.pt>
  * 
  */
-public class AsyncPost extends AsyncRequest {
+public class AsyncGet extends AsyncRequest {
 
 	HashMap<String, String> values = new HashMap<String, String>();
 	String server;
 
-	public AsyncPost(String server, HashMap<String, String> values, ResponseCommand command) {
+	public AsyncGet(String server, HashMap<String, String> values, ResponseCommand command) {
 		super(command);
 		this.values = values;
 		this.server = server;
@@ -30,8 +30,8 @@ public class AsyncPost extends AsyncRequest {
 
 		if (isCancelled())
 			return null;
-
-		this.result = HTTPRequest.POST(server, values);
+		
+		this.result = HTTPRequest.GET(server, values);
 
 		return null;
 	}

@@ -28,6 +28,7 @@
     <string name="txt_reservation">Reservation</string>
     <string name="txt_reservations">Reservations</string>
     <string name="txt_reserve">Reserve</string>
+    <string name="label_lines">Lines</string>
 
 
 </resources>
