@@ -149,7 +149,23 @@ public class DatabaseAdapter {
 		values.put("ccnumber", ccnumber);
 		values.put("ccvalidity", ccvalidity.toString());
 		return database.update("User", values, "token = \""+ token + "\"", null);
+	}
+	
+	public long checkUserOnDB(Integer User_id, String name, String email, String hash, String token, String role, String address, String type, String cctype, Integer ccnumber, Date ccvalidity){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM User WHERE email = \"" + email + "\"";
 
+		Cursor userCursor = database.rawQuery(query, null);
+		long ret;
+		userCursor.moveToFirst();
+		if(userCursor.getCount() == 0){
+			userCursor.close();
+			ret = createUser(User_id, name, email, hash, token, role, address, type, cctype, ccnumber, ccvalidity);
+			return ret;
+		}
+		ret = updateUser(User_id, name, email, hash, token, role, address, type, cctype, ccnumber, ccvalidity);
+
+		return ret;
 	}
 	
 	public String getToken(String email){
