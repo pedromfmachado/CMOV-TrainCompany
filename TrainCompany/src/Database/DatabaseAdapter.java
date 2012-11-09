@@ -114,40 +114,24 @@ public class DatabaseAdapter {
 
 	}
 	
-	private long createUser(Integer User_id, String name, String email, String hash, String token, String role, String address, String type, String cctype, Integer ccnumber, Date ccvalidity){
+	private long createUser(String name, String email, String token){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put("User_id", User_id);
 		values.put("name", name);
 		values.put("email", email);
-		values.put("hash", CalcHashedPassword(hash));
 		values.put("token", token);
-		values.put("role", role);
-		values.put("address", address);
-		values.put("type", type);
-		values.put("cctype", cctype);
-		values.put("ccnumber", ccnumber);
-		values.put("ccvalidity", ccvalidity.toString());
 
 		return database.insert("User", null, values);
 	}
 	
-	private long updateUser(Integer User_id, String name, String email, String hash, String token, String role, String address, String type, String cctype, Integer ccnumber, Date ccvalidity){
+	private long updateUser(String name, String email, String token){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put("User_id", User_id);
 		values.put("name", name);
 		values.put("email", email);
-		values.put("hash", CalcHashedPassword(hash));
 		values.put("token", token);
-		values.put("role", role);
-		values.put("address", address);
-		values.put("type", type);
-		values.put("cctype", cctype);
-		values.put("ccnumber", ccnumber);
-		values.put("ccvalidity", ccvalidity.toString());
 		return database.update("User", values, "token = \""+ token + "\"", null);
 	}
 	
@@ -167,38 +151,16 @@ public class DatabaseAdapter {
 		return ret;
 	}
 	
-	public boolean login(String email, String password) {
-
-		final SQLiteDatabase database = dbHelper.getReadableDatabase();
-		String query = "SELECT hash FROM User WHERE email = \"" + email + "\"";
-		Cursor c = database.rawQuery(query, null);
-
-		c.moveToFirst();
-		if(c.getCount() == 0){
-			c.close();
-
-			return false;
-		}
-
-		String DBHashedPassword = c.getString(0);
-		if(DBHashedPassword.equals(CalcHashedPassword(password))){
-			android.util.Log.d("Debug", "password equal " + DBHashedPassword);
-			c.close();
-			return true;
-		}
-		else{
-			android.util.Log.d("Debug", "password not equal " + DBHashedPassword);
-			c.close();
-
-			return false;
-		}
-	}
-	
 	public boolean isNetworkAvailable(Context context) {
 		ConnectivityManager connectivityManager 
 		= (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 		return activeNetworkInfo != null;
+	}
+	
+	public void clearUsers(){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		database.rawQuery("DELETE * FROM User", null);
 	}
 	
 }

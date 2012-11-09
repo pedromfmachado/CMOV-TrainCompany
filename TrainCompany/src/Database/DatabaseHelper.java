@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Database create
 	private static final String DATABASE_CREATE_VERSION = "create table Version(version TEXT);";
 	private static final String DATABASE_CREATE_RESERVATION = "create table Reservation(Reservation_id INTEGER, uuid INTEGER, User_id INTEGER, Trip_id INTEGER, departureStation_id INTEGER, arrivalStation_id INTEGER);";
-	private static final String DATABASE_CREATE_USER = "create table User(User_id INTEGER, name TEXT, email TEXT, hash TEXT, token TEXT, role TEXT, address TEXT, type TEXT, cctype TEXT, ccnumber INTEGER, ccvalidity DATE);";
+	private static final String DATABASE_CREATE_USER = "create table User(name TEXT, email TEXT, token TEXT);";
 	
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
