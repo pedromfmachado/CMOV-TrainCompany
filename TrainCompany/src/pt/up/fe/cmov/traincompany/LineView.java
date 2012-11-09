@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import Requests.AsyncGet;
 import Requests.ResponseCommand;
@@ -18,22 +19,26 @@ import android.widget.Toast;
 public class LineView extends Activity{
 
 	ProgressDialog loading;
-	ListView list;
+
+	ArrayList<String> nomes = new ArrayList<String>();
+	ArrayList<String> descriptions = new ArrayList<String>();
+	ArrayList<String> ids = new ArrayList<String>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list);
 		
-		String name = savedInstanceState.getString("name");
-		String id = savedInstanceState.getString("id");
+		Bundle bundle = getIntent().getExtras();
+		
+		String name = bundle.getString("name");
+		String id = bundle.getString("id");
 		
 		((TextView)findViewById(R.id.title)).setText(name);
 
 		String server = getString(R.string.server_address) + "lines/" + id;
 
 		loading = ProgressDialog.show(LineView.this, "", "Loading lines");
-		list = (ListView) findViewById(R.id.list);
 		new AsyncGet(server, new HashMap<String,String>(), new ResponseCommand() {
 
 			public void onResultReceived(Object... results) {
@@ -46,18 +51,19 @@ public class LineView extends Activity{
 
 				try{
 					
-					JSONArray json = new JSONArray((String)results[0]);
-					ArrayList<String> nomes = new ArrayList<String>();
-					ArrayList<String> descriptions = new ArrayList<String>();
+					JSONObject json = new JSONObject((String)results[0]);
+					JSONArray jsonArray = json.getJSONArray("stations");
 
-					for(int i = 0; i < json.length(); i++){
+					for(int i = 0; i < jsonArray.length(); i++){
 
-						nomes.add(json.getJSONObject(i).getString("name"));
+						nomes.add(jsonArray.getJSONObject(i).getString("name"));
+						ids.add(jsonArray.getJSONObject(i).getString("id"));
 						descriptions.add("");
 					}
 					
 					ListAdapter adapter = new ListAdapter(LineView.this, nomes, descriptions);
-					
+
+					ListView list = (ListView) findViewById(R.id.list);
 					list.setAdapter(adapter);
 					loading.dismiss();
 					
@@ -79,11 +85,5 @@ public class LineView extends Activity{
 		}).execute();
 	}
 	
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		list.setAdapter(null);
-	}
 
 }
