@@ -169,7 +169,4 @@ public class DatabaseAdapter {
 		database.close();
 	}
 	
-	
-	
-	
 }
