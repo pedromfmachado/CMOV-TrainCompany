@@ -28,6 +28,8 @@
     <string name="label_reservations">Reservations</string>
     <string name="label_reserve">Reserve</string>
     <string name="label_lines">Lines</string>
+    <string name="button_logout">Logout</string>
+    <string name="button_home">Home</string>
 
 
 </resources>

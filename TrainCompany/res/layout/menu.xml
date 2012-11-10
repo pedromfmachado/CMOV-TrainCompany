@@ -3,6 +3,7 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical" >
 
@@ -10,21 +11,23 @@
         android:id="@+id/tableRow1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+
         <Button
             android:id="@+id/btLines"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="0.5"
+            android:onClick="onClick"
             android:text="@string/label_lines" />
-
+
         <Button
             android:id="@+id/btTrips"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="0.5"
+            android:onClick="onClick"
             android:text="@string/label_trips" />
 
     </TableRow>
@@ -33,22 +36,43 @@
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+
         <Button
             android:id="@+id/button3"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="0.5"
+            android:onClick="onClick"
             android:text="Button" />
-
+
         <Button
             android:id="@+id/button4"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="0.5"
+            android:onClick="onClick"
             android:text="Button" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="1.0" >
+
+        <Button
+            android:id="@+id/btLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="0.33"
+            android:onClick="onClick"
+            android:text="@string/button_logout" />
+
     </TableRow>
 
 </LinearLayout>
