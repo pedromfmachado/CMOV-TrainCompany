@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import Database.DatabaseAdapter;
-
 import Requests.AsyncPost;
 import Requests.ResponseCommand;
 import android.app.Activity;

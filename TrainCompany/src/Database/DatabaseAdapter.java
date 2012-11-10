@@ -159,6 +159,17 @@ public class DatabaseAdapter {
 	public void clearUsers(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		database.delete("User", null, null);
+		
 	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		super.finalize();
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		database.close();
+	}
+	
+	
+	
 	
 }

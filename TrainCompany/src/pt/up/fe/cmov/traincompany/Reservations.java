@@ -3,17 +3,11 @@ package pt.up.fe.cmov.traincompany;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import Requests.AsyncGet;
 import Requests.ResponseCommand;
-import Requests.ResponseCommand.ERROR_TYPE;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 

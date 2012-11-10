@@ -1,7 +1,5 @@
 package pt.up.fe.cmov.traincompany;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
