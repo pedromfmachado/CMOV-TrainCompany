@@ -14,9 +14,6 @@ public class MainMenu extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-        
-        findViewById(R.id.btLines).setOnClickListener(linesListener);
-        findViewById(R.id.btTrips).setOnClickListener(tripsListener);
     }
     
     @Override
@@ -25,21 +22,35 @@ public class MainMenu extends Activity {
     	 	
     }
     
-    OnClickListener linesListener = new OnClickListener() {
-		
-		public void onClick(View v) {
-			
-			Intent intent = new Intent(MainMenu.this, Lines.class);
+    public void onClick(View v) {
+    	
+    	Intent intent = null;
+    	switch(v.getId()){
+    	
+    	case R.id.btLines:
+
+    		intent = new Intent(MainMenu.this, Lines.class);
+    		startActivity(intent);
+    		break;
+    	
+    	case R.id.btTrips:
+    		
+	    	intent = new Intent(MainMenu.this, Trips.class);
 			startActivity(intent);
-		}
-	};
-	
-	OnClickListener tripsListener = new OnClickListener() {
-		
-		public void onClick(View v) {
-			
-			Intent intent = new Intent(MainMenu.this, Trips.class);
+    		break;
+    		
+    	case R.id.btLogout:
+    		Global.datasource.clearUsers();
+    		intent = new Intent(MainMenu.this, Login.class);
 			startActivity(intent);
-		}
-	};
+			finish();
+    		break;
+    	
+    	default:
+    		break;
+    	
+    	}
+		
+	}
+    
 } 
