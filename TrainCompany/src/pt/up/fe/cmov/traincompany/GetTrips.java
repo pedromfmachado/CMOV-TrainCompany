@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import Database.User;
 import Requests.AsyncGet;
 import Requests.AsyncPost;
 import Requests.ResponseCommand;
@@ -74,8 +75,10 @@ public class GetTrips extends Activity {
 		Log.i("trips", date + " - " + arrival_id + " - " + departure_id + " - " + time);
 
 		if(values.containsValue("")){
-
+			
+			loading.dismiss();
 			Toast.makeText(GetTrips.this, "Every field must be filled", Toast.LENGTH_LONG).show();
+			finish();
 			return;
 		}
 
@@ -88,6 +91,7 @@ public class GetTrips extends Activity {
 
 					loading.dismiss();
 					Toast.makeText(GetTrips.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
+					finish();
 					return;
 				}
 
@@ -127,6 +131,7 @@ public class GetTrips extends Activity {
 			public void onError(ERROR_TYPE error) {
 
 				loading.dismiss();
+				finish();
 				Toast.makeText(GetTrips.this, "Undefined error", Toast.LENGTH_LONG).show();
 
 			}
@@ -142,13 +147,14 @@ public class GetTrips extends Activity {
 		String arrival_id = bundle.getString("arrival_id");
 		String time = bundle.getString("time");
 		String date = bundle.getString("date");
+		User user = Global.datasource.getUser();
 
 		HashMap<String, String> values = new HashMap<String, String>(2);
 		values.put("[reservation][departureStation_id]", departure_id.trim());
 		values.put("[reservation][arrivalStation_id]", arrival_id.trim());
 		values.put("[reservation][date]", date.trim());
-		values.put("[reservation][user_id]", "1");
-		values.put("token", Global.datasource.getToken());
+		values.put("[reservation][user_id]", ""+user.id);
+		values.put("token", user.token);
 		values.put("time", time.trim());
 
 		if(values.containsValue("")){

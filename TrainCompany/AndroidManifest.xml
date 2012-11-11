@@ -26,50 +26,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Registration"
+            android:name="Registration"
             android:label="@string/title_activity_registration" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
-            android:name=".Lines"
+            android:name="Lines"
             android:label="@string/label_lines" >
         </activity>
         <activity
-            android:name=".Stations"
+            android:name="Stations"
             android:label="@string/label_stations" >
         </activity>
         <activity
-            android:name=".About"
+            android:name="About"
             android:label="@string/label_about" >
         </activity>
         <activity
-            android:name=".MainMenu"
+            android:name="MainMenu"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".Make_Reservation"
-            android:label="@string/label_reserve" >
-        </activity>
-        <activity
-            android:name=".Profile"
-            android:label="@string/label_profile" >
-        </activity>
-        <activity
-            android:name=".Trips"
+            android:name="Trips"
             android:label="@string/label_trips" >
         </activity>
         <activity
-            android:name=".LineView"
+            android:name="LineView"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name=".TripView" >
+        <activity android:name="TripView" >
         </activity>
         <activity
-            android:name=".MakeReservation"
+            android:name="MakeReservation"
             android:label="@string/title_activity_make_reservation" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,7 +65,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GetTrips"
+            android:name="GetTrips"
             android:label="@string/title_activity_get_trips" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -87,7 +74,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Reservations"
+            android:name="Reservations"
             android:label="@string/title_activity_reservations" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

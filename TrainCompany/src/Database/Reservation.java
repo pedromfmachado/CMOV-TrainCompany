@@ -2,8 +2,9 @@ package Database;
 
 public class Reservation{
 
+	public Integer id;
 	public Integer uuid;
-	public Integer User_id;
+	public Integer user_id;
 	public String canceled;
 	public String date;
 	public Integer departureStation_id;
@@ -14,7 +15,7 @@ public class Reservation{
 	public Reservation(Integer uuid, Integer User_id, String canceled, String date, Integer departureStation_id, Integer arrivalStation_id){
 		
 		this.uuid = uuid;
-		this.User_id = User_id;
+		this.user_id = User_id;
 		this.canceled = canceled;
 		this.date = date;
 		this.departureStation_id = departureStation_id;
