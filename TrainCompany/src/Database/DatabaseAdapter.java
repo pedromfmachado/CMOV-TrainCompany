@@ -99,16 +99,13 @@ public class DatabaseAdapter {
 
 	}
 	
-	
-	//TODO
 	public Reservation getReservation(Integer Reservation_id){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		
 		Cursor c = database.rawQuery("SELECT Reservation FROM Reservation WHERE Reservation_id = \"" + Reservation_id +"\"", null);
-		//Reservation r = new Reservation(c.getInt(0),c.getInt(1), new Boolean(c.getString(2)), new Date(c.getString(3)),c.getInt(4), c.getInt(5));
+		Reservation r = new Reservation(c.getInt(0),c.getInt(1), c.getString(2), c.getString(3), c.getInt(4), c.getInt(5));
 		c.close();
-		//return r;
-		return new Reservation();
+		return r;
 	}
 	
 	public ArrayList<Reservation> getReservationsByUser(Integer Reservation_id){
@@ -129,12 +126,10 @@ public class DatabaseAdapter {
 				Reservation reservation = new Reservation();
 				reservation.uuid = reservationCursor.getInt(reservationCursor.getColumnIndex("Reservation_id"));
 				reservation.User_id = reservationCursor.getInt(reservationCursor.getColumnIndex("User_id"));
-				//TODO
-				//reservation.canceled = reservationCursor.getString(reservationCursor.getColumnIndex("canceled"));
-				//reservation.date = reservationCursor.getString(reservationCursor.getColumnIndex("date"));
+				reservation.canceled = reservationCursor.getString(reservationCursor.getColumnIndex("canceled"));
+				reservation.date = reservationCursor.getString(reservationCursor.getColumnIndex("date"));
 				reservation.departureStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("departureStation_id"));
 				reservation.arrivalStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("arrivalStation_id"));
-
 				ret.add(reservation);
 			} catch (Exception e) {
 				e.printStackTrace();
