@@ -76,13 +76,13 @@ public class Registration extends Activity {
 				return;
 			}
 
-			if(password.equals(password_confirm)){
+			if(!password.equals(password_confirm)){
 
 				Toast.makeText(Registration.this, "Passwords must match", Toast.LENGTH_LONG).show();
 				return;
 			}
 
-			if(email.equals(email_confirm)){
+			if(!email.equals(email_confirm)){
 
 				Toast.makeText(Registration.this, "Emails must match", Toast.LENGTH_LONG).show();
 				return;
