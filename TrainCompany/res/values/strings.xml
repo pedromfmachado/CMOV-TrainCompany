@@ -40,5 +40,7 @@
     <string name="label_date">Date</string>
     <string name="label_make_reservation">Make Reservation</string>
     <string name="title_activity_get_trips">GetTrips</string>
+    <string name="title_activity_reservations">Reservations</string>
+    <string name="label_new_reservation">New Reservation</string>
 
 </resources>

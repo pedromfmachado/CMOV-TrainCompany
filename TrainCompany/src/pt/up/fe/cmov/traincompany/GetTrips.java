@@ -10,15 +10,12 @@ import org.json.JSONObject;
 import Requests.AsyncGet;
 import Requests.AsyncPost;
 import Requests.ResponseCommand;
-import Requests.ResponseCommand.ERROR_TYPE;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -149,10 +146,12 @@ public class GetTrips extends Activity {
 		values.put("[reservation][departureStation_id]", departure_id.trim());
 		values.put("[reservation][arrivalStation_id]", arrival_id.trim());
 		values.put("[reservation][date]", date.trim());
+		values.put("[reservation][user_id]", "1");
+		values.put("token", Global.datasource.getToken());
 		values.put("time", time.trim());
 
 		if(values.containsValue("")){
-			Toast.makeText(GetTrips.this, "Please fill in the email and password", Toast.LENGTH_LONG).show();
+			Toast.makeText(GetTrips.this, "Please fill all fields", Toast.LENGTH_LONG).show();
 			return;
 		}
 		loading = ProgressDialog.show(GetTrips.this, "", "Making Reservation");

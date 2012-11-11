@@ -140,9 +140,9 @@ public class DatabaseAdapter {
 		return c.getCount() > 0;
 	}
 	
-	public String getToken(String email){
+	public String getToken(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
-		Cursor c = database.rawQuery("SELECT token FROM User WHERE email = \"" + email +"\"", null);
+		Cursor c = database.rawQuery("SELECT token FROM User", null);
 		c.moveToFirst();
 		String ret = c.getString(0); 
 		c.close();
