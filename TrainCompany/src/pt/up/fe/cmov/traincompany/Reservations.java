@@ -51,6 +51,7 @@ public class Reservations extends Activity {
     	
     	Intent intent = null;
     	switch (v.getId()) {
+    	
 		case R.id.btNewReservation:
 			
 			intent = new Intent(Reservations.this, MakeReservation.class);
@@ -65,7 +66,6 @@ public class Reservations extends Activity {
     private void populateDb(){
     	
     	User user = Global.datasource.getUser();
-    	//Log.i("size", ""+Global.datasource.getReservation(5).arrivalStation_name);
     	for(Reservation r : Global.datasource.getReservationsByUser(user.id)){
     		
     		names.add(r.departureStation_name + " - " + r.arrivalStation_name);
@@ -82,7 +82,7 @@ public class Reservations extends Activity {
 			public void onItemClick(AdapterView<?> parent,
 					View view, int position, long id) {
 
-				Intent intent = new Intent(Reservations.this, LineView.class);
+				Intent intent = new Intent(Reservations.this, ReservationView.class);
 				intent.putExtra("id", ids.get(position));
 				intent.putExtra("name", names.get(position));
 				startActivity(intent);
@@ -167,7 +167,6 @@ public class Reservations extends Activity {
 
 				loading.dismiss();
 				Toast.makeText(Reservations.this, "Undefined error", Toast.LENGTH_LONG).show();
-
 			}
 		}).execute();
     }

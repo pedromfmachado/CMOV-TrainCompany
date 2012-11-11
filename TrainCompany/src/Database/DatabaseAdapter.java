@@ -91,7 +91,7 @@ public class DatabaseAdapter {
 				ReservationTrip r = new ReservationTrip();
 				r.departureName = reservationCursor.getString(reservationCursor.getColumnIndex("departureStation_name"));
 				r.arrivalName = reservationCursor.getString(reservationCursor.getColumnIndex("arrivalStation_name"));
-				r.time = reservationCursor.getString(reservationCursor.getColumnIndex("date"));
+				r.time = reservationCursor.getString(reservationCursor.getColumnIndex("time"));
 				r.reservation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("Reservation_id"));
 				r.trip_id = reservationCursor.getInt(reservationCursor.getColumnIndex("Trip_id"));
 				result.add(r);
@@ -173,7 +173,8 @@ public class DatabaseAdapter {
 		while(!reservationCursor.isAfterLast()){
 			try {
 				Reservation reservation = new Reservation();
-				reservation.uuid = reservationCursor.getInt(reservationCursor.getColumnIndex("Reservation_id"));
+				reservation.id = reservationCursor.getInt(reservationCursor.getColumnIndex("Reservation_id"));
+				reservation.uuid = reservationCursor.getInt(reservationCursor.getColumnIndex("uuid"));
 				reservation.user_id = reservationCursor.getInt(reservationCursor.getColumnIndex("User_id"));
 				reservation.canceled = reservationCursor.getString(reservationCursor.getColumnIndex("canceled"));
 				reservation.date = reservationCursor.getString(reservationCursor.getColumnIndex("date"));

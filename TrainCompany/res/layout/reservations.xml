@@ -11,11 +11,12 @@
         android:layout_height="wrap_content" >
 
     </ListView>
-
+
     <Button
         android:id="@+id/btNewReservation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="@string/label_new_reservation" />
 
 </LinearLayout>
