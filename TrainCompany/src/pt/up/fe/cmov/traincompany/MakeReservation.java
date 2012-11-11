@@ -100,7 +100,7 @@ public class MakeReservation extends Activity {
 
 	public void getTrips(){
 
-		Intent intent = new Intent(MakeReservation.this, LineView.class);
+		Intent intent = new Intent(MakeReservation.this, GetTrips.class);
 		
 		int arrival_pos = ((Spinner)findViewById(R.id.sArrival)).getSelectedItemPosition();
 		int departure_pos = ((Spinner)findViewById(R.id.sDeparture)).getSelectedItemPosition();
