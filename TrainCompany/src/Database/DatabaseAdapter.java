@@ -6,7 +6,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-import pt.up.fe.cmov.traincompany.Reservation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

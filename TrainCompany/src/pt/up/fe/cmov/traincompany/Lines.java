@@ -43,6 +43,7 @@ public class Lines extends Activity{
 
 				if(results[0] == null || ((String)results[0]).equals("")){
 
+					loading.dismiss();
 					Toast.makeText(Lines.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
 					return;
 				}

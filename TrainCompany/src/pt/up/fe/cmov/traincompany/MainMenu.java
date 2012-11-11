@@ -38,7 +38,7 @@ public class MainMenu extends Activity {
     		
     	case R.id.btMakeReservation:
     		
-    		intent = new Intent(MainMenu.this, Reservations.class);
+    		intent = new Intent(MainMenu.this, MakeReservation.class);
     		startActivity(intent);
     		break;
     		

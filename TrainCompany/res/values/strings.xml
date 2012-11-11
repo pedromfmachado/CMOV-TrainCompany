@@ -17,7 +17,7 @@
     <string name="label_ccvalidity">Credit Card Validity</string>
     <string name="button_register">Register</string>
     <string name="message_connection_error">Connection Error</string>
-    <string name="button_ok">OK</string> 
+    <string name="button_ok">OK</string>
     <string name="label_username">Username</string>
     <string name="label_team">Team</string>
     <string name="label_about">About</string>
@@ -33,6 +33,12 @@
     <string name="button_nextreservation">New Reservation</string>
     <string name="label_line">Line</string>
     <string name="label_email_confirm">Email Confirmation</string>
-
+    <string name="title_activity_make_reservation">MakeReservation</string>
+    <string name="label_arrival_station">Arrival Station</string>
+    <string name="label_departure_station">Departure Station</string>
+    <string name="label_time">Time</string>
+    <string name="label_date">Date</string>
+    <string name="label_make_reservation">Make Reservation</string>
+    <string name="title_activity_get_trips">GetTrips</string>
 
 </resources>

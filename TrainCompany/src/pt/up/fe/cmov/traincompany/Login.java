@@ -67,6 +67,7 @@ public class Login extends Activity {
 
 				public void onError(ERROR_TYPE error) {
 
+					loading.dismiss();
 					Toast.makeText(Login.this, "Login Error", Toast.LENGTH_LONG).show();
 				}
 
@@ -75,6 +76,7 @@ public class Login extends Activity {
 
 						if(results[0] == null || ((String)results[0]).equals("")){
 
+							loading.dismiss();
 							Toast.makeText(Login.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
 							return;
 						}
@@ -87,7 +89,7 @@ public class Login extends Activity {
 							boolean success = json.optBoolean("success");
 							if(success){
 
-								Integer user_id = json.getInt("user_id");
+								Integer user_id = json.getInt("id");
 								String name = json.getString("name");
 								String email = json.getString("email");
 								String token = json.getString("auth_token");
@@ -110,15 +112,16 @@ public class Login extends Activity {
 								Toast.makeText(Login.this, "Wrong email or password", Toast.LENGTH_LONG).show();
 							}
 							
-							loading.dismiss();
 
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
 					}
+
+					loading.dismiss();
 				}
 
-
+				
 			}).execute();
 
 		}

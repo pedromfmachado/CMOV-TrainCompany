@@ -1,7 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvDeparture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_departure_station"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/sDeparture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvArrival"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_arrival_station"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/sArrival"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_date"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <DatePicker
+            android:id="@+id/dpDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_time"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TimePicker
+            android:id="@+id/tpTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btMakeReservation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:onClick="onClick"
+            android:text="@string/label_make_reservation" />
 
-</RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>
