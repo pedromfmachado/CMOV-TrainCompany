@@ -11,7 +11,6 @@ public class Reservation{
 	public String departureStation_name;
 	public String arrivalStation_name;
 
-	
 	public Reservation(Integer uuid, Integer User_id, String canceled, String date, Integer departureStation_id, Integer arrivalStation_id){
 		
 		this.uuid = uuid;
@@ -23,8 +22,6 @@ public class Reservation{
 		
 	}
 
-
-	public Reservation() {
-	}
+	public Reservation() {}
 
 }
