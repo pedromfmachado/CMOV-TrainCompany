@@ -36,6 +36,18 @@ public class MainMenu extends Activity {
 			startActivity(intent);
     		break;
     		
+    	case R.id.btMakeReservation:
+    		
+    		intent = new Intent(MainMenu.this, Reservations.class);
+    		startActivity(intent);
+    		break;
+    		
+    	case R.id.btAbout:
+    		
+    		intent = new Intent(MainMenu.this, About.class);
+    		startActivity(intent);
+    		break;
+    		
     	case R.id.btLogout:
     		Global.datasource.clearUsers();
     		intent = new Intent(MainMenu.this, Login.class);

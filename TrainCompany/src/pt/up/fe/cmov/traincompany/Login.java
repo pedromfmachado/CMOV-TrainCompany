@@ -95,7 +95,9 @@ public class Login extends Activity {
 								Global.datasource.createUser(name, email, token);
 								
 								Toast.makeText(Login.this, "Logged in successfully!", Toast.LENGTH_LONG).show();
-
+								
+								//TODO check if is an inspector and redirect to MainMenuInspector
+								
 								// Open Main Menu
 								Intent intent = new Intent(Login.this, MainMenu.class);
 								startActivity(intent);

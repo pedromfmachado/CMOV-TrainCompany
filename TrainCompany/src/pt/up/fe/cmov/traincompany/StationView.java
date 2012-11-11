@@ -17,7 +17,6 @@ public class StationView extends Activity{
 		Bundle bundle = getIntent().getExtras();
 		
 		String name = bundle.getString("name");
-		String id = bundle.getString("id");
 		
 		((TextView)findViewById(R.id.title)).setText(name);
 		

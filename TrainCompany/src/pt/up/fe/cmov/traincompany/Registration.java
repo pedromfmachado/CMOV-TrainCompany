@@ -73,6 +73,8 @@ public class Registration extends Activity {
 
 				if(password.equals(password_confirm)){
 
+					//TODO confirmation email
+					
 					loading = ProgressDialog.show(Registration.this, "", "Registering user...");
 					new AsyncPost(register_path, values, new ResponseCommand() {
 

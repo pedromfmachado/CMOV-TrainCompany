@@ -44,7 +44,7 @@
             android:layout_margin="20dp"
             android:layout_weight="0.5"
             android:onClick="onClick"
-            android:text="Make Reservation" />
+            android:text="@string/label_reserve" />
 
         <Button
             android:id="@+id/btAbout"
@@ -53,7 +53,7 @@
             android:layout_margin="20dp"
             android:layout_weight="0.5"
             android:onClick="onClick"
-            android:text="About" />
+            android:text="@string/label_about" />
 
     </TableRow>
 
