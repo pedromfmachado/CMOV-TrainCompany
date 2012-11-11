@@ -36,24 +36,24 @@
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btMakeReservation"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="0.5"
             android:onClick="onClick"
-            android:text="Button" />
-
+            android:text="Make Reservation" />
+
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btAbout"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="0.5"
             android:onClick="onClick"
-            android:text="Button" />
+            android:text="About" />
 
     </TableRow>
 
