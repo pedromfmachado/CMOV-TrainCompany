@@ -16,7 +16,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -57,6 +56,21 @@ public class Reservations extends Activity {
 			intent = new Intent(Reservations.this, MakeReservation.class);
     		startActivity(intent);
     		break;
+    		
+		case R.id.btLogout:
+			Global.datasource.clearUsers();
+			intent = new Intent(Reservations.this, Login.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			finish();
+			break;
+			
+		case R.id.btHome:
+			Intent i = new Intent(Reservations.this, MainMenu.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			finish();
+			break;
 
 		default:
 			break;

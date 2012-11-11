@@ -11,7 +11,9 @@ import Requests.AsyncGet;
 import Requests.ResponseCommand;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +89,32 @@ public class TripView extends Activity{
 
 			}
 		}).execute();
+	}
+	
+	public void onClick(View v) {
+		
+		Intent intent = null;
+
+		switch (v.getId()) {
+
+		case R.id.btLogout:
+			Global.datasource.clearUsers();
+			intent = new Intent(TripView.this, Login.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			finish();
+			break;
+
+		case R.id.btHome:
+			Intent i = new Intent(TripView.this, MainMenu.class);
+i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			finish();
+			break;
+
+		default:
+			break;
+		}
 	}
 	
 

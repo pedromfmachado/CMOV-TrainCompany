@@ -13,6 +13,7 @@ import Requests.AsyncPost;
 import Requests.ResponseCommand;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -47,9 +48,25 @@ public class GetTrips extends Activity {
 
 	public void onClick(View v) {
 
+		Intent intent = null;
 		switch (v.getId()) {
 		case R.id.btMakeReservation:
 			makeReservation();
+			break;
+			
+		case R.id.btLogout:
+			Global.datasource.clearUsers();
+			intent = new Intent(GetTrips.this, Login.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			finish();
+			break;
+			
+		case R.id.btHome:
+			Intent i = new Intent(GetTrips.this, MainMenu.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			finish();
 			break;
 
 		default:

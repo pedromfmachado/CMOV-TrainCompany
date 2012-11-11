@@ -101,4 +101,30 @@ public class Trips extends Activity{
 		}).execute();
 	}
 	
+	public void onClick(View v) {
+		
+		Intent intent = null;
+
+		switch (v.getId()) {
+
+		case R.id.btLogout:
+			Global.datasource.clearUsers();
+			intent = new Intent(Trips.this, Login.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			finish();
+			break;
+
+		case R.id.btHome:
+			Intent i = new Intent(Trips.this, MainMenu.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			finish();
+			break;
+
+		default:
+			break;
+		}
+	}
+	
 }

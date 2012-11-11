@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import Database.ReservationTrip;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,4 +56,30 @@ public class ReservationView extends Activity {
 		ListView list = (ListView) findViewById(R.id.list);
 		list.setAdapter(adapter);
     }
+    
+	public void onClick(View v) {
+		
+		Intent intent = null;
+
+		switch (v.getId()) {
+
+		case R.id.btLogout:
+			Global.datasource.clearUsers();
+			intent = new Intent(ReservationView.this, Login.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			finish();
+			break;
+
+		case R.id.btHome:
+			Intent i = new Intent(ReservationView.this, MainMenu.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
+			finish();
+			break;
+
+		default:
+			break;
+		}
+	}
 }

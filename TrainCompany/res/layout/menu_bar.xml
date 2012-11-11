@@ -3,19 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="horizontal" >
-
+
     <Button
         android:id="@+id/btHome"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="25dp"
-        android:background="@drawable/home_icon_style" />
-
+        android:background="@drawable/home_icon_style"
+        android:onClick="onClick" />
+
     <Button
         android:id="@+id/btLogout"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="25dp"
-        android:background="@drawable/logout_icon_style" />
+        android:background="@drawable/logout_icon_style"
+        android:onClick="onClick" />
 
 </LinearLayout>
