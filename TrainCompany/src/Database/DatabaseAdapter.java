@@ -157,10 +157,11 @@ public class DatabaseAdapter {
 		return database.insert("User", null, values);
 	}
 	
-	public User getUser(String email){
+	public User getUser(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		
-		Cursor c = database.rawQuery("SELECT User FROM User WHERE email = \"" + email +"\"", null);
+		Cursor c = database.rawQuery("SELECT * FROM User", null);
+		c.moveToFirst();
 		User u = new User(c.getInt(0),c.getString(1),c.getString(2),c.getString(3)); 
 		c.close();
 		return u;

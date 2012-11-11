@@ -130,6 +130,7 @@ public class GetTrips extends Activity {
 				Toast.makeText(GetTrips.this, "Undefined error", Toast.LENGTH_LONG).show();
 
 			}
+			
 		}).execute();
 	}
 
