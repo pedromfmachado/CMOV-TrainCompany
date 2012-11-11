@@ -112,11 +112,12 @@ public class DatabaseAdapter {
 
 	}
 	
-	public long createUser(String name, String email, String token){
+	public long createUser(Integer user_id, String name, String email, String token){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+		values.put("User_id", user_id);
 		values.put("name", name);
 		values.put("email", email);
 		values.put("token", token);
@@ -124,9 +125,10 @@ public class DatabaseAdapter {
 		return database.insert("User", null, values);
 	}
 	
-	public long updateUser(String name, String email, String token){
+	public long updateUser(Integer user_id, String name, String email, String token){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
+		values.put("User_id", user_id);
 		values.put("name", name);
 		values.put("email", email);
 		values.put("token", token);

@@ -87,12 +87,13 @@ public class Login extends Activity {
 							boolean success = json.optBoolean("success");
 							if(success){
 
+								Integer user_id = json.getInt("user_id");
 								String name = json.getString("name");
 								String email = json.getString("email");
 								String token = json.getString("auth_token");
 								
 								Global.datasource.clearUsers();
-								Global.datasource.createUser(name, email, token);
+								Global.datasource.createUser(user_id, name, email, token);
 								
 								Toast.makeText(Login.this, "Logged in successfully!", Toast.LENGTH_LONG).show();
 								
@@ -112,7 +113,6 @@ public class Login extends Activity {
 							loading.dismiss();
 
 						} catch (JSONException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
