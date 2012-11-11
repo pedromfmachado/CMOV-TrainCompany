@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		database.execSQL(DATABASE_CREATE_VERSION);
 		database.execSQL(DATABASE_CREATE_RESERVATION);
 		database.execSQL(DATABASE_CREATE_USER);
-		database.execSQL("DATABASE_CREATE_RESERVATIONTRIPS");
+		database.execSQL(DATABASE_CREATE_RESERVATIONTRIPS);
 
 		android.util.Log.d("debug", "database created!");
 	}

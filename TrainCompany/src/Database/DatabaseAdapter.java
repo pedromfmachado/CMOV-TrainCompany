@@ -105,10 +105,9 @@ public class DatabaseAdapter {
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		
 		Cursor c = database.rawQuery("SELECT Reservation FROM Reservation WHERE Reservation_id = \"" + Reservation_id +"\"", null);
-		//Reservation r = new Reservation(c.getInt(0),c.getInt(1), new Boolean(c.getString(2)), new Date(c.getString(3)),c.getInt(4), c.getInt(5));
+		Reservation r = new Reservation(c.getInt(0),c.getInt(1), c.getString(2), c.getString(3), c.getInt(4), c.getInt(5));
 		c.close();
-		//return r;
-		return new Reservation();
+		return r;
 	}
 	
 	public ArrayList<Reservation> getReservationsByUser(Integer Reservation_id){
