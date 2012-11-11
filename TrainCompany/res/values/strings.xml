@@ -32,6 +32,7 @@
     <string name="button_home">Home</string>
     <string name="button_nextreservation">New Reservation</string>
     <string name="label_line">Line</string>
+    <string name="label_email_confirm">Email Confirmation</string>
 
 
 </resources>
