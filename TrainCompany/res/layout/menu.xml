@@ -10,68 +10,71 @@
     <TableRow
         android:id="@+id/tableRow1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/btLines"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_weight="0.5"
-            android:onClick="onClick"
-            android:text="@string/label_lines" />
+        android:layout_height="wrap_content"
+        android:gravity="center" >
 
         <Button
-            android:id="@+id/btTrips"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:id="@+id/btLines"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_margin="20dp"
-            android:layout_weight="0.5"
-            android:onClick="onClick"
-            android:text="@string/label_trips" />
+            android:layout_weight="0"
+            android:background="@drawable/lines_icon_style"
+            android:onClick="onClick" />
+
+        <Button
+            android:id="@+id/btTrips"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="20dp"
+            android:layout_weight="0"
+            android:background="@drawable/trip_icon_style"
+            android:onClick="onClick" />
 
     </TableRow>
 
     <TableRow
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
         <Button
             android:id="@+id/btMakeReservation"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_margin="20dp"
-            android:layout_weight="0.5"
-            android:onClick="onClick"
-            android:text="@string/label_reserve" />
-
-        <Button
-            android:id="@+id/btAbout"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_weight="0.5"
-            android:onClick="onClick"
-            android:text="@string/label_about" />
+            android:layout_weight="0"
+            android:background="@drawable/reservation_icon_style"
+            android:onClick="onClick" />
 
     </TableRow>
-
+
     <TableRow
         android:id="@+id/tableRow3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:weightSum="1.0" >
-
+
         <Button
             android:id="@+id/btLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="20dp"
-            android:layout_weight="0.33"
-            android:onClick="onClick"
-            android:text="@string/button_logout" />
+            android:layout_weight="0"
+            android:background="@drawable/logout_icon_style"
+            android:onClick="onClick" />
+
+        <Button
+            android:id="@+id/btAbout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:layout_weight="0"
+            android:background="@drawable/about_icon_style"
+            android:onClick="onClick" />
 
     </TableRow>
 
