@@ -25,7 +25,6 @@ import android.net.NetworkInfo;
 
 public class DatabaseAdapter {
 
-	//private static SQLiteDatabase database;
 	private static DatabaseHelper dbHelper;
 
 
@@ -101,7 +100,7 @@ public class DatabaseAdapter {
 	
 	/**
 	 * @param reservation_id
-	 * @return ArrayList of ReservationTrips with the id passed by argument
+	 * @return ArrayList of ReservationTrips with the Reservation_id passed as argument
 	 */
 	public ArrayList<ReservationTrip> getReservationTrip(int reservation_id){
 		
@@ -199,7 +198,7 @@ public class DatabaseAdapter {
 		
 		Cursor c = database.rawQuery("SELECT * FROM Reservations WHERE Reservation_id = \"" + Reservation_id +"\"", null);
 		c.moveToFirst();
-		Reservation r = new Reservation(c.getInt(0),c.getInt(1), c.getString(2), c.getString(3), c.getInt(4), c.getInt(5));
+		Reservation r = new Reservation(c.getInt(0),c.getString(1),c.getInt(2), c.getString(3), c.getString(4), c.getInt(5), c.getInt(6));
 		c.close();
 		return r;
 	}
@@ -226,7 +225,7 @@ public class DatabaseAdapter {
 			try {
 				Reservation reservation = new Reservation();
 				reservation.id = reservationCursor.getInt(reservationCursor.getColumnIndex("Reservation_id"));
-				reservation.uuid = reservationCursor.getInt(reservationCursor.getColumnIndex("uuid"));
+				reservation.uuid = reservationCursor.getString(reservationCursor.getColumnIndex("uuid"));
 				reservation.user_id = reservationCursor.getInt(reservationCursor.getColumnIndex("User_id"));
 				reservation.canceled = reservationCursor.getString(reservationCursor.getColumnIndex("canceled"));
 				reservation.date = reservationCursor.getString(reservationCursor.getColumnIndex("date"));
@@ -246,7 +245,44 @@ public class DatabaseAdapter {
 		reservationCursor.close();
 
 		return ret;
+	}
+	
+	/**
+	 * @return ArrayList of Reservations
+	 */
+	public ArrayList<Reservation> getReservations(){
+		
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM Reservations";
+		Cursor reservationCursor = database.rawQuery(query, null);
 
+		reservationCursor.moveToFirst();
+		if(reservationCursor.getCount() == 0){
+			reservationCursor.close();
+
+			return new ArrayList<Reservation>();
+		}
+		ArrayList<Reservation> result = new ArrayList<Reservation>();
+		while(!reservationCursor.isAfterLast()){
+			try {
+				Reservation r = new Reservation();
+				r.id = reservationCursor.getInt(reservationCursor.getColumnIndex("Reservation_id"));
+				r.uuid = reservationCursor.getString(reservationCursor.getColumnIndex("uuid"));
+				r.user_id = reservationCursor.getInt(reservationCursor.getColumnIndex("User_id"));
+				r.canceled = reservationCursor.getString(reservationCursor.getColumnIndex("canceled"));
+				r.date = reservationCursor.getString(reservationCursor.getColumnIndex("date"));
+				r.departureStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("departureStation_id"));
+				r.arrivalStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("arrivalStation_id"));
+				result.add(r);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			reservationCursor.moveToNext();
+		}
+
+		reservationCursor.close();
+		
+		return result;
 	}
 	
 	/**

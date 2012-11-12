@@ -3,7 +3,7 @@ package Structures;
 public class Reservation{
 
 	public Integer id;
-	public Integer uuid;
+	public String uuid;
 	public Integer user_id;
 	public String canceled;
 	public String date;
@@ -11,9 +11,11 @@ public class Reservation{
 	public Integer arrivalStation_id;
 	public String departureStation_name;
 	public String arrivalStation_name;
+	
 
-	public Reservation(Integer uuid, Integer User_id, String canceled, String date, Integer departureStation_id, Integer arrivalStation_id){
+	public Reservation(Integer id, String uuid, Integer User_id, String canceled, String date, Integer departureStation_id, Integer arrivalStation_id){
 		
+		this.id = id;
 		this.uuid = uuid;
 		this.user_id = User_id;
 		this.canceled = canceled;
