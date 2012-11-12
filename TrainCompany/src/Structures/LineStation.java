@@ -1,4 +1,4 @@
-package Database;
+package Structures;
 
 public class LineStation {
 

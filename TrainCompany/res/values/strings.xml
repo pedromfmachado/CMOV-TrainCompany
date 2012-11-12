@@ -43,5 +43,6 @@
     <string name="title_activity_reservations">Reservations</string>
     <string name="label_new_reservation">New Reservation</string>
     <string name="title_activity_reservation_view">ReservationView</string>
+    <string name="message_login_success">Login successful!</string>
 
 </resources>

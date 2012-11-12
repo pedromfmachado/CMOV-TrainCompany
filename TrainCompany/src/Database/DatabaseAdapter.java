@@ -7,6 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import Structures.Reservation;
+import Structures.ReservationTrip;
+import Structures.User;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

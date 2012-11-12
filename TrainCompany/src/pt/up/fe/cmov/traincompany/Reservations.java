@@ -7,11 +7,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Database.Reservation;
-import Database.ReservationTrip;
-import Database.User;
 import Requests.AsyncGet;
 import Requests.ResponseCommand;
+import Structures.Reservation;
+import Structures.ReservationTrip;
+import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
