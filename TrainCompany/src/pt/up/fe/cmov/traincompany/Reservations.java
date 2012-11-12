@@ -37,7 +37,6 @@ public class Reservations extends Activity {
         setContentView(R.layout.reservations);
         
         getData();
-        populateDb();
     }
 
     @Override
@@ -173,12 +172,15 @@ public class Reservations extends Activity {
 					e.printStackTrace();
 				}
 
+		        populateDb();
 				loading.dismiss();
 
 			}
 
 			public void onError(ERROR_TYPE error) {
 
+
+		        populateDb();
 				loading.dismiss();
 				Toast.makeText(Reservations.this, "Undefined error", Toast.LENGTH_LONG).show();
 			}

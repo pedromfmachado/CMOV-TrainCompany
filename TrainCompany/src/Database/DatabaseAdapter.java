@@ -258,13 +258,13 @@ public class DatabaseAdapter {
 	}
 	
 	public void clearUsers(){
-		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		database.delete("User", null, null);
 		
 	}
 	
 	public void clearReservations(){
-		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		database.delete("Reservation", null, null);
 		database.delete("ReservationTrips", null, null);
 		

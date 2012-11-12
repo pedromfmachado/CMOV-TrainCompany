@@ -1,5 +1,6 @@
 package pt.up.fe.cmov.traincompany;
 
+import Database.DatabaseAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ public class MainMenu extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+       
     }
     
     @Override
