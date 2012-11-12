@@ -53,7 +53,7 @@ public class GetTrips extends Activity {
 		case R.id.btMakeReservation:
 			makeReservation();
 			break;
-			
+
 		case R.id.btLogout:
 			Global.datasource.clearUsers();
 			intent = new Intent(GetTrips.this, Login.class);
@@ -61,7 +61,7 @@ public class GetTrips extends Activity {
 			startActivity(intent);
 			finish();
 			break;
-			
+
 		case R.id.btHome:
 			Intent i = new Intent(GetTrips.this, MainMenu.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -92,7 +92,7 @@ public class GetTrips extends Activity {
 		Log.i("trips", date + " - " + arrival_id + " - " + departure_id + " - " + time);
 
 		if(values.containsValue("")){
-			
+
 			loading.dismiss();
 			Toast.makeText(GetTrips.this, "Every field must be filled", Toast.LENGTH_LONG).show();
 			finish();
@@ -116,6 +116,13 @@ public class GetTrips extends Activity {
 
 					JSONArray json = new JSONArray((String)results[0]);
 
+					if(json.length() == 0){
+
+						loading.dismiss();
+						Toast.makeText(GetTrips.this, "There are no trips in this direction", Toast.LENGTH_LONG).show();
+						finish();
+						return;
+					}
 
 					for(int i = 0; i < json.length(); i++){
 
@@ -152,12 +159,12 @@ public class GetTrips extends Activity {
 				Toast.makeText(GetTrips.this, "Undefined error", Toast.LENGTH_LONG).show();
 
 			}
-			
+
 		}).execute();
 	}
 
 	public void makeReservation(){
-		
+
 		String server = getString(R.string.server_address)+"reservations";
 
 		String departure_id = bundle.getString("departure_id");

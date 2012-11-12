@@ -40,7 +40,10 @@ public class Stations extends Activity{
 
 				if(results[0] == null || ((String)results[0]).equals("")){
 
+
+					loading.dismiss();
 					Toast.makeText(Stations.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
+					finish();
 					return;
 				}
 
@@ -56,13 +59,15 @@ public class Stations extends Activity{
 						descriptions.add("");
 					}
 					
-					loading.dismiss();
 					
 				}
 				catch(JSONException e){
 					
 					e.printStackTrace();
 				}
+				
+
+				loading.dismiss();
 
 			}
 
@@ -70,7 +75,7 @@ public class Stations extends Activity{
 
 				loading.dismiss();
 				Toast.makeText(Stations.this, "Undefined error", Toast.LENGTH_LONG).show();
-
+				finish();
 			}
 		}).execute();
 	}

@@ -46,6 +46,7 @@ public class Trips extends Activity{
 
 					loading.dismiss();
 					Toast.makeText(Trips.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
+					finish();
 					return;
 				}
 
@@ -96,7 +97,7 @@ public class Trips extends Activity{
 
 				loading.dismiss();
 				Toast.makeText(Trips.this, "Undefined error", Toast.LENGTH_LONG).show();
-
+				finish();
 			}
 		}).execute();
 	}

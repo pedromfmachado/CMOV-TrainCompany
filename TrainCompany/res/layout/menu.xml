@@ -4,8 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
     android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        layout="@layout/main_menu_bar" />
 
     <TableRow
         android:id="@+id/tableRow1"
@@ -57,24 +62,6 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:weightSum="1.0" >
-
-        <Button
-            android:id="@+id/btLogout"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:layout_weight="0"
-            android:background="@drawable/logout_icon_style"
-            android:onClick="onClick" />
-
-        <Button
-            android:id="@+id/btAbout"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:layout_weight="0"
-            android:background="@drawable/about_icon_style"
-            android:onClick="onClick" />
 
     </TableRow>
 

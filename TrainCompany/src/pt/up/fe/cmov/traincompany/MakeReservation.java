@@ -56,13 +56,14 @@ public class MakeReservation extends Activity {
 
 					loading.dismiss();
 					Toast.makeText(MakeReservation.this, "Connection problems, verify your network signal", Toast.LENGTH_LONG).show();
+					finish();
 					return;
 				}
 
 				try{
 
 					JSONArray json = new JSONArray((String)results[0]);
-
+					
 					ArrayAdapter <CharSequence> adapter =
 							new ArrayAdapter <CharSequence> (MakeReservation.this, android.R.layout.simple_spinner_item );
 					adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -94,6 +95,7 @@ public class MakeReservation extends Activity {
 
 				loading.dismiss();
 				Toast.makeText(MakeReservation.this, "Undefined error", Toast.LENGTH_LONG).show();
+				finish();
 			}
 		}).execute();
 	}
