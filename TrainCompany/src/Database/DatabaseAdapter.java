@@ -429,7 +429,7 @@ public class DatabaseAdapter {
 		values.put("Station_id", Station_id);
 		values.put("name", name);
 
-		return database.insert("Lines", null, values);
+		return database.insert("Stations", null, values);
 	}
 	
 	/**
@@ -460,6 +460,35 @@ public class DatabaseAdapter {
 		Station s = new Station(c.getInt(0),c.getString(1));
 		c.close();
 		return s;
+	}
+	
+	public ArrayList<Station> getStations(int line_id){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		
+		String query = "SELECT * FROM Stations WHERE Line_id = \"" + line_id + "\"";
+		Cursor stationsCursor = database.rawQuery(query, null);
+
+		stationsCursor.moveToFirst();
+		if(stationsCursor.getCount() == 0){
+			stationsCursor.close();
+
+			return new ArrayList<Station>();
+		}
+		ArrayList<Station> result = new ArrayList<Station>();
+		while(!stationsCursor.isAfterLast()){
+			try {
+				Station s = new Station();
+				s.id = stationsCursor.getInt(stationsCursor.getColumnIndex("id"));
+				s.name = stationsCursor.getString(stationsCursor.getColumnIndex("name"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			stationsCursor.moveToNext();
+		}
+
+		stationsCursor.close();
+		
+		return result;
 	}
 	
 	/**
@@ -568,7 +597,7 @@ public class DatabaseAdapter {
 		values.put("email", email);
 		values.put("token", token);
 		values.put("role", role);
-		return database.insert("User", null, values);
+		return database.insert("Users", null, values);
 	}
 	
 	/**
@@ -587,7 +616,7 @@ public class DatabaseAdapter {
 		values.put("email", email);
 		values.put("token", token);
 		values.put("role", role);
-		return database.update("User", values, "token = \""+ token + "\"", null);
+		return database.update("Users", values, "token = \""+ token + "\"", null);
 	}
 	
 	/**
@@ -596,7 +625,7 @@ public class DatabaseAdapter {
 	public User getUser(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		
-		Cursor c = database.rawQuery("SELECT * FROM User", null);
+		Cursor c = database.rawQuery("SELECT * FROM Users", null);
 		c.moveToFirst();
 		User u = new User();
 		u.email = c.getString(c.getColumnIndex("email"));
@@ -614,7 +643,7 @@ public class DatabaseAdapter {
 	 */
 	public boolean checkUserOnDB(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
-		Cursor c = database.rawQuery("SELECT * FROM User", null);
+		Cursor c = database.rawQuery("SELECT * FROM Users", null);
 		return c.getCount() > 0;
 	}
 	
@@ -623,7 +652,7 @@ public class DatabaseAdapter {
 	 */
 	public String getToken(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
-		Cursor c = database.rawQuery("SELECT token FROM User", null);
+		Cursor c = database.rawQuery("SELECT token FROM Users", null);
 		c.moveToFirst();
 		String ret = c.getString(0); 
 		c.close();

@@ -92,6 +92,7 @@ public class User extends Structure {
 
 					} catch (JSONException e) {
 						
+						e.printStackTrace();
 						errors.add("JSON Response Error");
 					}
 				}

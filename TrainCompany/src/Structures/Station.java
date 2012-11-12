@@ -33,7 +33,7 @@ public class Station extends Structure{
 		this.name = name;
 	}
 	
-	Station(){
+	public Station(){
 		
 		super();
 	}
