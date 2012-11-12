@@ -107,7 +107,7 @@ public class GetTrips extends Activity {
 				if(results[0] == null || ((String)results[0]).equals("")){
 
 					loading.dismiss();
-					Toast.makeText(GetTrips.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
+					Toast.makeText(GetTrips.this, "Connection problems, verify your network signal", Toast.LENGTH_LONG).show();
 					finish();
 					return;
 				}
@@ -200,7 +200,7 @@ public class GetTrips extends Activity {
 					if(results[0] == null || ((String)results[0]).equals("")){
 
 						loading.dismiss();
-						Toast.makeText(GetTrips.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
+						Toast.makeText(GetTrips.this, "Connection problems, verify your network signal", Toast.LENGTH_LONG).show();
 						return;
 					}
 

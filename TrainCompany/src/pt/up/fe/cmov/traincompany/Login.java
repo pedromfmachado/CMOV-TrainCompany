@@ -44,11 +44,11 @@ public class Login extends Activity {
 			String password = ((EditText)findViewById(R.id.etPassword)).getText().toString();
 			String path = getString(R.string.server_address)+"users/sign_in";
 			
-			User u = new User();
 			final ProgressDialog loading = ProgressDialog.show(Login.this, "", "Loging in...");
 			User.login(path, email, password, Login.this, loading);
 			
 			
+
 		}
 	};
 
