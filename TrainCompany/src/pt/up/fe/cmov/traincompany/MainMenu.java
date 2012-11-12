@@ -1,6 +1,5 @@
 package pt.up.fe.cmov.traincompany;
 
-import Database.DatabaseAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
