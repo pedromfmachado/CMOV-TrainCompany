@@ -124,7 +124,7 @@ public class DatabaseAdapter {
 		values.put("departureStation_name", departureStation_name);
 		values.put("arrivalStation_name", arrivalStation_name);
 
-		return database.insert("Reservation", null, values);
+		return database.insert("Reservations", null, values);
 	}
 	
 	public long updateReservation(Integer Reservation_id, Integer uuid, String User_id, String canceled,
@@ -143,7 +143,7 @@ public class DatabaseAdapter {
 		values.put("departureStation_name", departureStation_name);
 		values.put("arrivalStation_name", arrivalStation_name);
 		
-		return database.update("Reservation", values, null, null);
+		return database.update("Reservations", values, null, null);
 
 	}
 	
@@ -157,6 +157,11 @@ public class DatabaseAdapter {
 		return r;
 	}
 	
+	/**
+	 * returns the list of reservations by User
+	 * @param user_id
+	 * @return arrayList of Reservations
+	 */
 	public ArrayList<Reservation> getReservationsByUser(Integer user_id){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		String query = "SELECT * FROM Reservation WHERE User_id = " + user_id;
@@ -196,6 +201,46 @@ public class DatabaseAdapter {
 		return ret;
 
 	}
+	
+	/**
+	 * creates a Train
+	 * @param Train_id
+	 * @param maximumCapacity
+	 * @param velocity
+	 * @return
+	 */
+	public long createTrain(Integer Train_id, Integer maximumCapacity, Float velocity){
+
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("Train_id", Train_id);
+		values.put("maximumCapacity", maximumCapacity);
+		values.put("velocity", velocity);
+
+		return database.insert("Trains", null, values);
+	}
+	
+	/**
+	 * updates a Train
+	 * @param Train_id
+	 * @param maximumCapacity
+	 * @param velocity
+	 * @return
+	 */
+	public long updateTrain(Integer Train_id, Integer maximumCapacity, Float velocity){
+		
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("Train_id", Train_id);
+		values.put("maximumCapacity", maximumCapacity);
+		values.put("velocity", velocity);
+		
+		return database.update("Trains", values, null, null);
+
+	}
+	
+	
 	
 	public long createUser(Integer user_id, String name, String email, String token){
 
