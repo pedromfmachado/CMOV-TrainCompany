@@ -393,6 +393,35 @@ public class DatabaseAdapter {
 		return s;
 	}
 	
+	public ArrayList<Station> getStations(int line_id){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		
+		String query = "SELECT * FROM Stations WHERE Line_id = \"" + line_id + "\"";
+		Cursor stationsCursor = database.rawQuery(query, null);
+
+		stationsCursor.moveToFirst();
+		if(stationsCursor.getCount() == 0){
+			stationsCursor.close();
+
+			return new ArrayList<Station>();
+		}
+		ArrayList<Station> result = new ArrayList<Station>();
+		while(!stationsCursor.isAfterLast()){
+			try {
+				Station s = new Station();
+				s.id = stationsCursor.getInt(stationsCursor.getColumnIndex("id"));
+				s.name = stationsCursor.getString(stationsCursor.getColumnIndex("name"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			stationsCursor.moveToNext();
+		}
+
+		stationsCursor.close();
+		
+		return result;
+	}
+	
 	/**
 	 * creates a LineStation
 	 * @param order

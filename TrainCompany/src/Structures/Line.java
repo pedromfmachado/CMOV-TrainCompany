@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pt.up.fe.cmov.traincompany.Global;
 import pt.up.fe.cmov.traincompany.LineView;
 import pt.up.fe.cmov.traincompany.ListAdapter;
 import pt.up.fe.cmov.traincompany.R;
@@ -159,5 +160,13 @@ public class Line extends Structure {
 				printErrors(activity, loading, finish_on_success, finish_on_error, null);
 			}
 		}).execute();
+	}
+	
+	private void populateLines(){
+		
+	}
+	
+	private void populateLineStations(){
+		
 	}
 }
