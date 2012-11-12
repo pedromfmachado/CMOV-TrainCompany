@@ -116,11 +116,13 @@ public class Line extends Structure {
 						
 						JSONObject obj = json.getJSONObject(i);
 						String name = obj.getString("name");
-						String id = obj.getString("id");
+						int id = obj.getInt("id");
 						
 						names.add(name);
-						ids.add(id);
+						ids.add(""+id);
 						descriptions.add("");
+						
+						Global.datasource.createStation(id, name);
 					}
 					
 					final ArrayList<String> names_f = new ArrayList<String>(names);

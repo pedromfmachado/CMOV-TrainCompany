@@ -360,7 +360,7 @@ public class DatabaseAdapter {
 		values.put("Station_id", Station_id);
 		values.put("name", name);
 
-		return database.insert("Lines", null, values);
+		return database.insert("Stations", null, values);
 	}
 	
 	/**
@@ -528,7 +528,7 @@ public class DatabaseAdapter {
 		values.put("email", email);
 		values.put("token", token);
 		values.put("role", role);
-		return database.insert("User", null, values);
+		return database.insert("Users", null, values);
 	}
 	
 	/**
@@ -547,7 +547,7 @@ public class DatabaseAdapter {
 		values.put("email", email);
 		values.put("token", token);
 		values.put("role", role);
-		return database.update("User", values, "token = \""+ token + "\"", null);
+		return database.update("Users", values, "token = \""+ token + "\"", null);
 	}
 	
 	/**
@@ -556,7 +556,7 @@ public class DatabaseAdapter {
 	public User getUser(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		
-		Cursor c = database.rawQuery("SELECT * FROM User", null);
+		Cursor c = database.rawQuery("SELECT * FROM Users", null);
 		c.moveToFirst();
 		User u = new User();
 		u.email = c.getString(c.getColumnIndex("email"));
@@ -574,7 +574,7 @@ public class DatabaseAdapter {
 	 */
 	public boolean checkUserOnDB(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
-		Cursor c = database.rawQuery("SELECT * FROM User", null);
+		Cursor c = database.rawQuery("SELECT * FROM Users", null);
 		return c.getCount() > 0;
 	}
 	
@@ -583,7 +583,7 @@ public class DatabaseAdapter {
 	 */
 	public String getToken(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
-		Cursor c = database.rawQuery("SELECT token FROM User", null);
+		Cursor c = database.rawQuery("SELECT token FROM Users", null);
 		c.moveToFirst();
 		String ret = c.getString(0); 
 		c.close();
