@@ -28,7 +28,7 @@ public class Station extends Structure{
 	private static ArrayList<String> descriptions = new ArrayList<String>();
 	private static ArrayList<String> ids = new ArrayList<String>();
 	
-	Station(Integer Station_id, String name){
+	public Station(Integer Station_id, String name){
 		this.id = Station_id;
 		this.name = name;
 	}

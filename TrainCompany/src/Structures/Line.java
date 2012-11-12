@@ -25,7 +25,7 @@ public class Line extends Structure {
 	public Integer id;
 	public String name;
 	
-	Line(Integer Line_id, String name){
+	public Line(Integer Line_id, String name){
 		this.id = Line_id;
 		this.name = name;
 	}

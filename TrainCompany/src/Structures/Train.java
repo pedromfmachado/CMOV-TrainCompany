@@ -7,7 +7,7 @@ public class Train {
 	public Float velocity;
 	
 	
-	Train(Integer Train_id, Integer maximumCapacity, Float velocity){
+	public Train(Integer Train_id, Integer maximumCapacity, Float velocity){
 		this.Train_id = Train_id;
 		this.maximumCapacity = maximumCapacity;
 		this.velocity = velocity;
