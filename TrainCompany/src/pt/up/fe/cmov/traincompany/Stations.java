@@ -1,20 +1,14 @@
 package pt.up.fe.cmov.traincompany;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import Requests.AsyncGet;
-import Requests.ResponseCommand;
+import Structures.Station;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Stations extends Activity{
 
@@ -34,50 +28,8 @@ public class Stations extends Activity{
 		String server = getString(R.string.server_address) + "stations";
 
 		loading = ProgressDialog.show(Stations.this, "", "Loading stations");
-		new AsyncGet(server, new HashMap<String,String>(), new ResponseCommand() {
-
-			public void onResultReceived(Object... results) {
-
-				if(results[0] == null || ((String)results[0]).equals("")){
-
-
-					loading.dismiss();
-					Toast.makeText(Stations.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
-					finish();
-					return;
-				}
-
-				try{
-					
-					JSONArray json = new JSONArray((String)results[0]);
-
-					
-					for(int i = 0; i < json.length(); i++){
-
-						names.add(json.getJSONObject(i).getString("name"));
-						ids.add(json.getJSONObject(i).getString("id"));
-						descriptions.add("");
-					}
-					
-					
-				}
-				catch(JSONException e){
-					
-					e.printStackTrace();
-				}
-				
-
-				loading.dismiss();
-
-			}
-
-			public void onError(ERROR_TYPE error) {
-
-				loading.dismiss();
-				Toast.makeText(Stations.this, "Undefined error", Toast.LENGTH_LONG).show();
-				finish();
-			}
-		}).execute();
+		Station.getStations(server, this, loading, R.id.list, false, true);
+		
 	}
 	
 	public void onClick(View v) {

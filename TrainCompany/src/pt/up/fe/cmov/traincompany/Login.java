@@ -45,7 +45,7 @@ public class Login extends Activity {
 			String path = getString(R.string.server_address)+"users/sign_in";
 			
 			final ProgressDialog loading = ProgressDialog.show(Login.this, "", "Loging in...");
-			User.login(path, email, password, Login.this, loading);
+			User.login(path, email, password, Login.this, loading, true, false);
 			
 			
 

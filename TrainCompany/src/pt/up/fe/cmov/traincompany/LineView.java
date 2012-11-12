@@ -1,22 +1,14 @@
 package pt.up.fe.cmov.traincompany;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import Requests.AsyncGet;
-import Requests.ResponseCommand;
+import Structures.Line;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class LineView extends Activity{
 
@@ -40,50 +32,9 @@ public class LineView extends Activity{
 
 		String server = getString(R.string.server_address) + "lines/" + id;
 
-		loading = ProgressDialog.show(LineView.this, "", "Loading lines " + name);
-		new AsyncGet(server, new HashMap<String,String>(), new ResponseCommand() {
-
-			public void onResultReceived(Object... results) {
-
-				if(results[0] == null || ((String)results[0]).equals("")){
-
-					Toast.makeText(LineView.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
-					return;
-				}
-
-				try{
-					
-					JSONObject json = new JSONObject((String)results[0]);
-					JSONArray jsonArray = json.getJSONArray("stations");
-
-					for(int i = 0; i < jsonArray.length(); i++){
-
-						nomes.add(jsonArray.getJSONObject(i).getString("name"));
-						ids.add(jsonArray.getJSONObject(i).getString("id"));
-						descriptions.add("");
-					}
-					
-					ListAdapter adapter = new ListAdapter(LineView.this, nomes, descriptions);
-
-					ListView list = (ListView) findViewById(R.id.list);
-					list.setAdapter(adapter);
-					
-				}
-				catch(JSONException e){
-					
-					e.printStackTrace();
-				}
-
-				loading.dismiss();
-			}
-
-			public void onError(ERROR_TYPE error) {
-
-				loading.dismiss();
-				Toast.makeText(LineView.this, "Undefined error", Toast.LENGTH_LONG).show();
-
-			}
-		}).execute();
+		loading = ProgressDialog.show(LineView.this, "", "Loading line: " + name);
+		Line.getLineStations(server, this, loading, R.id.list, false, true);
+		
 	}
 	
 	public void onClick(View v) {
