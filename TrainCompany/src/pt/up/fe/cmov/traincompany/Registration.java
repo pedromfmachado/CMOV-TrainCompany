@@ -96,8 +96,7 @@ public class Registration extends Activity {
 				public void onError(ERROR_TYPE error) {
 
 					loading.dismiss();
-					UI.showErrorDialog(Registration.this,
-							R.string.message_connection_error, R.string.button_ok);
+					UI.showErrorDialog(Registration.this, R.string.message_connection_error, R.string.button_ok);
 				}
 
 				public void onResultReceived(Object... results) {

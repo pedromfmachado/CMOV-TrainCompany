@@ -47,7 +47,9 @@ public class TripView extends Activity{
 
 				if(results[0] == null || ((String)results[0]).equals("")){
 
+					loading.dismiss();
 					Toast.makeText(TripView.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
+					finish();
 					return;
 				}
 
@@ -86,7 +88,7 @@ public class TripView extends Activity{
 
 				loading.dismiss();
 				Toast.makeText(TripView.this, "Undefined error", Toast.LENGTH_LONG).show();
-
+				finish();
 			}
 		}).execute();
 	}
