@@ -12,6 +12,7 @@ import Structures.Reservation;
 import Structures.ReservationTrip;
 import Structures.Station;
 import Structures.Train;
+import Structures.Trip;
 import Structures.TripType;
 import Structures.User;
 import android.content.ContentValues;
@@ -248,16 +249,72 @@ public class DatabaseAdapter {
 
 	}
 	
-	public long createTrip(Integer Trip_id, Integer  Integer TripType_id){
+	/**
+	 * creates a Trip
+	 * @param Trip_id
+	 * @param beginTime
+	 * @param Train_id
+	 * @param departureStation_id
+	 * @param arrivalStation_id
+	 * @param Line_id
+	 * @param TripType_id
+	 * @return
+	 */
+	public long createTrip(Integer Trip_id, String beginTime, Integer Train_id, Integer departureStation_id, Integer arrivalStation_id, Integer Line_id, Integer TripType_id){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+		values.put("Trip_id", Trip_id);
+		values.put("beginTime", beginTime);
 		values.put("Train_id", Train_id);
-		values.put("maximumCapacity", maximumCapacity);
-		values.put("velocity", velocity);
+		values.put("departureStation_id", departureStation_id);
+		values.put("arrivalStation_id", arrivalStation_id);
+		values.put("Line_id", Line_id);
+		values.put("TripType_id", TripType_id);		
 
-		return database.insert("Trains", null, values);
+		return database.insert("Trips", null, values);
+	}
+	
+	/**
+	 * updates a Trip
+	 * @param Trip_id
+	 * @param beginTime
+	 * @param Train_id
+	 * @param departureStation_id
+	 * @param arrivalStation_id
+	 * @param Line_id
+	 * @param TripType_id
+	 * @return
+	 */
+	public long updateTrip(Integer Trip_id, String beginTime, Integer Train_id, Integer departureStation_id, Integer arrivalStation_id, Integer Line_id, Integer TripType_id){
+
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("Trip_id", Trip_id);
+		values.put("beginTime", beginTime);
+		values.put("Train_id", Train_id);
+		values.put("departureStation_id", departureStation_id);
+		values.put("arrivalStation_id", arrivalStation_id);
+		values.put("Line_id", Line_id);
+		values.put("TripType_id", TripType_id);		
+
+		return database.update("Trips", values, null, null);
+	}
+	
+	/**
+	 * @param Trip_id
+	 * @return the Trip with the ID passed as argument
+	 */
+	public Trip getTrip(Integer Trip_id){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		
+		Cursor c = database.rawQuery("SELECT * FROM Trips WHERE Trip_id = \"" + Trip_id +"\"", null);
+		c.moveToFirst();
+		Trip t = new Trip(c.getInt(0), c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4), c.getInt(5), c.getInt(6));
+		c.close();
+		return t;
 	}
 	
 	/**
