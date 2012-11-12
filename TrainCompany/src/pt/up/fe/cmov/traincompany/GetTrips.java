@@ -7,10 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Database.User;
 import Requests.AsyncGet;
 import Requests.AsyncPost;
 import Requests.ResponseCommand;
+import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;

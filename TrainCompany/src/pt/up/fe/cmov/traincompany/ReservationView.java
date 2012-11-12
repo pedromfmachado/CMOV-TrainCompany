@@ -2,7 +2,7 @@ package pt.up.fe.cmov.traincompany;
 
 import java.util.ArrayList;
 
-import Database.ReservationTrip;
+import Structures.ReservationTrip;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
