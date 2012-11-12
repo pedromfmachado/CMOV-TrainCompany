@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import Structures.Line;
+import Structures.LineStation;
 import Structures.Reservation;
 import Structures.ReservationTrip;
 import Structures.Station;
@@ -106,6 +107,42 @@ public class DatabaseAdapter {
 		
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		String query = "SELECT * FROM ReservationTrips WHERE Reservation_id = " + reservation_id;
+		Cursor reservationCursor = database.rawQuery(query, null);
+
+		reservationCursor.moveToFirst();
+		if(reservationCursor.getCount() == 0){
+			reservationCursor.close();
+
+			return new ArrayList<ReservationTrip>();
+		}
+		ArrayList<ReservationTrip> result = new ArrayList<ReservationTrip>();
+		while(!reservationCursor.isAfterLast()){
+			try {
+				ReservationTrip r = new ReservationTrip();
+				r.departureName = reservationCursor.getString(reservationCursor.getColumnIndex("departureStation_name"));
+				r.arrivalName = reservationCursor.getString(reservationCursor.getColumnIndex("arrivalStation_name"));
+				r.time = reservationCursor.getString(reservationCursor.getColumnIndex("time"));
+				r.reservation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("Reservation_id"));
+				r.trip_id = reservationCursor.getInt(reservationCursor.getColumnIndex("Trip_id"));
+				result.add(r);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			reservationCursor.moveToNext();
+		}
+
+		reservationCursor.close();
+		
+		return result;
+	}
+	
+	/**
+	 * @return ArrayList of ReservationTrips
+	 */
+	public ArrayList<ReservationTrip> getReservationTrips(){
+		
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM ReservationTrips";
 		Cursor reservationCursor = database.rawQuery(query, null);
 
 		reservationCursor.moveToFirst();
@@ -354,6 +391,44 @@ public class DatabaseAdapter {
 	}
 	
 	/**
+	 * @return the trips of the DB
+	 */
+	public ArrayList<Trip> getTrips(){
+		
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM Trips";
+		Cursor tripCursor = database.rawQuery(query, null);
+
+		tripCursor.moveToFirst();
+		if(tripCursor.getCount() == 0){
+			tripCursor.close();
+
+			return new ArrayList<Trip>();
+		}
+		ArrayList<Trip> result = new ArrayList<Trip>();
+		while(!tripCursor.isAfterLast()){
+			try {
+				Trip t = new Trip();
+				t.Trip_id = tripCursor.getInt(tripCursor.getColumnIndex("Trip_id"));
+				t.beginTime = tripCursor.getString(tripCursor.getColumnIndex("beginTime"));
+				t.Train_id = tripCursor.getInt(tripCursor.getColumnIndex("Train_id"));
+				t.departureStation_id = tripCursor.getInt(tripCursor.getColumnIndex("departureStation_id"));
+				t.arrivalStation_id = tripCursor.getInt(tripCursor.getColumnIndex("arrivalStation_id"));
+				t.Line_id = tripCursor.getInt(tripCursor.getColumnIndex("Line_id"));
+				t.TripType_id = tripCursor.getInt(tripCursor.getColumnIndex("TripType_id"));
+				result.add(t);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			tripCursor.moveToNext();
+		}
+
+		tripCursor.close();
+		
+		return result;
+	}
+	
+	/**
 	 * creates a Train
 	 * @param Train_id
 	 * @param maximumCapacity
@@ -405,6 +480,40 @@ public class DatabaseAdapter {
 	}	
 	
 	/**
+	 * @return the trains of the database
+	 */
+	public ArrayList<Train> getTrains(){
+		
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM Trains";
+		Cursor trainCursor = database.rawQuery(query, null);
+
+		trainCursor.moveToFirst();
+		if(trainCursor.getCount() == 0){
+			trainCursor.close();
+
+			return new ArrayList<Train>();
+		}
+		ArrayList<Train> result = new ArrayList<Train>();
+		while(!trainCursor.isAfterLast()){
+			try {
+				Train t = new Train();
+				t.Train_id = trainCursor.getInt(trainCursor.getColumnIndex("Train_id"));
+				t.maximumCapacity = trainCursor.getInt(trainCursor.getColumnIndex("maximumCapacity"));
+				t.velocity = trainCursor.getFloat(trainCursor.getColumnIndex("velocity"));
+				result.add(t);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			trainCursor.moveToNext();
+		}
+
+		trainCursor.close();
+		
+		return result;
+	}
+	
+	/**
 	 * creates a Line
 	 * @param Line_id
 	 * @param name
@@ -449,6 +558,39 @@ public class DatabaseAdapter {
 		Line l = new Line(c.getInt(0),c.getString(1));
 		c.close();
 		return l;
+	}
+	
+	/**
+	 * @return the lines of the database
+	 */
+	public ArrayList<Line> getLines(){
+		
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM Lines";
+		Cursor lineCursor = database.rawQuery(query, null);
+
+		lineCursor.moveToFirst();
+		if(lineCursor.getCount() == 0){
+			lineCursor.close();
+
+			return new ArrayList<Line>();
+		}
+		ArrayList<Line> result = new ArrayList<Line>();
+		while(!lineCursor.isAfterLast()){
+			try {
+				Line l = new Line();
+				l.id = lineCursor.getInt(lineCursor.getColumnIndex("Line_id"));
+				l.name = lineCursor.getString(lineCursor.getColumnIndex("name"));
+				result.add(l);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			lineCursor.moveToNext();
+		}
+
+		lineCursor.close();
+		
+		return result;
 	}
 	
 	/**
@@ -498,31 +640,35 @@ public class DatabaseAdapter {
 		return s;
 	}
 	
-	public ArrayList<Station> getStations(int line_id){
-		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+	/**
+	 * @return the stations of the database
+	 */
+	public ArrayList<Station> getStations(){
 		
-		String query = "SELECT * FROM Stations WHERE Line_id = \"" + line_id + "\"";
-		Cursor stationsCursor = database.rawQuery(query, null);
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM Stations";
+		Cursor stationCursor = database.rawQuery(query, null);
 
-		stationsCursor.moveToFirst();
-		if(stationsCursor.getCount() == 0){
-			stationsCursor.close();
+		stationCursor.moveToFirst();
+		if(stationCursor.getCount() == 0){
+			stationCursor.close();
 
 			return new ArrayList<Station>();
 		}
 		ArrayList<Station> result = new ArrayList<Station>();
-		while(!stationsCursor.isAfterLast()){
+		while(!stationCursor.isAfterLast()){
 			try {
 				Station s = new Station();
-				s.id = stationsCursor.getInt(stationsCursor.getColumnIndex("id"));
-				s.name = stationsCursor.getString(stationsCursor.getColumnIndex("name"));
+				s.id = stationCursor.getInt(stationCursor.getColumnIndex("Station_id"));
+				s.name = stationCursor.getString(stationCursor.getColumnIndex("name"));
+				result.add(s);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			stationsCursor.moveToNext();
+			stationCursor.moveToNext();
 		}
 
-		stationsCursor.close();
+		stationCursor.close();
 		
 		return result;
 	}
@@ -565,7 +711,77 @@ public class DatabaseAdapter {
 		values.put("Station_id", Station_id);
 		values.put("Line_id", Line_id);
 		return database.update("LineStations", values, null, null);
+	}
+	
+	/**
+	 * @param Line_id
+	 * @return ArrayList of LineStations with the Line_id passed as argument
+	 */
+	public ArrayList<LineStation> getLineStation(int line_id){
+		
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM LineStations WHERE Line_id = " + line_id;
+		Cursor lineCursor = database.rawQuery(query, null);
 
+		lineCursor.moveToFirst();
+		if(lineCursor.getCount() == 0){
+			lineCursor.close();
+
+			return new ArrayList<LineStation>();
+		}
+		ArrayList<LineStation> result = new ArrayList<LineStation>();
+		while(!lineCursor.isAfterLast()){
+			try {
+				LineStation l = new LineStation();
+				l.order = lineCursor.getInt(lineCursor.getColumnIndex("order"));
+				l.distance = lineCursor.getInt(lineCursor.getColumnIndex("distance"));
+				l.Line_id = lineCursor.getInt(lineCursor.getColumnIndex("Line_id"));
+				l.Station_id = lineCursor.getInt(lineCursor.getColumnIndex("Station_id"));
+				result.add(l);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			lineCursor.moveToNext();
+		}
+
+		lineCursor.close();
+		
+		return result;
+	}
+	
+	/**
+	 * @return the LineStation of the database
+	 */
+	public ArrayList<LineStation> getLineStations(){
+		
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM LineStations";
+		Cursor lineCursor = database.rawQuery(query, null);
+
+		lineCursor.moveToFirst();
+		if(lineCursor.getCount() == 0){
+			lineCursor.close();
+
+			return new ArrayList<LineStation>();
+		}
+		ArrayList<LineStation> result = new ArrayList<LineStation>();
+		while(!lineCursor.isAfterLast()){
+			try {
+				LineStation l = new LineStation();
+				l.order = lineCursor.getInt(lineCursor.getColumnIndex("order"));
+				l.distance = lineCursor.getInt(lineCursor.getColumnIndex("distance"));
+				l.Line_id = lineCursor.getInt(lineCursor.getColumnIndex("Line_id"));
+				l.Station_id = lineCursor.getInt(lineCursor.getColumnIndex("Station_id"));
+				result.add(l);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			lineCursor.moveToNext();
+		}
+
+		lineCursor.close();
+		
+		return result;
 	}
 	
 	/**
@@ -613,6 +829,39 @@ public class DatabaseAdapter {
 		TripType t = new TripType(c.getInt(0),c.getFloat(1));
 		c.close();
 		return t;
+	}
+	
+	/**
+	 * @return the tripTypes of the database
+	 */
+	public ArrayList<TripType> getTripTypes(){
+		
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM TripTypes";
+		Cursor triptypeCursor = database.rawQuery(query, null);
+
+		triptypeCursor.moveToFirst();
+		if(triptypeCursor.getCount() == 0){
+			triptypeCursor.close();
+
+			return new ArrayList<TripType>();
+		}
+		ArrayList<TripType> result = new ArrayList<TripType>();
+		while(!triptypeCursor.isAfterLast()){
+			try {
+				TripType t = new TripType();
+				t.TripType_id = triptypeCursor.getInt(triptypeCursor.getColumnIndex("TripType_id"));
+				t.price = triptypeCursor.getFloat(triptypeCursor.getColumnIndex("price"));
+				result.add(t);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			triptypeCursor.moveToNext();
+		}
+
+		triptypeCursor.close();
+		
+		return result;
 	}
 	
 	/**
@@ -674,6 +923,42 @@ public class DatabaseAdapter {
 	}
 	
 	/**
+	 * @return the users of the database
+	 */
+	public ArrayList<User> getUsers(){
+		
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		String query = "SELECT * FROM Users";
+		Cursor userCursor = database.rawQuery(query, null);
+
+		userCursor.moveToFirst();
+		if(userCursor.getCount() == 0){
+			userCursor.close();
+
+			return new ArrayList<User>();
+		}
+		ArrayList<User> result = new ArrayList<User>();
+		while(!userCursor.isAfterLast()){
+			try {
+				User u = new User();
+				u.id = userCursor.getInt(userCursor.getColumnIndex("User_id"));
+				u.name = userCursor.getString(userCursor.getColumnIndex("name"));
+				u.token = userCursor.getString(userCursor.getColumnIndex("token"));
+				u.email = userCursor.getString(userCursor.getColumnIndex("email"));
+				u.role = userCursor.getString(userCursor.getColumnIndex("role"));
+				result.add(u);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			userCursor.moveToNext();
+		}
+
+		userCursor.close();
+		
+		return result;
+	}
+	
+	/**
 	 * checks if the User is in the database
 	 * @return
 	 */
@@ -728,6 +1013,11 @@ public class DatabaseAdapter {
 	public void clearTripTypes(){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		database.delete("TripTypes", null, null);	
+	}
+	
+	public void clearTrips(){
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		database.delete("Trips", null, null);	
 	}
 	
 	public void clearStations(){

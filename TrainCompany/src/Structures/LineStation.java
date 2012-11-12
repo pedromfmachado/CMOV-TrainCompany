@@ -14,6 +14,8 @@ public class LineStation {
 		this.Line_id = Line_id;
 	}
 	
-	LineStation(){}
+	public LineStation(){
+		super();
+	}
 	
 }

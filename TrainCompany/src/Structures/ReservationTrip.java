@@ -14,5 +14,7 @@ public class ReservationTrip {
 		this.trip_id = trip_id;
 	}
 	
-	public ReservationTrip() {}
+	public ReservationTrip() {
+		super();
+	}
 }

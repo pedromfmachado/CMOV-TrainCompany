@@ -13,6 +13,8 @@ public class Train {
 		this.velocity = velocity;
 	}
 	
-	Train(){}
+	public Train(){
+		super();
+	}
 	
 }

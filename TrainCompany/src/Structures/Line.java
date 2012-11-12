@@ -31,7 +31,7 @@ public class Line extends Structure {
 		this.name = name;
 	}
 	
-	Line(){
+	public Line(){
 		
 		super();
 	}

@@ -10,5 +10,7 @@ public class TripType {
 		this.price = price;
 	}
 	
-	TripType(){}
+	public TripType(){
+		super();
+	}
 }
