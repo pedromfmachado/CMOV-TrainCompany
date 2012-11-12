@@ -2,13 +2,9 @@ package Structures;
 
 import java.util.ArrayList;
 
-import pt.up.fe.cmov.traincompany.Login;
 import pt.up.fe.cmov.traincompany.MainMenu;
 import pt.up.fe.cmov.traincompany.R;
-
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
