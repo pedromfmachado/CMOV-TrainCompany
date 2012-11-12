@@ -489,7 +489,7 @@ public class DatabaseAdapter {
 	 * @param token
 	 * @return
 	 */
-	public long createUser(Integer user_id, String name, String email, String token){
+	public long createUser(Integer user_id, String name, String email, String token, String role){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -498,7 +498,7 @@ public class DatabaseAdapter {
 		values.put("name", name);
 		values.put("email", email);
 		values.put("token", token);
-
+		values.put("role", role);
 		return database.insert("User", null, values);
 	}
 	
@@ -510,13 +510,14 @@ public class DatabaseAdapter {
 	 * @param token
 	 * @return
 	 */
-	public long updateUser(Integer user_id, String name, String email, String token){
+	public long updateUser(Integer user_id, String name, String email, String token, String role){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("User_id", user_id);
 		values.put("name", name);
 		values.put("email", email);
 		values.put("token", token);
+		values.put("role", role);
 		return database.update("User", values, "token = \""+ token + "\"", null);
 	}
 	
@@ -533,6 +534,7 @@ public class DatabaseAdapter {
 		u.name = c.getString(c.getColumnIndex("name"));
 		u.id = c.getInt(c.getColumnIndex("User_id"));
 		u.token = c.getString(c.getColumnIndex("token"));
+		u.role = c.getString(c.getColumnIndex("role"));
 		c.close();
 		return u;
 	}

@@ -18,15 +18,17 @@ public class User extends Structure {
 	public String name;
 	public String token;
 	public String email;
+	public String role;
 	
 	
-	public User(Integer User_id, String name, String token, String email){
+	public User(Integer User_id, String name, String token, String email, String role){
 		super();
 		
 		this.id = User_id;
 		this.name = name;
 		this.token = token;
 		this.email = email;
+		this.role = role;
 	}
 	
 	public User(){
@@ -76,9 +78,10 @@ public class User extends Structure {
 							String name = json.getString("name");
 							String email = json.getString("email");
 							String token = json.getString("auth_token");
+							String role = json.getString("role");
 							
 							Global.datasource.clearUsers();
-							Global.datasource.createUser(user_id, name, email, token);
+							Global.datasource.createUser(user_id, name, email, token, role);
 							
 						}
 						else{
@@ -89,7 +92,7 @@ public class User extends Structure {
 
 					} catch (JSONException e) {
 						
-						errors.add("JSon Respons Error");
+						errors.add("JSON Response Error");
 					}
 				}
 				
