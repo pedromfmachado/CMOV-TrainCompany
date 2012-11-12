@@ -13,10 +13,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	// Database create
 	private static final String DATABASE_CREATE_VERSION = "create table Version(version TEXT);";
-	private static final String DATABASE_CREATE_RESERVATION = "create table Reservation(Reservation_id INTEGER, uuid TEXT, User_id INTEGER, canceled BOOLEAN, date TEXT, departureStation_name TEXT, arrivalStation_name TEXT, departureStation_id INTEGER, arrivalStation_id INTEGER);";
-	private static final String DATABASE_CREATE_USER = "create table User(User_id INTEGER, name TEXT, email TEXT, token TEXT);";
+	private static final String DATABASE_CREATE_RESERVATIONS = "create table Reservations(Reservation_id INTEGER, uuid TEXT, User_id INTEGER, canceled BOOLEAN, date TEXT, departureStation_name TEXT, arrivalStation_name TEXT, departureStation_id INTEGER, arrivalStation_id INTEGER);";
+	private static final String DATABASE_CREATE_USERS = "create table Users(User_id INTEGER, name TEXT, email TEXT, token TEXT);";
 	private static final String DATABASE_CREATE_RESERVATIONTRIPS = "create table ReservationTrips(departureStation_name TEXT, arrivalStation_name TEXT, Reservation_id INTEGER, Trip_id INTEGER, time TEXT);";
-	private static final String DATABASE_CREATE_LINES = "create table Line(Line_id INTEGER, name TEXT);";
+	private static final String DATABASE_CREATE_LINES = "create table Lines(Line_id INTEGER, name TEXT);";
+	private static final String DATABASE_CREATE_STATIONS = "create table Stations(Station_id INTEGER, name TEXT);";
+	private static final String DATABASE_CREATE_TRIPTYPE = "create table TripTypes(TripType INTEGER, price FLOAT);";
+	private static final String DATABASE_CREATE_TRAIN = "create table Trains(Train_id INTEGER, maximumCapacity INTEGER, velocity FLOAT));";
+	private static final String DATABASE_CREATE_LINESTATIONS = "create table LineStations(order INTEGER, distance INTEGER, Station_id INTEGER, Line_id INTEGER;";
+	private static final String DATABASE_CREATE_TRIPS = "create table Trips(Trip_id INTEGER, beginTime DATE, Train_id INTEGER, departureStation_id INTEGER, arrivalStation_id INTEGER, Line_id INTEGER, TripType_id INTEGER);";
 	
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,9 +30,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		database.execSQL(DATABASE_CREATE_VERSION);
-		database.execSQL(DATABASE_CREATE_RESERVATION);
-		database.execSQL(DATABASE_CREATE_USER);
+		database.execSQL(DATABASE_CREATE_RESERVATIONS);
+		database.execSQL(DATABASE_CREATE_USERS);
 		database.execSQL(DATABASE_CREATE_RESERVATIONTRIPS);
+		database.execSQL(DATABASE_CREATE_LINES);
+		database.execSQL(DATABASE_CREATE_STATIONS);
+		database.execSQL(DATABASE_CREATE_TRIPTYPE);
+		database.execSQL(DATABASE_CREATE_TRAIN);
+		database.execSQL(DATABASE_CREATE_LINESTATIONS);
+		database.execSQL(DATABASE_CREATE_TRIPS);
+		
 
 		android.util.Log.d("debug", "database created!");
 	}
@@ -38,9 +50,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Log.w(DatabaseHelper.class.getName(),
 				"Upgrading database from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all the old data");
-		db.execSQL("DROP TABLE IF EXISTS Reservation");
+		db.execSQL("DROP TABLE IF EXISTS Reservations");
 		db.execSQL("DROP TABLE IF EXISTS ReservationTrips");
-		db.execSQL("DROP TABLE IF EXISTS User");
+		db.execSQL("DROP TABLE IF EXISTS Users");
+		db.execSQL("DROP TABLE IF EXISTS LineStations");
+		db.execSQL("DROP TABLE IF EXISTS Lines");
+		db.execSQL("DROP TABLE IF EXISTS Stations");
+		db.execSQL("DROP TABLE IF EXISTS TripTypes");
+		db.execSQL("DROP TABLE IF EXISTS Trains");
+		db.execSQL("DROP TABLE IF EXISTS Trips");
 		
 		//TODO add new drops here
 		onCreate(db);
