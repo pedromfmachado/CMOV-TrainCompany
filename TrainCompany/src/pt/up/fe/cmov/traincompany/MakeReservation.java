@@ -55,7 +55,7 @@ public class MakeReservation extends Activity {
 				if(results[0] == null || ((String)results[0]).equals("")){
 
 					loading.dismiss();
-					Toast.makeText(MakeReservation.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
+					Toast.makeText(MakeReservation.this, "Connection problems, verify your network signal", Toast.LENGTH_LONG).show();
 					return;
 				}
 
@@ -126,27 +126,27 @@ public class MakeReservation extends Activity {
 		Intent intent = null;
 
 		switch (v.getId()) {
-		case R.id.btMakeReservation:
-			getTrips();
-			break;
-
-		case R.id.btLogout:
-			Global.datasource.clearUsers();
-			intent = new Intent(MakeReservation.this, Login.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			finish();
-			break;
-
-		case R.id.btHome:
-			Intent i = new Intent(MakeReservation.this, MainMenu.class);
-			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
-			break;
-
-		default:
-			break;
+			case R.id.btMakeReservation:
+				getTrips();
+				break;
+	
+			case R.id.btLogout:
+				Global.datasource.clearUsers();
+				intent = new Intent(MakeReservation.this, Login.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				finish();
+				break;
+	
+			case R.id.btHome:
+				Intent i = new Intent(MakeReservation.this, MainMenu.class);
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+				break;
+	
+			default:
+				break;
 		}
 	}
 }
