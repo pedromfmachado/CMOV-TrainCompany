@@ -248,6 +248,18 @@ public class DatabaseAdapter {
 
 	}
 	
+	public long createTrip(Integer Trip_id, Integer  Integer TripType_id){
+
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("Train_id", Train_id);
+		values.put("maximumCapacity", maximumCapacity);
+		values.put("velocity", velocity);
+
+		return database.insert("Trains", null, values);
+	}
+	
 	/**
 	 * creates a Train
 	 * @param Train_id

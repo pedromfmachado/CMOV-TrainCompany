@@ -40,7 +40,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		database.execSQL(DATABASE_CREATE_LINESTATIONS);
 		database.execSQL(DATABASE_CREATE_TRIPS);
 		
-
 		android.util.Log.d("debug", "database created!");
 	}
 
