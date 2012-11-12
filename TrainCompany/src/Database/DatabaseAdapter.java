@@ -7,8 +7,12 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import Structures.Line;
 import Structures.Reservation;
 import Structures.ReservationTrip;
+import Structures.Station;
+import Structures.Train;
+import Structures.TripType;
 import Structures.User;
 import android.content.ContentValues;
 import android.content.Context;
@@ -48,6 +52,15 @@ public class DatabaseAdapter {
 		return null;
 	}
 	
+	/**
+	 * creates a ReservationTrip
+	 * @param departureStation_name
+	 * @param arrivalStation_name
+	 * @param Reservation_id
+	 * @param Trip_id
+	 * @param time
+	 * @return
+	 */
 	public long createReservationTrips(String departureStation_name, String arrivalStation_name, Integer Reservation_id
 			, Integer Trip_id, String time){
 
@@ -63,7 +76,16 @@ public class DatabaseAdapter {
 		return database.insert("ReservationTrips", null, values);
 	}
 	
-	public long updateReservationTrips(String departureStation_name, String arrivalStation_name, Integer Reservation_id
+	/**
+	 * updates a ReservationTrip
+	 * @param departureStation_name
+	 * @param arrivalStation_name
+	 * @param Reservation_id
+	 * @param Trip_id
+	 * @param date
+	 * @return
+	 */
+	public long updateReservationTrip(String departureStation_name, String arrivalStation_name, Integer Reservation_id
 			, Integer Trip_id, Date date){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -76,6 +98,10 @@ public class DatabaseAdapter {
 
 	}
 	
+	/**
+	 * @param reservation_id
+	 * @return ArrayList of ReservationTrips with the id passed by argument
+	 */
 	public ArrayList<ReservationTrip> getReservationTrip(int reservation_id){
 		
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
@@ -101,7 +127,6 @@ public class DatabaseAdapter {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 			reservationCursor.moveToNext();
 		}
 
@@ -110,6 +135,19 @@ public class DatabaseAdapter {
 		return result;
 	}
 	
+	/**
+	 * creates a Reservation
+	 * @param Reservation_id
+	 * @param uuid
+	 * @param User_id
+	 * @param canceled
+	 * @param date
+	 * @param departureStation_id
+	 * @param arrivalStation_id
+	 * @param departureStation_name
+	 * @param arrivalStation_name
+	 * @return
+	 */
 	public long createReservation(Integer Reservation_id, String uuid, Integer User_id, Boolean canceled,
 			String date, Integer departureStation_id, Integer arrivalStation_id,
 			String departureStation_name, String arrivalStation_name){
@@ -150,10 +188,15 @@ public class DatabaseAdapter {
 
 	}
 	
+	/**
+	 * from a Reservation_id, returns a Reservation
+	 * @param Reservation_id
+	 * @return Reservation
+	 */
 	public Reservation getReservation(Integer Reservation_id){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		
-		Cursor c = database.rawQuery("SELECT * FROM Reservation WHERE Reservation_id = \"" + Reservation_id +"\"", null);
+		Cursor c = database.rawQuery("SELECT * FROM Reservations WHERE Reservation_id = \"" + Reservation_id +"\"", null);
 		c.moveToFirst();
 		Reservation r = new Reservation(c.getInt(0),c.getInt(1), c.getString(2), c.getString(3), c.getInt(4), c.getInt(5));
 		c.close();
@@ -167,7 +210,7 @@ public class DatabaseAdapter {
 	 */
 	public ArrayList<Reservation> getReservationsByUser(Integer user_id){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
-		String query = "SELECT * FROM Reservation WHERE User_id = " + user_id;
+		String query = "SELECT * FROM Reservations WHERE User_id = " + user_id;
 		Cursor reservationCursor = database.rawQuery(query, null);
 
 		reservationCursor.moveToFirst();
@@ -240,11 +283,212 @@ public class DatabaseAdapter {
 		values.put("velocity", velocity);
 		
 		return database.update("Trains", values, null, null);
+	}
+	
+	/**
+	 * @param Train_id
+	 * @return Train with the id passed by argument
+	 */
+	public Train getTrain(Integer Train_id){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		
+		Cursor c = database.rawQuery("SELECT * FROM Trains WHERE Train_id = \"" + Train_id +"\"", null);
+		c.moveToFirst();
+		Train t = new Train(c.getInt(0),c.getInt(1), c.getFloat(2));
+		c.close();
+		return t;
+	}	
+	
+	/**
+	 * creates a Line
+	 * @param Line_id
+	 * @param name
+	 * @return
+	 */
+	public long createLine(Integer Line_id, String name){
+
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("Line_id", Line_id);
+		values.put("name", name);
+
+		return database.insert("Lines", null, values);
+	}
+	
+	/**
+	 * updates a Line
+	 * @param Line_id
+	 * @param name
+	 * @return
+	 */
+	public long updateLine(Integer Line_id, String name){
+		
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("Line_id", Line_id);
+		values.put("name", name);
+
+		return database.update("Lines", values, null, null);
+	}
+	
+	/**
+	 * @param Line_id
+	 * @return the Line with the id passed by argument
+	 */
+	public Line getLine(Integer Line_id){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		
+		Cursor c = database.rawQuery("SELECT * FROM Lines WHERE Line_id = \"" + Line_id +"\"", null);
+		c.moveToFirst();
+		Line l = new Line(c.getInt(0),c.getString(1));
+		c.close();
+		return l;
+	}
+	
+	/**
+	 * creates a Station
+	 * @param Station_id
+	 * @param name
+	 * @return
+	 */
+	public long createStation(Integer Station_id, String name){
+
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("Station_id", Station_id);
+		values.put("name", name);
+
+		return database.insert("Lines", null, values);
+	}
+	
+	/**
+	 * updates a Station
+	 * @param Station_id
+	 * @param name
+	 * @return
+	 */
+	public long updateStation(Integer Station_id, String name){
+		
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("Station_id", Station_id);
+		values.put("name", name);
+
+		return database.update("Stations", values, null, null);
+	}
+	
+	/**
+	 * @param Station_id
+	 * @return the station with the id passed by argument
+	 */
+	public Station getStation(Integer Station_id){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		
+		Cursor c = database.rawQuery("SELECT * FROM Stations WHERE Station_id = \"" + Station_id +"\"", null);
+		c.moveToFirst();
+		Station s = new Station(c.getInt(0),c.getString(1));
+		c.close();
+		return s;
+	}
+	
+	/**
+	 * creates a LineStation
+	 * @param order
+	 * @param distance
+	 * @param Station_id
+	 * @param Line_id
+	 * @return
+	 */
+	public long createLineStation(Integer order, Integer distance, Integer Station_id, Integer Line_id){
+
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("order", order);
+		values.put("distance", distance);
+		values.put("Station_id", Station_id);
+		values.put("Line_id", Line_id);
+
+		return database.insert("LineStations", null, values);
+	}
+	
+	/**
+	 * updates a LineStation
+	 * @param order
+	 * @param distance
+	 * @param Station_id
+	 * @param Line_id
+	 * @return
+	 */
+	public long updateLineStation(Integer order, Integer distance, Integer Station_id, Integer Line_id){
+		
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("order", order);
+		values.put("distance", distance);
+		values.put("Station_id", Station_id);
+		values.put("Line_id", Line_id);
+		return database.update("LineStations", values, null, null);
 
 	}
 	
+	/**
+	 * creates a TripType
+	 * @param TripType_id
+	 * @param price
+	 * @return
+	 */
+	public long createTripType(Integer TripType_id, Float price){
+
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put("TripType_id", TripType_id);
+		values.put("price", price);
+
+		return database.insert("TripTypes", null, values);
+	}
 	
+	/**
+	 * updates a TripType
+	 * @param TripType_id
+	 * @param price
+	 * @return
+	 */
+	public long updateTripType(Integer TripType_id, Float price){
+		
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("TripType_id", TripType_id);
+		values.put("price", price);
+
+		return database.update("TripTypes", values, null, null);
+	}
 	
+	/**
+	 * @param TripType_id
+	 * @return the TripType which ID is the one passed by argument
+	 */
+	public TripType getTripType(Integer TripType_id){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		
+		Cursor c = database.rawQuery("SELECT * FROM TripTypes WHERE TripType_id = \"" + TripType_id +"\"", null);
+		c.moveToFirst();
+		TripType t = new TripType(c.getInt(0),c.getFloat(1));
+		c.close();
+		return t;
+	}
+	
+	/**
+	 * creates a User
+	 * @param user_id
+	 * @param name
+	 * @param email
+	 * @param token
+	 * @return
+	 */
 	public long createUser(Integer user_id, String name, String email, String token){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
@@ -258,6 +502,27 @@ public class DatabaseAdapter {
 		return database.insert("User", null, values);
 	}
 	
+	/**
+	 * updates a User
+	 * @param user_id
+	 * @param name
+	 * @param email
+	 * @param token
+	 * @return
+	 */
+	public long updateUser(Integer user_id, String name, String email, String token){
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("User_id", user_id);
+		values.put("name", name);
+		values.put("email", email);
+		values.put("token", token);
+		return database.update("User", values, "token = \""+ token + "\"", null);
+	}
+	
+	/**
+	 * @return User from the DB
+	 */
 	public User getUser(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		
@@ -272,22 +537,19 @@ public class DatabaseAdapter {
 		return u;
 	}
 	
-	public long updateUser(Integer user_id, String name, String email, String token){
-		final SQLiteDatabase database = dbHelper.getWritableDatabase();
-		ContentValues values = new ContentValues();
-		values.put("User_id", user_id);
-		values.put("name", name);
-		values.put("email", email);
-		values.put("token", token);
-		return database.update("User", values, "token = \""+ token + "\"", null);
-	}
-	
+	/**
+	 * checks if the User is in the database
+	 * @return
+	 */
 	public boolean checkUserOnDB(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		Cursor c = database.rawQuery("SELECT * FROM User", null);
 		return c.getCount() > 0;
 	}
 	
+	/**
+	 * @return the string(token) from the User in DB
+	 */
 	public String getToken(){
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		Cursor c = database.rawQuery("SELECT token FROM User", null);
@@ -298,6 +560,11 @@ public class DatabaseAdapter {
 		return ret;
 	}
 	
+	/**
+	 * checks if the network is available
+	 * @param context
+	 * @return
+	 */
 	public boolean isNetworkAvailable(Context context) {
 		ConnectivityManager connectivityManager 
 		= (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -305,17 +572,37 @@ public class DatabaseAdapter {
 		return activeNetworkInfo != null;
 	}
 	
+	//CLEAR FUNCTIONS
 	public void clearUsers(){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
-		database.delete("User", null, null);
-		
+		database.delete("Users", null, null);	
 	}
 	
 	public void clearReservations(){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
-		database.delete("Reservation", null, null);
-		database.delete("ReservationTrips", null, null);
-		
+		database.delete("Reservations", null, null);
+		database.delete("ReservationTrips", null, null);	
+	}
+	
+	public void clearTrains(){
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		database.delete("Trains", null, null);
+	}
+	
+	public void clearTripTypes(){
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		database.delete("TripTypes", null, null);	
+	}
+	
+	public void clearStations(){
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		database.delete("Stations", null, null);
+		database.delete("LineStations", null, null);
+	}
+	
+	public void clearLines(){
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		database.delete("Lines", null, null);
 	}
 
 	@Override

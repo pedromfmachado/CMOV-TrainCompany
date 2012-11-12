@@ -7,7 +7,7 @@ public class LineStation {
 	public Integer order;
 	public Integer distance;
 	
-	LineStation(Integer order, Integer distance, Integer Station_id, Integer Line_id){
+	public LineStation(Integer order, Integer distance, Integer Station_id, Integer Line_id){
 		this.order = order;
 		this.distance = distance;
 		this.Station_id = Station_id;
