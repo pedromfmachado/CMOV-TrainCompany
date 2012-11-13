@@ -3,7 +3,6 @@ package pt.up.fe.cmov.traincompany;
 import java.util.ArrayList;
 
 import Structures.Reservation;
-import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,7 +23,7 @@ public class Reservations extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservations);
         
-        getData();
+        Reservation.populateReservationsFromDb(this, R.id.list);
     }
 
     @Override
@@ -35,35 +34,19 @@ public class Reservations extends Activity {
     
     public void onClick(View v) {
     	
+    	Global.buttonAction(v, this);
+    	
     	Intent intent = null;
     	switch (v.getId()) {
     	
-		case R.id.btNewReservation:
+		case R.id.menu_new_reservation:
 			
 			intent = new Intent(Reservations.this, MakeReservation.class);
     		startActivity(intent);
     		break;
-    		
-		case R.id.btLogout:
-
-			User.Logout(this);
-			break;
-			
-		case R.id.btHome:
-
-			User.goHome(this);
-			break;
 
 		default:
 			break;
 		}
-    }
-    
-    private void getData(){
-    	
-    	String server = getString(R.string.server_address) + "reservations";
-
-		loading = ProgressDialog.show(Reservations.this, "", "Loading reservations");
-		Reservation.getReservations(server, this, loading, R.id.list, false, false);
     }
 }

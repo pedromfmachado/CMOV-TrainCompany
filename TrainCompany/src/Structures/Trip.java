@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pt.up.fe.cmov.traincompany.Global;
 import pt.up.fe.cmov.traincompany.ListAdapter;
 import pt.up.fe.cmov.traincompany.R;
 import pt.up.fe.cmov.traincompany.TripView;
@@ -65,40 +66,26 @@ public class Trip extends Structure{
 
 				try{
 
+					Global.datasource.clearTrips();
 					JSONArray json = new JSONArray((String)results[0]);
 
 					for(int i = 0; i < json.length(); i++){
+						
+						JSONObject obj = json.getJSONObject(i);
+						JSONObject tripObj = obj.getJSONObject("trip");
 
-						String departure = json.getJSONObject(i).getString("departure_station");
-						String arrival = json.getJSONObject(i).getString("arrival_station");
-						String time = json.getJSONObject(i).getString("time");
-						String id = json.getJSONObject(i).getString("id");
-
-						names.add(departure + " - " + arrival);
-						ids.add(id);
-						descriptions.add(time);
+						Trip trip = new Trip();
+						trip.departureStation_id = tripObj.getInt("departureStation_id");
+						trip.arrivalStation_id = tripObj.getInt("arrivalStation_id");
+						trip.beginTime = obj.getString("time");
+						trip.Trip_id = tripObj.getInt("id");
+						trip.Train_id = tripObj.getInt("train_id");
+						trip.TripType_id = tripObj.getInt("tripType_id");
+						trip.Line_id = tripObj.getInt("line_id");
+						
+						Global.datasource.createTrip(trip.Trip_id, trip.beginTime, trip.Train_id, 
+								trip.departureStation_id, trip.arrivalStation_id, trip.Line_id, trip.TripType_id);
 					}
-
-					final ArrayList<String> names_f = new ArrayList<String>(names);
-					final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
-					final ArrayList<String> ids_f = new ArrayList<String>(ids);
-
-					ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f);
-
-					ListView list = (ListView) activity.findViewById(R.id.list);
-					list.setAdapter(adapter);
-					list.setOnItemClickListener(new OnItemClickListener() {
-
-						public void onItemClick(AdapterView<?> parent,
-								View view, int position, long id) {
-
-							Intent intent = new Intent(activity, TripView.class);
-							intent.putExtra("id", ids_f.get(position));
-							intent.putExtra("name", names_f.get(position));
-							activity.startActivity(intent);
-						}
-					});
-
 
 				}
 				catch(JSONException e){
@@ -151,27 +138,14 @@ public class Trip extends Structure{
 						ids.add(id);
 						descriptions.add(time);
 					}
-
+					
 					final ArrayList<String> names_f = new ArrayList<String>(names);
 					final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
-					final ArrayList<String> ids_f = new ArrayList<String>(ids);
 
 					ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f);
 
 					ListView list = (ListView) activity.findViewById(R.id.list);
 					list.setAdapter(adapter);
-					list.setOnItemClickListener(new OnItemClickListener() {
-
-						public void onItemClick(AdapterView<?> parent,
-								View view, int position, long id) {
-
-							Intent intent = new Intent(activity, TripView.class);
-							intent.putExtra("id", ids_f.get(position));
-							intent.putExtra("name", names_f.get(position));
-							activity.startActivity(intent);
-						}
-					});
-
 
 				}
 				catch(JSONException e){
@@ -190,5 +164,39 @@ public class Trip extends Structure{
 				printErrors(activity, loading, finish_on_success, finish_on_error, null);
 			}
 		}).execute();
+	}
+	
+	public static void populateTripsFromDb(final Activity activity){
+		
+		init();
+		for(Trip t : Global.datasource.getTrips()){
+			
+			Station departure = Global.datasource.getStation(t.departureStation_id);
+			Station arrival = Global.datasource.getStation(t.arrivalStation_id);
+			
+			names.add(departure.name + " - " + arrival.name);
+			ids.add(""+t.Trip_id);
+			descriptions.add(t.beginTime);
+		}
+		
+		final ArrayList<String> names_f = new ArrayList<String>(names);
+		final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
+		final ArrayList<String> ids_f = new ArrayList<String>(ids);
+
+		ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f);
+
+		ListView list = (ListView) activity.findViewById(R.id.list);
+		list.setAdapter(adapter);
+		list.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parent,
+					View view, int position, long id) {
+
+				Intent intent = new Intent(activity, TripView.class);
+				intent.putExtra("id", ids_f.get(position));
+				intent.putExtra("name", names_f.get(position));
+				activity.startActivity(intent);
+			}
+		});
 	}
 }

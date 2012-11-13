@@ -3,7 +3,6 @@ package pt.up.fe.cmov.traincompany;
 import java.util.ArrayList;
 
 import Structures.Station;
-import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -34,21 +33,7 @@ public class Stations extends Activity{
 	
 	public void onClick(View v) {
 
-		switch (v.getId()) {
-
-		case R.id.btLogout:
-
-			User.Logout(this);
-			break;
-
-		case R.id.btHome:
-
-			User.goHome(this);
-			break;
-
-		default:
-			break;
-		}
+		Global.buttonAction(v, this);
 	}
 	
 }

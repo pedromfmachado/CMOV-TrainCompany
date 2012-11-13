@@ -1,6 +1,5 @@
 package pt.up.fe.cmov.traincompany;
 
-import Structures.User;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,16 +11,17 @@ public class MainMenu extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-       
+    	Global.sync(this); 	
     }
     
     @Override
     public void onStart() {
     	super.onStart();
-    	 	
     }
     
     public void onClick(View v) {
+    	
+    	Global.buttonAction(v, this);
     	
     	Intent intent = null;
     	switch(v.getId()){
@@ -48,11 +48,6 @@ public class MainMenu extends Activity {
     		
     		intent = new Intent(MainMenu.this, About.class);
     		startActivity(intent);
-    		break;
-    		
-    	case R.id.btLogout:
-
-    		User.Logout(this);
     		break;
     	
     	default:

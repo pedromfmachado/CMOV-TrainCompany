@@ -1,13 +1,8 @@
 package pt.up.fe.cmov.traincompany;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import Requests.AsyncGet;
-import Requests.ResponseCommand;
+import Structures.Station;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class MakeReservation extends Activity {
 
@@ -46,60 +40,21 @@ public class MakeReservation extends Activity {
 
 	public void populate(){
 
-		String server = getString(R.string.server_address) + "stations";
-		loading = ProgressDialog.show(MakeReservation.this, "", "Loading stations");
-		loading.setCancelable(true);
+		ArrayAdapter <CharSequence> adapter =
+				new ArrayAdapter <CharSequence> (MakeReservation.this, android.R.layout.simple_spinner_item );
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		new AsyncGet(server, new HashMap<String,String>(), new ResponseCommand() {
+		for(Station s : Global.datasource.getStations()){
 
-			public void onResultReceived(Object... results) {
+			names.add(s.name);
+			ids.add(""+s.id);
 
-				if(results[0] == null || ((String)results[0]).equals("")){
+			adapter.add(s.name);
+		}
 
-					loading.dismiss();
-					Toast.makeText(MakeReservation.this, "Connection problems, verify your network signal", Toast.LENGTH_LONG).show();
-					finish();
-					return;
-				}
+		((Spinner)findViewById(R.id.sArrival)).setAdapter(adapter);
+		((Spinner)findViewById(R.id.sDeparture)).setAdapter(adapter);
 
-				try{
-
-					JSONArray json = new JSONArray((String)results[0]);
-					
-					ArrayAdapter <CharSequence> adapter =
-							new ArrayAdapter <CharSequence> (MakeReservation.this, android.R.layout.simple_spinner_item );
-					adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-					for(int i = 0; i < json.length(); i++){
-
-						String name = json.getJSONObject(i).getString("name");
-						String id = json.getJSONObject(i).getString("id");
-						names.add(name);
-						ids.add(id);
-
-						adapter.add(name);
-					}
-
-					((Spinner)findViewById(R.id.sArrival)).setAdapter(adapter);
-					((Spinner)findViewById(R.id.sDeparture)).setAdapter(adapter);
-
-				}
-				catch(JSONException e){
-
-					e.printStackTrace();
-				}
-
-				loading.dismiss();
-
-			}
-
-			public void onError(ERROR_TYPE error) {
-
-				loading.dismiss();
-				Toast.makeText(MakeReservation.this, "Undefined error", Toast.LENGTH_LONG).show();
-				finish();
-			}
-		}).execute();
 	}
 
 	public void getTrips(){
@@ -110,7 +65,10 @@ public class MakeReservation extends Activity {
 		int departure_pos = ((Spinner)findViewById(R.id.sDeparture)).getSelectedItemPosition();
 
 		DatePicker dp = ((DatePicker)findViewById(R.id.dpDate));
-		String date = dp.getYear() + "-" + dp.getMonth()+1 + "-" + dp.getDayOfMonth();
+		int year = dp.getYear();
+		int month = dp.getMonth() + 1;
+		int day = dp.getDayOfMonth();
+		String date = year + "-" + month + "-" + day;
 
 		TimePicker tp = ((TimePicker)findViewById(R.id.tpTime));
 		String time = tp.getCurrentHour() + ":" + tp.getCurrentMinute();
@@ -127,26 +85,11 @@ public class MakeReservation extends Activity {
 
 	public void onClick(View v) {
 		
-		Intent intent = null;
+		Global.buttonAction(v, this);
 
 		switch (v.getId()) {
 			case R.id.btMakeReservation:
 				getTrips();
-				break;
-	
-			case R.id.btLogout:
-				Global.datasource.clearUsers();
-				intent = new Intent(MakeReservation.this, Login.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-				finish();
-				break;
-	
-			case R.id.btHome:
-				Intent i = new Intent(MakeReservation.this, MainMenu.class);
-				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-				finish();
 				break;
 	
 			default:

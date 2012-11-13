@@ -13,9 +13,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	// Database create
 	private static final String DATABASE_CREATE_VERSION = "create table Version(version TEXT);";
-	private static final String DATABASE_CREATE_RESERVATIONS = "create table Reservations(Reservation_id INTEGER, uuid TEXT, User_id INTEGER, canceled BOOLEAN, date TEXT, departureStation_name TEXT, arrivalStation_name TEXT, departureStation_id INTEGER, arrivalStation_id INTEGER);";
+	private static final String DATABASE_CREATE_RESERVATIONS = "create table Reservations(Reservation_id INTEGER, uuid TEXT, User_id INTEGER, canceled BOOLEAN, date TEXT, departureStation_id INTEGER, arrivalStation_id INTEGER);";
 	private static final String DATABASE_CREATE_USERS = "create table Users(User_id INTEGER, name TEXT, email TEXT, token TEXT, role TEXT);";
-	private static final String DATABASE_CREATE_RESERVATIONTRIPS = "create table ReservationTrips(departureStation_name TEXT, arrivalStation_name TEXT, Reservation_id INTEGER, Trip_id INTEGER, time TEXT);";
+	private static final String DATABASE_CREATE_RESERVATIONTRIPS = "create table ReservationTrips(departureStation_id INTEGER, arrivalStation_id INTEGER, Reservation_id INTEGER, Trip_id INTEGER, time TEXT);";
 	private static final String DATABASE_CREATE_LINES = "create table Lines(Line_id INTEGER, name TEXT);";
 	private static final String DATABASE_CREATE_STATIONS = "create table Stations(Station_id INTEGER, name TEXT);";
 	private static final String DATABASE_CREATE_TRIPTYPE = "create table TripTypes(TripType INTEGER, price FLOAT);";

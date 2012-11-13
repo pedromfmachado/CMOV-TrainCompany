@@ -62,14 +62,14 @@ public class DatabaseAdapter {
 	 * @param time
 	 * @return
 	 */
-	public long createReservationTrips(String departureStation_name, String arrivalStation_name, Integer Reservation_id
+	public long createReservationTrips(int departureStation_id, int arrivalStation_id, Integer Reservation_id
 			, Integer Trip_id, String time){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put("departureStation_name", departureStation_name);
-		values.put("arrivalStation_name", arrivalStation_name);
+		values.put("departureStation_id", departureStation_id);
+		values.put("arrivalStation_id", arrivalStation_id);
 		values.put("Reservation_id", Reservation_id);
 		values.put("Trip_id", Trip_id);
 		values.put("time", time.toString());
@@ -86,12 +86,12 @@ public class DatabaseAdapter {
 	 * @param date
 	 * @return
 	 */
-	public long updateReservationTrip(String departureStation_name, String arrivalStation_name, Integer Reservation_id
+	public long updateReservationTrip(int departureStation_id, int arrivalStation_id, Integer Reservation_id
 			, Integer Trip_id, Date date){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put("departureStation_name", departureStation_name);
-		values.put("arrivalStation_name", arrivalStation_name);
+		values.put("departureStation_i", departureStation_id);
+		values.put("arrivalStation_name", arrivalStation_id);
 		values.put("Reservation_id", Reservation_id);
 		values.put("Trip_id", Trip_id);
 		values.put("date", date.toString());
@@ -119,8 +119,8 @@ public class DatabaseAdapter {
 		while(!reservationCursor.isAfterLast()){
 			try {
 				ReservationTrip r = new ReservationTrip();
-				r.departureName = reservationCursor.getString(reservationCursor.getColumnIndex("departureStation_name"));
-				r.arrivalName = reservationCursor.getString(reservationCursor.getColumnIndex("arrivalStation_name"));
+				r.departure_id = reservationCursor.getInt(reservationCursor.getColumnIndex("departureStation_id"));
+				r.arrival_id = reservationCursor.getInt(reservationCursor.getColumnIndex("arrivalStation_id"));
 				r.time = reservationCursor.getString(reservationCursor.getColumnIndex("time"));
 				r.reservation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("Reservation_id"));
 				r.trip_id = reservationCursor.getInt(reservationCursor.getColumnIndex("Trip_id"));
@@ -155,8 +155,8 @@ public class DatabaseAdapter {
 		while(!reservationCursor.isAfterLast()){
 			try {
 				ReservationTrip r = new ReservationTrip();
-				r.departureName = reservationCursor.getString(reservationCursor.getColumnIndex("departureStation_name"));
-				r.arrivalName = reservationCursor.getString(reservationCursor.getColumnIndex("arrivalStation_name"));
+				r.departure_id = reservationCursor.getInt(reservationCursor.getColumnIndex("departureStation_id"));
+				r.arrival_id = reservationCursor.getInt(reservationCursor.getColumnIndex("arrivalStation_id"));
 				r.time = reservationCursor.getString(reservationCursor.getColumnIndex("time"));
 				r.reservation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("Reservation_id"));
 				r.trip_id = reservationCursor.getInt(reservationCursor.getColumnIndex("Trip_id"));
@@ -181,13 +181,10 @@ public class DatabaseAdapter {
 	 * @param date
 	 * @param departureStation_id
 	 * @param arrivalStation_id
-	 * @param departureStation_name
-	 * @param arrivalStation_name
 	 * @return
 	 */
 	public long createReservation(Integer Reservation_id, String uuid, Integer User_id, Boolean canceled,
-			String date, Integer departureStation_id, Integer arrivalStation_id,
-			String departureStation_name, String arrivalStation_name){
+			String date, Integer departureStation_id, Integer arrivalStation_id){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -199,15 +196,12 @@ public class DatabaseAdapter {
 		values.put("date", date.toString());
 		values.put("departureStation_id", departureStation_id);
 		values.put("arrivalStation_id", arrivalStation_id);
-		values.put("departureStation_name", departureStation_name);
-		values.put("arrivalStation_name", arrivalStation_name);
 
 		return database.insert("Reservations", null, values);
 	}
 	
 	public long updateReservation(Integer Reservation_id, Integer uuid, String User_id, String canceled,
-			String date, Integer departureStation_id, Integer arrivalStation_id,
-			String departureStation_name, String arrivalStation_name){
+			String date, Integer departureStation_id, Integer arrivalStation_id){
 		
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -218,8 +212,6 @@ public class DatabaseAdapter {
 		values.put("date", date.toString());
 		values.put("departureStation_id", departureStation_id);
 		values.put("arrivalStation_id", arrivalStation_id);
-		values.put("departureStation_name", departureStation_name);
-		values.put("arrivalStation_name", arrivalStation_name);
 		
 		return database.update("Reservations", values, null, null);
 
@@ -268,8 +260,6 @@ public class DatabaseAdapter {
 				reservation.date = reservationCursor.getString(reservationCursor.getColumnIndex("date"));
 				reservation.departureStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("departureStation_id"));
 				reservation.arrivalStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("arrivalStation_id"));
-				reservation.departureStation_name = reservationCursor.getString(reservationCursor.getColumnIndex("departureStation_name"));
-				reservation.arrivalStation_name = reservationCursor.getString(reservationCursor.getColumnIndex("arrivalStation_name"));
 				
 				ret.add(reservation);
 			} catch (Exception e) {
@@ -1023,12 +1013,12 @@ public class DatabaseAdapter {
 	public void clearStations(){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		database.delete("Stations", null, null);
-		database.delete("LineStations", null, null);
 	}
 	
 	public void clearLines(){
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		database.delete("Lines", null, null);
+		database.delete("LineStations", null, null);
 	}
 
 	@Override

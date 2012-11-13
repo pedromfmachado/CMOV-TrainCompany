@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -32,8 +33,6 @@ public class Reservation extends Structure{
 	public String date;
 	public Integer departureStation_id;
 	public Integer arrivalStation_id;
-	public String departureStation_name;
-	public String arrivalStation_name;
 
 
 	public Reservation(Integer id, String uuid, Integer User_id, String canceled, String date, Integer departureStation_id, Integer arrivalStation_id){
@@ -51,8 +50,80 @@ public class Reservation extends Structure{
 	public Reservation() {
 		super();
 	}
+	
+	public static void getTrips(final String path, final Activity activity, final ProgressDialog loading,
+			HashMap<String,String> values,final int list_id, final boolean finish_on_success, final boolean finish_on_error){
 
-	public static void getReservations(String path, final Activity activity, final ProgressDialog loading,
+		init();
+		if(values.containsValue("")){
+
+			errors.add("Empty values not allowed");
+			printErrors(activity, loading, finish_on_success, finish_on_error, null);
+			return;
+		}
+
+		new AsyncGet(path, values, new ResponseCommand() {
+
+			public void onResultReceived(Object... results) {
+
+				if(results[0] == null || ((String)results[0]).equals("")){
+
+					return;
+				}
+
+				try{
+
+					Log.i("result", (String)results[0]);
+					JSONObject json = new JSONObject((String)results[0]);
+					JSONArray jsonArray = json.getJSONArray("trips");
+
+					if(jsonArray.length() == 0){
+
+						errors.add("Connection problem");
+						printErrors(activity, loading, finish_on_success, finish_on_error, null);
+						return;
+					}
+
+					for(int i = 0; i < jsonArray.length(); i++){
+
+						String departure = jsonArray.getJSONObject(i).getString("departure");
+						String arrival = jsonArray.getJSONObject(i).getString("arrival");
+						String time = jsonArray.getJSONObject(i).getString("time");
+
+						JSONObject trip = jsonArray.getJSONObject(i).getJSONObject("trip");
+
+						names.add(departure + " - " + arrival);
+						ids.add(trip.getString("id"));
+						descriptions.add(time);
+					}
+
+					ListAdapter adapter = new ListAdapter(activity, names, descriptions);
+
+					ListView list = (ListView) activity.findViewById(list_id);
+					list.setAdapter(adapter);
+					
+				}
+				catch(JSONException e){
+
+					errors.add("JSon respons error");
+					e.printStackTrace();
+				}
+				
+				printErrors(activity, loading, finish_on_success, finish_on_error, null);
+				
+			}
+
+			public void onError(ERROR_TYPE error) {
+
+				errors.add("Connection Error");
+				printErrors(activity, loading, finish_on_success, finish_on_error, null);
+			}
+
+		}).execute();
+		
+	}
+
+	public static void getReservations(final String path, final Activity activity, final ProgressDialog loading,
 			final int list_id, final boolean finish_on_success, final boolean finish_on_error){
 
 		init();
@@ -66,14 +137,16 @@ public class Reservation extends Structure{
 
 				if(results[0] == null || ((String)results[0]).equals("")){
 
-					populateReservationsFromDb(activity, list_id);
-					//errors.add("Connection problem");
+					//populateReservationsFromDb(activity, list_id);
+					errors.add("Connection problem");
 					printErrors(activity, loading, finish_on_success, finish_on_error, null);
 					return;
 				}
 
 				try{
 
+					Log.i("result", path);
+					Log.i("result", (String)results[0]);
 					JSONArray json = new JSONArray((String)results[0]);
 					Global.datasource.clearReservations();
 
@@ -89,25 +162,23 @@ public class Reservation extends Structure{
 						reservation.id = rJson.getInt("id");
 						reservation.date = rJson.getString("date");
 						reservation.user_id = rJson.getInt("user_id");
-						reservation.arrivalStation_name = obj.getString("arrival");
-						reservation.departureStation_name = obj.getString("departure");
 
 						Global.datasource.createReservation(reservation.id, "", reservation.user_id,
-								false, reservation.date, reservation.departureStation_id, reservation.arrivalStation_id,
-								reservation.departureStation_name, reservation.arrivalStation_name);
+								false, reservation.date, reservation.departureStation_id, reservation.arrivalStation_id);
 
 						for(int j = 0; j < tripsArray.length(); j++){
 
-							JSONObject rTripObj = tripsArray.getJSONObject(j);
+							obj = tripsArray.getJSONObject(j);
+							JSONObject rTripObj = obj.getJSONObject("reservation_trip");
 
 							ReservationTrip rTrip = new ReservationTrip();
-							rTrip.departureName = rTripObj.getString("arrival");
-							rTrip.arrivalName = rTripObj.getString("departure");
-							rTrip.reservation_id = reservation.id;
-							rTrip.time = rTripObj.getString("time");
-							rTrip.trip_id = rTripObj.getJSONObject("reservation_trip").getInt("id");
+							rTrip.departure_id = rTripObj.getInt("departureStation_id");
+							rTrip.arrival_id = rTripObj.getInt("arrivalStation_id");
+							rTrip.reservation_id = rTripObj.getInt("reservation_id");
+							rTrip.time = obj.getString("time");
+							rTrip.trip_id = rTripObj.getInt("trip_id");
 
-							Global.datasource.createReservationTrips(rTrip.departureName, rTrip.arrivalName,
+							Global.datasource.createReservationTrips(rTrip.departure_id, rTrip.arrival_id,
 									rTrip.reservation_id, rTrip.trip_id, rTrip.time);
 
 						}
@@ -119,20 +190,21 @@ public class Reservation extends Structure{
 					errors.add("JSon Response Error");
 				}
 
-				populateReservationsFromDb(activity, list_id);
+				//populateReservationsFromDb(activity, list_id);
 				printErrors(activity, loading, finish_on_success, finish_on_error, null);
 
 			}
 
 			public void onError(ERROR_TYPE error) {
 
-				populateReservationsFromDb(activity, list_id);
-				//errors.add("Response error - Using local data");
+				//populateReservationsFromDb(activity, list_id);
+				errors.add("Response error - Using local data");
 				printErrors(activity, loading, finish_on_success, finish_on_error, null);
 
 			}
 		}).execute();
 	}
+	
 
 	public static void populateReservationsFromDb(final Activity activity, Integer list_id){
 
@@ -140,8 +212,11 @@ public class Reservation extends Structure{
 		
 		User user = Global.datasource.getUser();
 		for(Reservation r : Global.datasource.getReservationsByUser(user.id)){
+			
+			Station departure = Global.datasource.getStation(r.departureStation_id);
+			Station arrival = Global.datasource.getStation(r.arrivalStation_id);
 
-			names.add(r.departureStation_name + " - " + r.arrivalStation_name);
+			names.add(departure.name + " - " + arrival.name);
 			descriptions.add(r.date);
 			ids.add(""+r.id);
 		}
@@ -180,8 +255,11 @@ public class Reservation extends Structure{
 		ArrayList<ReservationTrip> rTrips = Global.datasource.getReservationTrip(Integer.parseInt(id));
 
 		for(ReservationTrip rt : rTrips){
+			
+			Station departure = Global.datasource.getStation(rt.departure_id);
+			Station arrival = Global.datasource.getStation(rt.arrival_id);
 
-			names.add(rt.departureName + " - " + rt.arrivalName);
+			names.add(departure.name + " - " + arrival.name);
 			descriptions.add(rt.time);
 			ids.add(""+rt.trip_id);
 		}

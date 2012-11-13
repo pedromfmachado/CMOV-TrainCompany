@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -30,11 +29,6 @@ public class Login extends Activity {
 		findViewById(R.id.btRegister).setOnClickListener(registerListener);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_login, menu);
-		return true;
-	}
 
 	private OnClickListener loginListener = new OnClickListener() {
 

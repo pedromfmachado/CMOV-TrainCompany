@@ -16,7 +16,6 @@ import Requests.ResponseCommand;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -49,8 +48,8 @@ public class Line extends Structure {
 				if(results[0] == null || ((String)results[0]).equals("")){
 
 
-					populateLines(activity);
-					//errors.add("Response error");
+					//populateLines(activity);
+					errors.add("Response error");
 					printErrors(activity, loading, finish_on_success, finish_on_error, null);
 					return;
 				}
@@ -58,7 +57,7 @@ public class Line extends Structure {
 				try{
 
 					JSONArray json = new JSONArray((String)results[0]);
-					Global.datasource.clearStations();
+					Global.datasource.clearLines();
 
 					for(int i = 0; i < json.length(); i++){
 
@@ -94,21 +93,21 @@ public class Line extends Structure {
 				}
 
 
-				populateLines(activity);
+				//populateLines(activity);
 				printErrors(activity, loading, finish_on_success, finish_on_error, null);
 			}
 
 			public void onError(ERROR_TYPE error) {
 
 
-				populateLines(activity);
-				//errors.add("Connection error");
+				//populateLines(activity);
+				errors.add("Connection error");
 				printErrors(activity, loading, finish_on_success, finish_on_error, null);
 			}
 		}).execute();
 	}
 
-	private static void populateLines(final Activity activity){
+	public static void populateLines(final Activity activity){
 
 		init();
 		
@@ -140,30 +139,28 @@ public class Line extends Structure {
 		});
 	}
 
-	public void populateLineStations(final Activity activity){
+	public static void populateLineStations(final Activity activity, int id){
 
 		init();
 		
-		Bundle b = activity.getIntent().getExtras();
-		int id = b.getInt("id");
-		
 		for(LineStation ls: Global.datasource.getLineStation(id)){
 			
+			Station station = Global.datasource.getStation(ls.Station_id);
 			
-			/*names.add(l.name);
+			names.add(station.name);
 			descriptions.add("");
-			ids.add(""+l.id);*/
+			ids.add(""+station.id);
 		}
 		
 		final ArrayList<String> names_f = new ArrayList<String>(names);
 		final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
-		final  ArrayList<String> ids_f= new ArrayList<String>(ids);
+		//final  ArrayList<String> ids_f= new ArrayList<String>(ids);
 		
 		ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f);
 
 		ListView list = (ListView) activity.findViewById(R.id.list);
 		list.setAdapter(adapter);
-		list.setOnItemClickListener(new OnItemClickListener() {
+		/*list.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parent,
 					View view, int position, long id) {
@@ -173,6 +170,6 @@ public class Line extends Structure {
 				intent.putExtra("name", names_f.get(position));
 				activity.startActivity(intent);
 			}
-		});
+		});*/
 	}
 }

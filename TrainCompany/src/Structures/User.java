@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import pt.up.fe.cmov.traincompany.GetTrips;
 import pt.up.fe.cmov.traincompany.Global;
 import pt.up.fe.cmov.traincompany.Login;
 import pt.up.fe.cmov.traincompany.MainMenu;

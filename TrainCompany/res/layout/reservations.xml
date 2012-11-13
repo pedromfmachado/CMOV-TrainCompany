@@ -4,19 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="25dp" >
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp" >
 
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/menu_bar" />
 
-    <Button
-        android:id="@+id/btNewReservation"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="@string/label_new_reservation" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ListView
         android:id="@+id/list"

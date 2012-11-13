@@ -8,18 +8,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Requests.AsyncGet;
 import Requests.AsyncPost;
 import Requests.ResponseCommand;
+import Structures.Reservation;
 import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class GetTrips extends Activity {
@@ -41,27 +37,14 @@ public class GetTrips extends Activity {
 		populate();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_get_trips, menu);
-		return true;
-	}
 
 	public void onClick(View v) {
 
+		Global.buttonAction(v, this);
+		
 		switch (v.getId()) {
 		case R.id.btMakeReservation:
 			makeReservation();
-			break;
-
-		case R.id.btLogout:
-			
-			User.Logout(this);
-			break;
-
-		case R.id.btHome:
-			
-			User.goHome(this);
 			break;
 
 		default:
@@ -84,78 +67,9 @@ public class GetTrips extends Activity {
 		values.put("departureStation_id", departure_id);
 		values.put("time", time);
 
-		if(values.containsValue("")){
-
-			loading.dismiss();
-			Toast.makeText(GetTrips.this, "Every field must be filled", Toast.LENGTH_LONG).show();
-			finish();
-			return;
-		}
-
-		loading = ProgressDialog.show(GetTrips.this, "", "Loading lines");
-		new AsyncGet(server, values, new ResponseCommand() {
-
-			public void onResultReceived(Object... results) {
-
-				if(results[0] == null || ((String)results[0]).equals("")){
-
-					loading.dismiss();
-					Toast.makeText(GetTrips.this, "Connection problems, verify your network signal", Toast.LENGTH_LONG).show();
-					finish();
-					return;
-				}
-
-				try{
-
-					Log.i("result", (String)results[0]);
-					JSONObject json = new JSONObject((String)results[0]);
-					JSONArray jsonArray = json.getJSONArray("trips");
-
-					if(jsonArray.length() == 0){
-
-						loading.dismiss();
-						Toast.makeText(GetTrips.this, "There are no trips in this direction", Toast.LENGTH_LONG).show();
-						finish();
-						return;
-					}
-
-					for(int i = 0; i < jsonArray.length(); i++){
-
-						String departure = jsonArray.getJSONObject(i).getString("departure");
-						String arrival = jsonArray.getJSONObject(i).getString("arrival");
-						String time = jsonArray.getJSONObject(i).getString("time");
-
-						JSONObject trip = jsonArray.getJSONObject(i).getJSONObject("trip");
-
-						names.add(departure + " - " + arrival);
-						ids.add(trip.getString("id"));
-						descriptions.add(time);
-					}
-
-					ListAdapter adapter = new ListAdapter(GetTrips.this, names, descriptions);
-
-					ListView list = (ListView) findViewById(R.id.list);
-					list.setAdapter(adapter);
-
-				}
-				catch(JSONException e){
-
-					e.printStackTrace();
-				}
-
-				loading.dismiss();
-
-			}
-
-			public void onError(ERROR_TYPE error) {
-
-				loading.dismiss();
-				finish();
-				Toast.makeText(GetTrips.this, "Undefined error", Toast.LENGTH_LONG).show();
-
-			}
-
-		}).execute();
+		loading = ProgressDialog.show(this, "", "Loading lines");
+		Reservation.getTrips(server, this, loading, values, R.id.list, false, true);
+		
 	}
 
 	public void makeReservation(){

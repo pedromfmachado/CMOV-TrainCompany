@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -31,13 +30,6 @@ public class Registration extends Activity {
 
 		findViewById(R.id.btRegister).setOnClickListener(registerListener);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_registration, menu);
-		return true;
-	}
-
 	OnClickListener registerListener = new OnClickListener() {
 
 		public void onClick(View v) {
