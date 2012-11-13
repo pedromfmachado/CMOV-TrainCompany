@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -56,19 +57,23 @@ public class Reservation extends Structure{
 		
 		for(Reservation r : Global.datasource.getReservations()){
 			
-			String r_path = path + "/" + r.id;
+			String r_path = path + "/cancel/" + r.id;
 			HashMap<String,String> values = new HashMap<String, String>();
 			values.put("id", ""+r.id);
 			values.put("token", Global.datasource.getToken());
-			
-			if(Boolean.parseBoolean(r.canceled)){
+			Log.i("result", r.canceled);
+			if(r.canceled.equals("1")){
 				
 				new AsyncPost(r_path, values, new ResponseCommand() {
 
 					public void onError(ERROR_TYPE error) {
+						
+						Log.i("response", "not canceled");
 					}
 
 					public void onResultReceived(Object... results) {
+						
+						Log.i("result", (String)results[0]);
 					}
 				}).execute();
 			}
@@ -92,6 +97,8 @@ public class Reservation extends Structure{
 
 				if(results[0] == null || ((String)results[0]).equals("")){
 
+					errors.add("Connection problem");
+					printErrors(activity, loading, finish_on_success, finish_on_error, null);
 					return;
 				}
 
