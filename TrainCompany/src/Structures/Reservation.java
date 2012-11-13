@@ -51,35 +51,35 @@ public class Reservation extends Structure{
 	public Reservation() {
 		super();
 	}
-	
+
 	public static void cancelReservations(final String path){
-		
-		
+
+
 		for(Reservation r : Global.datasource.getReservations()){
-			
+
 			String r_path = path + "/cancel/" + r.id;
 			HashMap<String,String> values = new HashMap<String, String>();
 			values.put("id", ""+r.id);
 			values.put("token", Global.datasource.getToken());
 			Log.i("result", r.canceled);
 			if(r.canceled.equals("1")){
-				
+
 				new AsyncPost(r_path, values, new ResponseCommand() {
 
 					public void onError(ERROR_TYPE error) {
-						
+
 						Log.i("response", "not canceled");
 					}
 
 					public void onResultReceived(Object... results) {
-						
+
 						Log.i("result", (String)results[0]);
 					}
 				}).execute();
 			}
 		}
 	}
-	
+
 	public static void getTrips(final String path, final Activity activity, final ProgressDialog loading,
 			HashMap<String,String> values,final int list_id, final boolean finish_on_success, final boolean finish_on_error){
 
@@ -131,16 +131,16 @@ public class Reservation extends Structure{
 
 					ListView list = (ListView) activity.findViewById(list_id);
 					list.setAdapter(adapter);
-					
+
 				}
 				catch(JSONException e){
 
 					errors.add("JSon respons error");
 					e.printStackTrace();
 				}
-				
+
 				printErrors(activity, loading, finish_on_success, finish_on_error, null);
-				
+
 			}
 
 			public void onError(ERROR_TYPE error) {
@@ -150,7 +150,7 @@ public class Reservation extends Structure{
 			}
 
 		}).execute();
-		
+
 	}
 
 	public static void getReservations(final String path, final Activity activity, final ProgressDialog loading,
@@ -232,21 +232,24 @@ public class Reservation extends Structure{
 			}
 		}).execute();
 	}
-	
+
 
 	public static void populateReservationsFromDb(final Activity activity, Integer list_id){
 
 		init();
-		
+
 		User user = Global.datasource.getUser();
 		for(Reservation r : Global.datasource.getReservationsByUser(user.id)){
-			
-			Station departure = Global.datasource.getStation(r.departureStation_id);
-			Station arrival = Global.datasource.getStation(r.arrivalStation_id);
 
-			names.add(departure.name + " - " + arrival.name);
-			descriptions.add(r.date);
-			ids.add(""+r.id);
+			if(r.canceled.equals("0")){
+				
+				Station departure = Global.datasource.getStation(r.departureStation_id);
+				Station arrival = Global.datasource.getStation(r.arrivalStation_id);
+
+				names.add(departure.name + " - " + arrival.name);
+				descriptions.add(r.date);
+				ids.add(""+r.id);
+			}
 		}
 
 		final ArrayList<String> names_f = new ArrayList<String>(names);
@@ -273,7 +276,7 @@ public class Reservation extends Structure{
 	public static void populateReservationFromDb(Activity activity){
 
 		init();
-		
+
 		Bundle b = activity.getIntent().getExtras();
 		String id = b.getString("id");
 		String name = b.getString("name");
@@ -283,7 +286,7 @@ public class Reservation extends Structure{
 		ArrayList<ReservationTrip> rTrips = Global.datasource.getReservationTrip(Integer.parseInt(id));
 
 		for(ReservationTrip rt : rTrips){
-			
+
 			Station departure = Global.datasource.getStation(rt.departure_id);
 			Station arrival = Global.datasource.getStation(rt.arrival_id);
 
