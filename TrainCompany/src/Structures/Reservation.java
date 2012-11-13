@@ -12,6 +12,7 @@ import pt.up.fe.cmov.traincompany.ListAdapter;
 import pt.up.fe.cmov.traincompany.R;
 import pt.up.fe.cmov.traincompany.ReservationView;
 import Requests.AsyncGet;
+import Requests.AsyncPost;
 import Requests.ResponseCommand;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -48,6 +49,30 @@ public class Reservation extends Structure{
 
 	public Reservation() {
 		super();
+	}
+	
+	public static void cancelReservations(final String path){
+		
+		
+		for(Reservation r : Global.datasource.getReservations()){
+			
+			String r_path = path + "/" + r.id;
+			HashMap<String,String> values = new HashMap<String, String>();
+			values.put("id", ""+r.id);
+			values.put("token", Global.datasource.getToken());
+			
+			if(Boolean.parseBoolean(r.canceled)){
+				
+				new AsyncPost(r_path, values, new ResponseCommand() {
+
+					public void onError(ERROR_TYPE error) {
+					}
+
+					public void onResultReceived(Object... results) {
+					}
+				}).execute();
+			}
+		}
 	}
 	
 	public static void getTrips(final String path, final Activity activity, final ProgressDialog loading,

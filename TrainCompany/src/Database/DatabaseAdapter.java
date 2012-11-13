@@ -200,6 +200,16 @@ public class DatabaseAdapter {
 		return database.insert("Reservations", null, values);
 	}
 	
+	public long cancelReservation(int id){
+		
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("Reservation_id", id);
+		values.put("canceled", true);
+		
+		return database.update("Reservations", values, null, null);
+	}
+	
 	public long updateReservation(Integer Reservation_id, Integer uuid, String User_id, String canceled,
 			String date, Integer departureStation_id, Integer arrivalStation_id){
 		

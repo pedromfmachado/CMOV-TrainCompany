@@ -18,8 +18,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.util.Log;
-
 public class HTTPRequest {
 
 	public static String POST(String server, HashMap<String, String> values){

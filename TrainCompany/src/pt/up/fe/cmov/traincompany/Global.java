@@ -17,7 +17,11 @@ public class Global {
 		String reservations_path = activity.getString(R.string.server_address) + "reservations";
 		String trips_path = activity.getString(R.string.server_address) + "trips";
 		
+
 		ProgressDialog loading = ProgressDialog.show(activity, "", "Syncing info...");
+		Reservation.cancelReservations(reservations_path);
+		
+		loading = ProgressDialog.show(activity, "", "Syncing info...");
 		Station.getStations(stations_path, activity, loading, R.id.list, false, false);
 
 		loading = ProgressDialog.show(activity, "", "Syncing info...");

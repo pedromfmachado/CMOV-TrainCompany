@@ -108,6 +108,10 @@ public class User extends Structure {
 					Intent i = new Intent(activity, MainMenu.class);
 					activity.startActivity(i);
 				}
+				else{
+					
+					errors.add("This application is not to be used by admins");
+				}
 
 				printErrors(activity, loading, finish_on_success, finish_on_error, R.string.message_login_success);
 
