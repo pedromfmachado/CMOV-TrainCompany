@@ -33,7 +33,7 @@ public class Reservations extends Activity {
 		return true;
 	}
 
-	public boolean onMenuClick(MenuItem m){
+	public boolean onOptionsItemSelected(MenuItem m){
 
 		switch (m.getItemId()) {
 
@@ -41,9 +41,6 @@ public class Reservations extends Activity {
 
 			Intent intent = new Intent(Reservations.this, MakeReservation.class);
 			startActivity(intent);
-			break;
-
-		default:
 			break;
 		}
 		return true;

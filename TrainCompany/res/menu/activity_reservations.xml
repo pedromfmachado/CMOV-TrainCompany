@@ -2,5 +2,5 @@
     <item android:id="@+id/menu_new_reservation"
         android:title="@string/label_new_reservation"
         android:orderInCategory="100"
-        android:showAsAction="never" android:onClick="onMenuClick"/>
+        android:showAsAction="never" android:onClick="onOptionsItemSelected"/>
 </menu>
