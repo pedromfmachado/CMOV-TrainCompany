@@ -3,6 +3,7 @@ package pt.up.fe.cmov.traincompany;
 import java.util.ArrayList;
 
 import Structures.Reservation;
+import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -44,18 +45,13 @@ public class Reservations extends Activity {
     		break;
     		
 		case R.id.btLogout:
-			Global.datasource.clearUsers();
-			intent = new Intent(Reservations.this, Login.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			finish();
+
+			User.Logout(this);
 			break;
 			
 		case R.id.btHome:
-			Intent i = new Intent(Reservations.this, MainMenu.class);
-			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
+
+			User.goHome(this);
 			break;
 
 		default:
@@ -68,6 +64,6 @@ public class Reservations extends Activity {
     	String server = getString(R.string.server_address) + "reservations";
 
 		loading = ProgressDialog.show(Reservations.this, "", "Loading reservations");
-		Reservation.getReservations(server, this, loading, R.id.list, false, true);
+		Reservation.getReservations(server, this, loading, R.id.list, false, false);
     }
 }

@@ -3,6 +3,7 @@ package pt.up.fe.cmov.traincompany;
 import java.util.ArrayList;
 
 import Structures.Line;
+import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -33,28 +34,22 @@ public class LineView extends Activity{
 		String server = getString(R.string.server_address) + "lines/" + id;
 
 		loading = ProgressDialog.show(LineView.this, "", "Loading line: " + name);
-		Line.getLineStations(server, this, loading, R.id.list, false, true);
+		//Line.getLineStations(server, this, loading, R.id.list, false, true);
 		
 	}
 	
 	public void onClick(View v) {
 
-		Intent intent = null;
 		switch (v.getId()) {
 
 		case R.id.btLogout:
-			Global.datasource.clearUsers();
-			intent = new Intent(LineView.this, Login.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			finish();
+
+			User.Logout(this);
 			break;
 			
 		case R.id.btHome:
-			Intent i = new Intent(LineView.this, MainMenu.class);
-			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
+
+			User.goHome(this);
 			break;
 
 		default:

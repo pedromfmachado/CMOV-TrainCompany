@@ -9,16 +9,19 @@ import org.json.JSONObject;
 
 import pt.up.fe.cmov.traincompany.Global;
 import pt.up.fe.cmov.traincompany.ListAdapter;
+import pt.up.fe.cmov.traincompany.R;
 import pt.up.fe.cmov.traincompany.ReservationView;
 import Requests.AsyncGet;
 import Requests.ResponseCommand;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class Reservation extends Structure{
 
@@ -53,8 +56,7 @@ public class Reservation extends Structure{
 			final int list_id, final boolean finish_on_success, final boolean finish_on_error){
 
 		init();
-		Global.datasource.clearReservations();
-		
+
 		HashMap<String,String> values = new HashMap<String, String>();
 		values.put("token", Global.datasource.getToken());
 
@@ -64,7 +66,8 @@ public class Reservation extends Structure{
 
 				if(results[0] == null || ((String)results[0]).equals("")){
 
-					errors.add("Connection problem");
+					populateReservationsFromDb(activity, list_id);
+					//errors.add("Connection problem");
 					printErrors(activity, loading, finish_on_success, finish_on_error, null);
 					return;
 				}
@@ -124,7 +127,7 @@ public class Reservation extends Structure{
 			public void onError(ERROR_TYPE error) {
 
 				populateReservationsFromDb(activity, list_id);
-				errors.add("Respons error - Using local data");
+				//errors.add("Response error - Using local data");
 				printErrors(activity, loading, finish_on_success, finish_on_error, null);
 
 			}
@@ -133,6 +136,8 @@ public class Reservation extends Structure{
 
 	public static void populateReservationsFromDb(final Activity activity, Integer list_id){
 
+		init();
+		
 		User user = Global.datasource.getUser();
 		for(Reservation r : Global.datasource.getReservationsByUser(user.id)){
 
@@ -161,10 +166,32 @@ public class Reservation extends Structure{
 			}
 		});
 	}
-	
-	public static void getReservation(String path, final Activity activity, final ProgressDialog loading,
-			final int list_id, final boolean finish_on_success, final boolean finish_on_error){
 
+	public static void populateReservationFromDb(Activity activity){
+
+		init();
 		
+		Bundle b = activity.getIntent().getExtras();
+		String id = b.getString("id");
+		String name = b.getString("name");
+
+		((TextView)activity.findViewById(R.id.title)).setText(name);
+
+		ArrayList<ReservationTrip> rTrips = Global.datasource.getReservationTrip(Integer.parseInt(id));
+
+		for(ReservationTrip rt : rTrips){
+
+			names.add(rt.departureName + " - " + rt.arrivalName);
+			descriptions.add(rt.time);
+			ids.add(""+rt.trip_id);
+		}
+
+		final ArrayList<String> names_f = new ArrayList<String>(names);
+		final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
+		ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f);
+
+		ListView list = (ListView) activity.findViewById(R.id.list);
+		list.setAdapter(adapter);
+
 	}
 }

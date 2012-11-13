@@ -5,12 +5,16 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pt.up.fe.cmov.traincompany.GetTrips;
 import pt.up.fe.cmov.traincompany.Global;
+import pt.up.fe.cmov.traincompany.Login;
+import pt.up.fe.cmov.traincompany.MainMenu;
 import pt.up.fe.cmov.traincompany.R;
 import Requests.AsyncPost;
 import Requests.ResponseCommand;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 
 public class User extends Structure {
 
@@ -102,5 +106,22 @@ public class User extends Structure {
 
 			
 		}).execute();
+	}
+	
+	public static void Logout(Activity activity){
+		
+		Global.datasource.clearUsers();
+		Intent i = new Intent(activity, Login.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(i);
+		activity.finish();
+	}
+	
+	public static void goHome(Activity activity){
+		
+		Intent i = new Intent(activity, MainMenu.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(i);
+		activity.finish();
 	}
 }

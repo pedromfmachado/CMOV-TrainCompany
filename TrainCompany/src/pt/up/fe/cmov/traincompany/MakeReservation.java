@@ -110,7 +110,7 @@ public class MakeReservation extends Activity {
 		int departure_pos = ((Spinner)findViewById(R.id.sDeparture)).getSelectedItemPosition();
 
 		DatePicker dp = ((DatePicker)findViewById(R.id.dpDate));
-		String date = dp.getYear() + "-" + dp.getMonth() + "-" + dp.getDayOfMonth();
+		String date = dp.getYear() + "-" + dp.getMonth()+1 + "-" + dp.getDayOfMonth();
 
 		TimePicker tp = ((TimePicker)findViewById(R.id.tpTime));
 		String time = tp.getCurrentHour() + ":" + tp.getCurrentMinute();

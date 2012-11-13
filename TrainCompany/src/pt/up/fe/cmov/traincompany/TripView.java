@@ -3,9 +3,9 @@ package pt.up.fe.cmov.traincompany;
 import java.util.ArrayList;
 
 import Structures.Trip;
+import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -39,23 +39,16 @@ public class TripView extends Activity{
 	
 	public void onClick(View v) {
 		
-		Intent intent = null;
-
 		switch (v.getId()) {
 
 		case R.id.btLogout:
-			Global.datasource.clearUsers();
-			intent = new Intent(TripView.this, Login.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			finish();
+
+			User.Logout(this);
 			break;
 
 		case R.id.btHome:
-			Intent i = new Intent(TripView.this, MainMenu.class);
-i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
+
+			User.goHome(this);
 			break;
 
 		default:

@@ -686,7 +686,7 @@ public class DatabaseAdapter {
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put("order", order);
+		values.put("order_nr", order);
 		values.put("distance", distance);
 		values.put("Station_id", Station_id);
 		values.put("Line_id", Line_id);
@@ -706,7 +706,7 @@ public class DatabaseAdapter {
 		
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put("order", order);
+		values.put("order_nr", order);
 		values.put("distance", distance);
 		values.put("Station_id", Station_id);
 		values.put("Line_id", Line_id);
@@ -733,7 +733,7 @@ public class DatabaseAdapter {
 		while(!lineCursor.isAfterLast()){
 			try {
 				LineStation l = new LineStation();
-				l.order = lineCursor.getInt(lineCursor.getColumnIndex("order"));
+				l.order = lineCursor.getInt(lineCursor.getColumnIndex("order_nr"));
 				l.distance = lineCursor.getInt(lineCursor.getColumnIndex("distance"));
 				l.Line_id = lineCursor.getInt(lineCursor.getColumnIndex("Line_id"));
 				l.Station_id = lineCursor.getInt(lineCursor.getColumnIndex("Station_id"));
@@ -768,7 +768,7 @@ public class DatabaseAdapter {
 		while(!lineCursor.isAfterLast()){
 			try {
 				LineStation l = new LineStation();
-				l.order = lineCursor.getInt(lineCursor.getColumnIndex("order"));
+				l.order = lineCursor.getInt(lineCursor.getColumnIndex("order_nr"));
 				l.distance = lineCursor.getInt(lineCursor.getColumnIndex("distance"));
 				l.Line_id = lineCursor.getInt(lineCursor.getColumnIndex("Line_id"));
 				l.Station_id = lineCursor.getInt(lineCursor.getColumnIndex("Station_id"));

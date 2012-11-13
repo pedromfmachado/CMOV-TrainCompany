@@ -1,5 +1,6 @@
 package pt.up.fe.cmov.traincompany;
 
+import Structures.User;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,10 +51,8 @@ public class MainMenu extends Activity {
     		break;
     		
     	case R.id.btLogout:
-    		Global.datasource.clearUsers();
-    		intent = new Intent(MainMenu.this, Login.class);
-			startActivity(intent);
-			finish();
+
+    		User.Logout(this);
     		break;
     	
     	default:

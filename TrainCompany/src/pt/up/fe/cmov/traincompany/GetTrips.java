@@ -49,25 +49,19 @@ public class GetTrips extends Activity {
 
 	public void onClick(View v) {
 
-		Intent intent = null;
 		switch (v.getId()) {
 		case R.id.btMakeReservation:
 			makeReservation();
 			break;
 
 		case R.id.btLogout:
-			Global.datasource.clearUsers();
-			intent = new Intent(GetTrips.this, Login.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			finish();
+			
+			User.Logout(this);
 			break;
 
 		case R.id.btHome:
-			Intent i = new Intent(GetTrips.this, MainMenu.class);
-			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
+			
+			User.goHome(this);
 			break;
 
 		default:
@@ -89,8 +83,6 @@ public class GetTrips extends Activity {
 		values.put("arrivalStation_id", arrival_id);
 		values.put("departureStation_id", departure_id);
 		values.put("time", time);
-
-		Log.i("trips", date + " - " + arrival_id + " - " + departure_id + " - " + time);
 
 		if(values.containsValue("")){
 
@@ -115,6 +107,7 @@ public class GetTrips extends Activity {
 
 				try{
 
+					Log.i("result", (String)results[0]);
 					JSONObject json = new JSONObject((String)results[0]);
 					JSONArray jsonArray = json.getJSONArray("trips");
 
@@ -210,7 +203,6 @@ public class GetTrips extends Activity {
 					try {
 
 						json = new JSONObject((String)results[0]);
-						Log.i("result", (String)results[0]);
 
 						boolean success = json.optBoolean("success");
 						if(success){
