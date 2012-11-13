@@ -235,7 +235,7 @@ public class DatabaseAdapter {
 		
 		Cursor c = database.rawQuery("SELECT * FROM Reservations WHERE Reservation_id = \"" + Reservation_id +"\"", null);
 		c.moveToFirst();
-		Reservation r = new Reservation(c.getInt(0),c.getString(1),c.getInt(2), c.getString(3), c.getString(4), c.getInt(5), c.getInt(6));
+		Reservation r = new Reservation(c.getInt(0),c.getString(1),c.getInt(2), c.getString(3), c.getString(4), c.getInt(7), c.getInt(8));
 		c.close();
 		return r;
 	}
