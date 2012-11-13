@@ -64,6 +64,7 @@ public class User extends Structure {
 			}
 
 			public void onResultReceived(Object... results) {
+				User u = new User();
 				if(results.length > 0){
 
 					if(results[0] == null || ((String)results[0]).equals("")){
@@ -79,14 +80,14 @@ public class User extends Structure {
 						boolean success = json.optBoolean("success");
 						if(success){
 
-							Integer user_id = json.getInt("id");
-							String name = json.getString("name");
-							String email = json.getString("email");
-							String token = json.getString("auth_token");
-							String role = json.getString("role");
+							u.id = json.getInt("id");
+							u.name = json.getString("name");
+							u.email = json.getString("email");
+							u.token = json.getString("auth_token");
+							u.role = json.getString("role");
 
 							Global.datasource.clearUsers();
-							Global.datasource.createUser(user_id, name, email, token, role);
+							Global.datasource.createUser(u.id, u.name, u.email, u.token, u.role);
 
 						}
 						else{
@@ -101,15 +102,22 @@ public class User extends Structure {
 						errors.add("JSON Response Error");
 					}
 				}
+				
+				if(errors.size() == 0 && !u.role.equals("admin")){
+					
+					Intent i = new Intent(activity, MainMenu.class);
+					activity.startActivity(i);
+				}
 
 				printErrors(activity, loading, finish_on_success, finish_on_error, R.string.message_login_success);
+
 			}
 
 
 		}).execute();
 	}
 
-	public static void register(String path, String email, String password, final Activity activity,
+	public static void register(String path, final Activity activity,
 			final ProgressDialog loading, HashMap<String, String> values,
 			final boolean finish_on_success, final boolean finish_on_error){
 
@@ -135,7 +143,6 @@ public class User extends Structure {
 
 				try{
 					JSONObject json = new JSONObject((String)results[0]);
-
 					Log.i("response",json.toString());
 
 					boolean success = json.optBoolean("success");

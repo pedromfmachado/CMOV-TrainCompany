@@ -2,11 +2,8 @@ package Structures;
 
 import java.util.ArrayList;
 
-import pt.up.fe.cmov.traincompany.MainMenu;
-import pt.up.fe.cmov.traincompany.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.widget.Toast;
 
 public class Structure {
@@ -43,9 +40,7 @@ public class Structure {
 		}
 		else if(success_message_id != null){
 			
-			Toast.makeText(activity, activity.getString(R.string.message_login_success), Toast.LENGTH_LONG).show();
-			Intent intent = new Intent(activity, MainMenu.class);
-			activity.startActivity(intent);
+			Toast.makeText(activity, activity.getString(success_message_id), Toast.LENGTH_LONG).show();
 			if(finish_on_success)
 				activity.finish();
 		}

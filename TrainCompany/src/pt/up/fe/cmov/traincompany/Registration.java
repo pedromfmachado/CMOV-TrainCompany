@@ -1,18 +1,11 @@
 package pt.up.fe.cmov.traincompany;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import Requests.AsyncPost;
-import Requests.ResponseCommand;
-import Utils.UI;
+import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -80,62 +73,8 @@ public class Registration extends Activity {
 				return;
 			}
 
-			//TODO confirmation email
-
 			loading = ProgressDialog.show(Registration.this, "", "Registering user...");
-			new AsyncPost(register_path, values, new ResponseCommand() {
-
-				public void onError(ERROR_TYPE error) {
-
-					loading.dismiss();
-					UI.showErrorDialog(Registration.this, R.string.message_connection_error, R.string.button_ok);
-				}
-
-				public void onResultReceived(Object... results) {
-
-					loading.dismiss();
-
-					if(results[0] == null || ((String)results[0]).equals("")){
-
-						Toast.makeText(Registration.this, "Connections problems, verify your network signal", Toast.LENGTH_LONG).show();
-						return;
-					}
-
-					try{
-						JSONObject json = new JSONObject((String)results[0]);
-
-						Log.i("response",json.toString());
-
-						boolean success = json.optBoolean("success");
-						if(success){
-
-							Toast.makeText(Registration.this, "User registered successfully!", Toast.LENGTH_LONG).show();
-							finish();
-						}
-						else{
-
-							String errors = "";
-							JSONObject errors_json = json.optJSONObject("errors");
-							Iterator<?> errors_itr = errors_json.keys();
-							while(errors_itr.hasNext()){
-
-								String key = errors_itr.next().toString();
-								errors += "- " + key + errors_json.getJSONArray(key).getString(0) + "\n";
-
-							}
-
-							Toast.makeText(Registration.this, errors, Toast.LENGTH_LONG).show();
-							//Toast.makeText(RegistrationActivity.this, "Fields are not correctly filled", Toast.LENGTH_LONG).show();
-						}
-					}
-					catch(JSONException e){
-
-						e.printStackTrace();
-					}
-				}
-
-			}).execute();
-
+			User.register(register_path,Registration.this,loading,values,true,false);
 
 		}
 	};

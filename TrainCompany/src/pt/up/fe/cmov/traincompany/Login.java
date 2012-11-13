@@ -17,16 +17,21 @@ public class Login extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		Global.datasource = new DatabaseAdapter(getApplicationContext());
+
+		findViewById(R.id.btLogin).setOnClickListener(loginListener);
+		findViewById(R.id.btRegister).setOnClickListener(registerListener);
+	}
+	
+	@Override
+	protected void onStart() {
 		
+		super.onStart();
 		if(Global.datasource.checkUserOnDB()){
 			
 			Intent intent = new Intent(Login.this, MainMenu.class);
 			startActivity(intent);
 			finish();
 		}
-
-		findViewById(R.id.btLogin).setOnClickListener(loginListener);
-		findViewById(R.id.btRegister).setOnClickListener(registerListener);
 	}
 
 

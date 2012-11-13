@@ -17,7 +17,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -73,7 +72,6 @@ public class Reservation extends Structure{
 
 				try{
 
-					Log.i("result", (String)results[0]);
 					JSONObject json = new JSONObject((String)results[0]);
 					JSONArray jsonArray = json.getJSONArray("trips");
 
@@ -144,9 +142,6 @@ public class Reservation extends Structure{
 				}
 
 				try{
-
-					Log.i("result", path);
-					Log.i("result", (String)results[0]);
 					JSONArray json = new JSONArray((String)results[0]);
 					Global.datasource.clearReservations();
 
@@ -160,10 +155,11 @@ public class Reservation extends Structure{
 						reservation.arrivalStation_id = rJson.getInt("arrivalStation_id");
 						reservation.departureStation_id = rJson.getInt("departureStation_id");
 						reservation.id = rJson.getInt("id");
+						reservation.uuid = rJson.getString("uuid");
 						reservation.date = rJson.getString("date");
 						reservation.user_id = rJson.getInt("user_id");
 
-						Global.datasource.createReservation(reservation.id, "", reservation.user_id,
+						Global.datasource.createReservation(reservation.id, reservation.uuid, reservation.user_id,
 								false, reservation.date, reservation.departureStation_id, reservation.arrivalStation_id);
 
 						for(int j = 0; j < tripsArray.length(); j++){

@@ -79,8 +79,6 @@ public class HTTPRequest {
 		
 		server = server.substring(0,server.length()-1);
 		
-		Log.i("server string", server);
-		
 		HttpGet httpget = new HttpGet(server);
 
 		try {

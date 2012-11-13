@@ -2,12 +2,28 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/menu_bar" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/label_new_reservation"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:id="@+id/tvDeparture"
@@ -56,12 +72,13 @@
             android:id="@+id/tpTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
+
         <Button
             android:id="@+id/btMakeReservation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
+            android:background="@drawable/button_style"
             android:onClick="onClick"
             android:text="@string/label_make_reservation" />
 
