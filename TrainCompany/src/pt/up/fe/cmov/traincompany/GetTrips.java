@@ -2,6 +2,7 @@ package pt.up.fe.cmov.traincompany;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,9 +115,10 @@ public class GetTrips extends Activity {
 
 				try{
 
-					JSONArray json = new JSONArray((String)results[0]);
+					JSONObject json = new JSONObject((String)results[0]);
+					JSONArray jsonArray = json.getJSONArray("trips");
 
-					if(json.length() == 0){
+					if(jsonArray.length() == 0){
 
 						loading.dismiss();
 						Toast.makeText(GetTrips.this, "There are no trips in this direction", Toast.LENGTH_LONG).show();
@@ -124,13 +126,13 @@ public class GetTrips extends Activity {
 						return;
 					}
 
-					for(int i = 0; i < json.length(); i++){
+					for(int i = 0; i < jsonArray.length(); i++){
 
-						String departure = json.getJSONObject(i).getString("departure");
-						String arrival = json.getJSONObject(i).getString("arrival");
-						String time = json.getJSONObject(i).getString("time");
+						String departure = jsonArray.getJSONObject(i).getString("departure");
+						String arrival = jsonArray.getJSONObject(i).getString("arrival");
+						String time = jsonArray.getJSONObject(i).getString("time");
 
-						JSONObject trip = json.getJSONObject(i).getJSONObject("trip");
+						JSONObject trip = jsonArray.getJSONObject(i).getJSONObject("trip");
 
 						names.add(departure + " - " + arrival);
 						ids.add(trip.getString("id"));
@@ -208,9 +210,12 @@ public class GetTrips extends Activity {
 					try {
 
 						json = new JSONObject((String)results[0]);
+						Log.i("result", (String)results[0]);
 
 						boolean success = json.optBoolean("success");
 						if(success){
+							
+							
 
 							/*Integer user_id = json.getInt("id");
 							String name = json.getString("name");
@@ -225,8 +230,22 @@ public class GetTrips extends Activity {
 						}
 						else{
 
+							String error = "Error!";
+							JSONArray errors = json.getJSONArray("errors");
+							for(int i = 0; i < errors.length(); i++){
+								
+								
+								JSONObject obj = errors.getJSONObject(i);
+								Iterator<?> keys = obj.keys();
+								while(keys.hasNext()){
+									
+									String s = (String)keys.next();
+									error += s + " - " + obj.getString(s);
+								}
+							}
+							
 							loading.dismiss();
-							Toast.makeText(GetTrips.this, "Error creating reservation", Toast.LENGTH_LONG).show();
+							Toast.makeText(GetTrips.this, error, Toast.LENGTH_LONG).show();
 						}
 
 

@@ -31,6 +31,8 @@ public class MakeReservation extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.make_reservation);
+		
+		((TimePicker)findViewById(R.id.tpTime)).setIs24HourView(true);
 
 		populate();
 
