@@ -3,16 +3,12 @@ package pt.up.fe.cmov.traincompany;
 import java.util.ArrayList;
 
 import Structures.Reservation;
-import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
 public class Reservations extends Activity {
 	
@@ -65,33 +61,6 @@ public class Reservations extends Activity {
 		default:
 			break;
 		}
-    }
-    
-    private void populateDb(){
-    	
-    	User user = Global.datasource.getUser();
-    	for(Reservation r : Global.datasource.getReservationsByUser(user.id)){
-    		
-    		names.add(r.departureStation_name + " - " + r.arrivalStation_name);
-    		descriptions.add(r.date);
-    		ids.add(""+r.id);
-    	}
-    	
-    	ListAdapter adapter = new ListAdapter(Reservations.this, names, descriptions);
-
-		ListView list = (ListView) findViewById(R.id.list);
-		list.setAdapter(adapter);
-		list.setOnItemClickListener(new OnItemClickListener() {
-
-			public void onItemClick(AdapterView<?> parent,
-					View view, int position, long id) {
-
-				Intent intent = new Intent(Reservations.this, ReservationView.class);
-				intent.putExtra("id", ids.get(position));
-				intent.putExtra("name", names.get(position));
-				startActivity(intent);
-			}
-		});
     }
     
     private void getData(){
