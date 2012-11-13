@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE_STATIONS = "create table Stations(Station_id INTEGER, name TEXT);";
 	private static final String DATABASE_CREATE_TRIPTYPE = "create table TripTypes(TripType INTEGER, price FLOAT);";
 	private static final String DATABASE_CREATE_TRAIN = "create table Trains(Train_id INTEGER, maximumCapacity INTEGER, velocity FLOAT);";
-	private static final String DATABASE_CREATE_LINESTATIONS = "create table LineStations(order INTEGER, distance INTEGER, Station_id INTEGER, Line_id INTEGER);";
+	private static final String DATABASE_CREATE_LINESTATIONS = "create table LineStations(order_nr INTEGER, distance INTEGER, Station_id INTEGER, Line_id INTEGER);";
 	private static final String DATABASE_CREATE_TRIPS = "create table Trips(Trip_id INTEGER, beginTime DATE, Train_id INTEGER, departureStation_id INTEGER, arrivalStation_id INTEGER, Line_id INTEGER, TripType_id INTEGER);";
 	
 	public DatabaseHelper(Context context) {
