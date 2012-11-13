@@ -32,11 +32,6 @@ public class MakeReservation extends Activity {
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_make_reservation, menu);
-		return true;
-	}
 
 	public void populate(){
 
