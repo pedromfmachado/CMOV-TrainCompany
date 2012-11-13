@@ -243,6 +243,21 @@ public class DatabaseAdapter {
 	}
 	
 	/**
+	 * from a uuid, returns a Reservation
+	 * @param uuid
+	 * @return Reservation
+	 */
+	public Reservation getReservationUUID(String uuid){
+		final SQLiteDatabase database = dbHelper.getReadableDatabase();
+		
+		Cursor c = database.rawQuery("SELECT * FROM Reservations WHERE uuid = \"" + uuid +"\"", null);
+		c.moveToFirst();
+		Reservation r = new Reservation(c.getInt(0),c.getString(1),c.getInt(2), c.getString(3), c.getString(4), c.getInt(7), c.getInt(8));
+		c.close();
+		return r;
+	}
+	
+	/**
 	 * returns the list of reservations by User
 	 * @param user_id
 	 * @return arrayList of Reservations
