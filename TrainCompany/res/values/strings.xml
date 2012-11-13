@@ -45,5 +45,6 @@
     <string name="title_activity_reservation_view">ReservationView</string>
     <string name="message_login_success">Login successful!</string>
     <string name="label_sync">Sync</string>
+    <string name="message_registration_success">User registered successfully!</string>
 
 </resources>
