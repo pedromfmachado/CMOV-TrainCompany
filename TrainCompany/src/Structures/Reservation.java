@@ -313,4 +313,23 @@ public class Reservation extends Structure{
 		list.setAdapter(adapter);
 
 	}
+	
+	public static boolean validate(Reservation r, Trip t){
+		
+		boolean validated = false;
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = new Date();
+		
+		if(!r.date.equals(format.format(d)))
+			return validated;
+		
+		for(ReservationTrip rt: Global.datasource.getReservationTrip(r.id)){
+			
+			if(rt.trip_id == t.Trip_id)
+				validated = true;
+		}
+		
+		return validated;
+	}
 }

@@ -71,6 +71,9 @@
             android:name=".ReservationView"
             android:label="@string/title_activity_reservation_view" >
         </activity>
+        <activity
+            android:name=".ValidateReservation">
+        </activity>
     </application>
 
 </manifest>
