@@ -7,8 +7,13 @@ import android.view.View;
 import Database.DatabaseAdapter;
 
 public class Global {
+	
+	public static final String ADMIN = "admin";
+	public static final String INSPECTOR = "inspector";
+	public static final String CUSTOMER = "customer";
 
 	public static DatabaseAdapter datasource;
+	public static boolean synced = false;
 
 	public static void sync(Activity activity){
 		

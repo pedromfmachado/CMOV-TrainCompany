@@ -1,6 +1,8 @@
 package Structures;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -160,6 +162,11 @@ public class Reservation extends Structure{
 
 		HashMap<String,String> values = new HashMap<String, String>();
 		values.put("token", Global.datasource.getToken());
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = new Date();
+		
+		values.put("date", format.format(d));
 
 		new AsyncGet(path, values, new ResponseCommand() {
 
@@ -175,6 +182,9 @@ public class Reservation extends Structure{
 
 				try{
 					JSONArray json = new JSONArray((String)results[0]);
+					
+					Log.i("result", (String)results[0]);
+					
 					Global.datasource.clearReservations();
 
 					for(int i = 0; i < json.length(); i++){

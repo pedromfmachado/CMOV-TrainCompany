@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:background="@drawable/menu_border"
     android:orientation="horizontal" >
-
+
     <Button
         android:id="@+id/btSync"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="@string/label_sync" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/sync_icon_style"
+        android:onClick="onClick" />
 
     <Button
         android:id="@+id/btAbout"

@@ -39,9 +39,9 @@
             android:onClick="onClick" />
 
     </TableRow>
-
+
     <TableRow
-        android:id="@+id/tableRow2"
+        android:id="@+id/reservations_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center" >
