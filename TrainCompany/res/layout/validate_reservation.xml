@@ -5,55 +5,83 @@
     android:orientation="vertical"
     android:paddingLeft="15dp"
     android:paddingRight="15dp" >
-
+
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         layout="@layout/menu_bar" />
-
+
     <TextView
         android:id="@+id/reservation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_reservation"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/etUUID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" android:inputType="text">
+        android:ems="10"
+        android:inputType="text" >
 
         <requestFocus />
     </EditText>
-
+
     <Button
-        android:id="@+id/newReservation"
+        android:id="@+id/btValidate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_style"
-        android:text="@string/button_nextreservation" />
-
+        android:onClick="onClick"
+        android:text="@string/button_validate" />
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trip:"
+        android:layout_marginTop="15dp"
+        android:text="@string/label_trip"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <TextView
+        android:id="@+id/tvTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#888" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date"
+        android:layout_marginTop="15dp"
+        android:text="@string/label_date"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#888" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Medium Text"
+        android:layout_marginTop="15dp"
+        android:text="@string/label_validity"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvValidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>

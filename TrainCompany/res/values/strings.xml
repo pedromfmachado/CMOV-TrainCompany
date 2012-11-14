@@ -47,5 +47,9 @@
     <string name="label_sync">Sync</string>
     <string name="message_registration_success">User registered successfully!</string>
     <string name="label_cancel_reservation">Cancel reservation</string>
+    <string name="label_trip">Trip</string>
+    <string name="label_validity">Validity</string>
+    <string name="label_validate_trip">Validate reservations</string>
+    <string name="button_validate">Validate Reservation</string>
 
 </resources>

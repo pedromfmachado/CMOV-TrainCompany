@@ -22,7 +22,8 @@ public class NotificationActivity extends Activity {
 	    mgr=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 	  }
 	  
-	  public void notifyMe(View v) {
+	  @SuppressWarnings("deprecation")
+	public void notifyMe(View v) {
 	    Notification note = new Notification(R.drawable.stat_notify_chat,"Status message!",System.currentTimeMillis());
 	    PendingIntent i=PendingIntent.getActivity(this, 0,new Intent(this, NotificationMessage.class),0);
 	    note.setLatestEventInfo(this, "New Email","Unread Conversation", i);

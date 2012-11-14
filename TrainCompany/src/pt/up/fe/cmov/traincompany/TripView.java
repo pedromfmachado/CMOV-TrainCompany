@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import Structures.Trip;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,6 +20,29 @@ public class TripView extends Activity{
 	ArrayList<String> descriptions = new ArrayList<String>();
 	ArrayList<String> ids = new ArrayList<String>();
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		if(Global.datasource.getUser().role.equals(Global.INSPECTOR))
+			getMenuInflater().inflate(R.menu.activity_trip_view, menu);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem m){
+
+		switch (m.getItemId()) {
+
+		case R.id.menu_validate_trip:
+
+			Bundle b = getIntent().getExtras();
+			String id = b.getString("id");
+			
+			Intent i = new Intent(TripView.this, ValidateReservation.class);
+			i.putExtra("id", Integer.parseInt(id));
+			startActivity(i);
+		}
+		return true;
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
