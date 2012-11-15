@@ -184,7 +184,7 @@ public class DatabaseAdapter {
 	 * @return
 	 */
 	public long createReservation(Integer Reservation_id, String uuid, Integer User_id, Boolean canceled,
-			String date, Integer departureStation_id, Integer arrivalStation_id){
+			String date, Integer departureStation_id, Integer arrivalStation_id, Boolean paid, Float price){
 
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -196,6 +196,8 @@ public class DatabaseAdapter {
 		values.put("date", date.toString());
 		values.put("departureStation_id", departureStation_id);
 		values.put("arrivalStation_id", arrivalStation_id);
+		values.put("paid", paid);
+		values.put("price", price);
 
 		return database.insert("Reservations", null, values);
 	}
@@ -211,7 +213,7 @@ public class DatabaseAdapter {
 	}
 	
 	public long updateReservation(Integer Reservation_id, Integer uuid, String User_id, String canceled,
-			String date, Integer departureStation_id, Integer arrivalStation_id){
+			String date, Integer departureStation_id, Integer arrivalStation_id, String paid, Float price){
 		
 		final SQLiteDatabase database = dbHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -222,6 +224,8 @@ public class DatabaseAdapter {
 		values.put("date", date.toString());
 		values.put("departureStation_id", departureStation_id);
 		values.put("arrivalStation_id", arrivalStation_id);
+		values.put("paid", paid);
+		values.put("price", price);
 		
 		return database.update("Reservations", values, null, null);
 
@@ -237,7 +241,7 @@ public class DatabaseAdapter {
 		
 		Cursor c = database.rawQuery("SELECT * FROM Reservations WHERE Reservation_id = \"" + Reservation_id +"\"", null);
 		c.moveToFirst();
-		Reservation r = new Reservation(c.getInt(0),c.getString(1),c.getInt(2), c.getString(3), c.getString(4), c.getInt(5), c.getInt(6));
+		Reservation r = new Reservation(c.getInt(0),c.getString(1),c.getInt(2), c.getString(3), c.getString(4), c.getInt(5), c.getInt(6), c.getString(7), c.getFloat(8));
 		c.close();
 		return r;
 	}
@@ -258,7 +262,7 @@ public class DatabaseAdapter {
 			return null;
 		}
 		c.moveToFirst();
-		Reservation r = new Reservation(c.getInt(0),c.getString(1),c.getInt(2), c.getString(3), c.getString(4), c.getInt(5), c.getInt(6));
+		Reservation r = new Reservation(c.getInt(0),c.getString(1),c.getInt(2), c.getString(3), c.getString(4), c.getInt(5), c.getInt(6), c.getString(7), c.getFloat(8));
 		c.close();
 		return r;
 	}
@@ -291,6 +295,8 @@ public class DatabaseAdapter {
 				reservation.date = reservationCursor.getString(reservationCursor.getColumnIndex("date"));
 				reservation.departureStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("departureStation_id"));
 				reservation.arrivalStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("arrivalStation_id"));
+				reservation.price = reservationCursor.getFloat(reservationCursor.getColumnIndex("price"));
+				reservation.paid = reservationCursor.getString(reservationCursor.getColumnIndex("paid"));
 				
 				ret.add(reservation);
 			} catch (Exception e) {
@@ -331,6 +337,9 @@ public class DatabaseAdapter {
 				r.date = reservationCursor.getString(reservationCursor.getColumnIndex("date"));
 				r.departureStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("departureStation_id"));
 				r.arrivalStation_id = reservationCursor.getInt(reservationCursor.getColumnIndex("arrivalStation_id"));
+				r.price = reservationCursor.getFloat(reservationCursor.getColumnIndex("price"));
+				r.paid = reservationCursor.getString(reservationCursor.getColumnIndex("paid"));
+				
 				result.add(r);
 			} catch (Exception e) {
 				e.printStackTrace();

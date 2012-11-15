@@ -36,9 +36,11 @@ public class Reservation extends Structure{
 	public String date;
 	public Integer departureStation_id;
 	public Integer arrivalStation_id;
+	public String paid;
+	public Float price;
 
 
-	public Reservation(Integer id, String uuid, Integer User_id, String canceled, String date, Integer departureStation_id, Integer arrivalStation_id){
+	public Reservation(Integer id, String uuid, Integer User_id, String canceled, String date, Integer departureStation_id, Integer arrivalStation_id, String paid, Float price){
 
 		this.id = id;
 		this.uuid = uuid;
@@ -47,6 +49,8 @@ public class Reservation extends Structure{
 		this.date = date;
 		this.departureStation_id = departureStation_id;
 		this.arrivalStation_id = arrivalStation_id;
+		this.paid = paid;
+		this.price = price;
 
 	}
 
@@ -210,9 +214,12 @@ public class Reservation extends Structure{
 						reservation.uuid = rJson.getString("uuid");
 						reservation.date = rJson.getString("date");
 						reservation.user_id = rJson.getInt("user_id");
+						reservation.paid = rJson.getString("paid");
+						reservation.price = (float) rJson.getDouble("price");
+						
 
 						Global.datasource.createReservation(reservation.id, reservation.uuid, reservation.user_id,
-								false, reservation.date, reservation.departureStation_id, reservation.arrivalStation_id);
+								false, reservation.date, reservation.departureStation_id, reservation.arrivalStation_id, /*reservation.paid,*/ reservation.price);
 
 						for(int j = 0; j < tripsArray.length(); j++){
 
