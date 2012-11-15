@@ -17,11 +17,11 @@ public class ReservationView extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list);
+		setContentView(R.layout.reservation_view);
 
 		Reservation.populateReservationFromDb(this);
-		
-		
+
+
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ReservationView extends Activity {
 
 			Bundle b = getIntent().getExtras();
 			String id = b.getString("id");
-			
+
 			Global.datasource.cancelReservation(Integer.parseInt(id));
 			finish();
 		}
@@ -48,22 +48,23 @@ public class ReservationView extends Activity {
 	public void onClick(View v) {
 
 		Global.buttonAction(v,this);
-		
-		switch (v.getId()) {
-		case R.id.btGenQrCode:
-			
-			Bundle b = getIntent().getExtras();
-			String id = b.getString("id");
-			
-			String uuid = Global.datasource.getReservation(Integer.parseInt(id)).uuid;
-			
-			IntentIntegrator integrator = new IntentIntegrator(this);
-			integrator.shareText(uuid);
-			
-			break;
 
-		default:
-			break;
+		switch (v.getId()) {
+		
+			case R.id.btGenQrCode:
+	
+				Bundle b = getIntent().getExtras();
+				String id = b.getString("id");
+	
+				String uuid = Global.datasource.getReservation(Integer.parseInt(id)).uuid;
+	
+				IntentIntegrator integrator = new IntentIntegrator(this);
+				integrator.shareText(uuid);
+	
+				break;
+	
+			default:
+				break;
 		}
 	}
 }
