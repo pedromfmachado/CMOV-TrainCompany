@@ -50,21 +50,23 @@ public class ReservationView extends Activity {
 		Global.buttonAction(v,this);
 
 		switch (v.getId()) {
-		
-			case R.id.btGenQrCode:
-	
-				Bundle b = getIntent().getExtras();
-				String id = b.getString("id");
-	
-				String uuid = Global.datasource.getReservation(Integer.parseInt(id)).uuid;
-	
+
+		case R.id.btGenQrCode:
+
+			Bundle b = getIntent().getExtras();
+			String id = b.getString("id");
+
+			String uuid = Global.datasource.getReservation(Integer.parseInt(id)).uuid;
+
+			if(uuid != null){
 				IntentIntegrator integrator = new IntentIntegrator(this);
 				integrator.shareText(uuid);
-	
-				break;
-	
-			default:
-				break;
+			}
+
+			break;
+
+		default:
+			break;
 		}
 	}
 }

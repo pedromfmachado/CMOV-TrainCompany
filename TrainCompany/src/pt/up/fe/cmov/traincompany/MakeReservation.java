@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 import Structures.Station;
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +24,7 @@ public class MakeReservation extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.make_reservation);
-		
+
 		((TimePicker)findViewById(R.id.tpTime)).setIs24HourView(true);
 
 		populate();
@@ -81,16 +78,16 @@ public class MakeReservation extends Activity {
 	}
 
 	public void onClick(View v) {
-		
+
 		Global.buttonAction(v, this);
 
 		switch (v.getId()) {
-			case R.id.btMakeReservation:
-				getTrips();
-				break;
-	
-			default:
-				break;
+		case R.id.btMakeReservation:
+			getTrips();
+			break;
+
+		default:
+			break;
 		}
 	}
 }

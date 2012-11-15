@@ -103,14 +103,16 @@ public class User extends Structure {
 					}
 				}
 				
-				if(u != null && errors.size() == 0 && !u.role.equals(Global.ADMIN)){
-					
-					Intent i = new Intent(activity, MainMenu.class);
-					activity.startActivity(i);
-				}
-				else if(u != null && u.role.equals(Global.ADMIN)){
-					
-					errors.add("This application is not to be used by admins");
+				if(u != null){
+					if(errors.size() == 0 && u.role != null && !u.role.equals(Global.ADMIN)){
+						
+						Intent i = new Intent(activity, MainMenu.class);
+						activity.startActivity(i);
+					}
+					else if(u.role != null && u.role.equals(Global.ADMIN)){
+						
+						errors.add("This application is not to be used by admins");
+					}
 				}
 
 				printErrors(activity, loading, finish_on_success, finish_on_error, R.string.message_login_success);
