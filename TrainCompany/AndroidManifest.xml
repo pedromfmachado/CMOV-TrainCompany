@@ -76,10 +76,6 @@
         <activity
             android:name=".ValidateReservation">
         </activity>
-        <activity
-            android:name=".NotificationActivity"
-            android:label="@string/app_name" >
-        </activity>
     </application>
 
 </manifest>
