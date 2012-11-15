@@ -141,8 +141,8 @@ public class Trip extends Structure{
 					
 					final ArrayList<String> names_f = new ArrayList<String>(names);
 					final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
-
-					ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f);
+					final ArrayList<String> ids_f = new ArrayList<String>(ids);
+					ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f, ids_f);
 
 					ListView list = (ListView) activity.findViewById(R.id.list);
 					list.setAdapter(adapter);
@@ -182,8 +182,7 @@ public class Trip extends Structure{
 		final ArrayList<String> names_f = new ArrayList<String>(names);
 		final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
 		final ArrayList<String> ids_f = new ArrayList<String>(ids);
-
-		ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f);
+		ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f, ids_f);
 
 		ListView list = (ListView) activity.findViewById(R.id.list);
 		list.setAdapter(adapter);

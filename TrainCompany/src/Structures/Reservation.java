@@ -129,7 +129,10 @@ public class Reservation extends Structure{
 						descriptions.add(time);
 					}
 
-					ListAdapter adapter = new ListAdapter(activity, names, descriptions);
+					final ArrayList<String> names_f = new ArrayList<String>(names);
+					final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
+					final ArrayList<String> ids_f = new ArrayList<String>(ids);
+					ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f, ids_f);
 
 					ListView list = (ListView) activity.findViewById(list_id);
 					list.setAdapter(adapter);
@@ -181,15 +184,22 @@ public class Reservation extends Structure{
 				}
 
 				try{
-					JSONArray json = new JSONArray((String)results[0]);
+					JSONObject json = new JSONObject((String)results[0]);
+					boolean success = json.getBoolean("success");
 					
-					Log.i("result", (String)results[0]);
+					if(!success){
+						errors.add("Response error");
+						printErrors(activity, loading, finish_on_success, finish_on_error, null);
+						return;
+					}
+						
 					
 					Global.datasource.clearReservations();
+					JSONArray reservationsJson = json.getJSONArray("reservations");
 
-					for(int i = 0; i < json.length(); i++){
+					for(int i = 0; i < reservationsJson.length(); i++){
 
-						JSONObject obj = json.getJSONObject(i);
+						JSONObject obj = reservationsJson.getJSONObject(i);
 						JSONObject rJson = obj.getJSONObject("reservation");
 						JSONArray tripsArray = obj.getJSONArray("reservation_trips");
 
@@ -265,8 +275,7 @@ public class Reservation extends Structure{
 		final ArrayList<String> names_f = new ArrayList<String>(names);
 		final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
 		final ArrayList<String> ids_f = new ArrayList<String>(ids);
-
-		ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f);
+		ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f, ids_f);
 
 		ListView list = (ListView) activity.findViewById(list_id);
 		list.setAdapter(adapter);
@@ -307,7 +316,8 @@ public class Reservation extends Structure{
 
 		final ArrayList<String> names_f = new ArrayList<String>(names);
 		final ArrayList<String> descriptions_f = new ArrayList<String>(descriptions);
-		ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f);
+		final ArrayList<String> ids_f = new ArrayList<String>(ids);
+		ListAdapter adapter = new ListAdapter(activity, names_f, descriptions_f, ids_f);
 
 		ListView list = (ListView) activity.findViewById(R.id.list);
 		list.setAdapter(adapter);

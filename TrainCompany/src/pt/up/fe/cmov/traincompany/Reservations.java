@@ -1,23 +1,22 @@
 package pt.up.fe.cmov.traincompany;
 
-import java.util.ArrayList;
-
 import Structures.Reservation;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ListView;
 
 public class Reservations extends Activity {
 
 	ProgressDialog loading;
-
-	ArrayList<String> names = new ArrayList<String>();
-	ArrayList<String> descriptions = new ArrayList<String>();
-	ArrayList<String> ids = new ArrayList<String>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +24,38 @@ public class Reservations extends Activity {
 		setContentView(R.layout.reservations);
 
 		Reservation.populateReservationsFromDb(this, R.id.list);
+		
+		registerForContextMenu(findViewById(R.id.list));
+	}
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	        ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    
+	        MenuInflater inflater = getMenuInflater();
+	        inflater.inflate(R.menu.menu_item_cancel, menu);
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+	    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+	            .getMenuInfo();
+	 
+	    switch (item.getItemId()) {
+	    case R.id.remove_item:
+	    	
+	    	ListAdapter adapter = (ListAdapter)((ListView)findViewById(R.id.list)).getAdapter();
+	    	
+	    	String id = adapter.get_id(info.position);
+	    	Global.datasource.cancelReservation(Integer.parseInt(id));	
+	    	
+	    	adapter.removePosition(info.position);
+	    	adapter.notifyDataSetChanged();
+			
+	        return true;
+	    }
+	    return false;
 	}
 
 	@Override

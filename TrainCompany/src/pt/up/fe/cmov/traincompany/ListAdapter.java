@@ -15,14 +15,28 @@ public class ListAdapter extends BaseAdapter {
 	private Activity activity;
 	private ArrayList<String> descriptions;
 	private ArrayList<String> names;
+	private ArrayList<String> ids;
 	private static LayoutInflater inflater = null;
 
-	public ListAdapter(Activity a, ArrayList<String> n, ArrayList<String> d) {
+	public ListAdapter(Activity a, ArrayList<String> n, ArrayList<String> d, ArrayList<String> i) {
 		activity = a;
 		descriptions = d;
 		names = n;
+		ids = i;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
+	
+	public String get_id(int position){
+		
+		return ids.get(position);
+	}
+	
+	public void removePosition(int position){
+		
+		names.remove(position);
+		descriptions.remove(position);
+		ids.remove(position);
 	}
 
 	public int getCount() {
