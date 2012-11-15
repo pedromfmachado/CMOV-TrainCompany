@@ -1,5 +1,7 @@
 package pt.up.fe.cmov.traincompany;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+
 import Structures.Reservation;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -18,11 +20,6 @@ public class ReservationView extends Activity {
 		setContentView(R.layout.list);
 
 		Reservation.populateReservationFromDb(this);
-		
-		Bundle b = getIntent().getExtras();
-		String id = b.getString("id");
-		
-		String uuid = Global.datasource.getReservation(Integer.parseInt("id")).uuid;
 		
 		
 	}
@@ -51,5 +48,22 @@ public class ReservationView extends Activity {
 	public void onClick(View v) {
 
 		Global.buttonAction(v,this);
+		
+		switch (v.getId()) {
+		case R.id.btGenQrCode:
+			
+			Bundle b = getIntent().getExtras();
+			String id = b.getString("id");
+			
+			String uuid = Global.datasource.getReservation(Integer.parseInt(id)).uuid;
+			
+			IntentIntegrator integrator = new IntentIntegrator(this);
+			integrator.shareText(uuid);
+			
+			break;
+
+		default:
+			break;
+		}
 	}
 }
