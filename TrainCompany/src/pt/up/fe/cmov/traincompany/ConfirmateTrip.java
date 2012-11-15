@@ -27,7 +27,7 @@ public class ConfirmateTrip extends Activity{
 	    note.setLatestEventInfo(this, "Trip","confirmed!", i);
 	    note.number=++count;
 	    note.vibrate=new long[] {500L, 200L, 200L, 500L};
-	    note.flags|=Notification.FLAG_AUTO_CANCEL;	
+	    note.flags|=Notification.FLAG_AUTO_CANCEL;
 	    mgr.notify(NOTIFY_ME_ID, note);
 	  }
 	  

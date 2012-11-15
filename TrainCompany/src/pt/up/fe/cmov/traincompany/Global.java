@@ -1,6 +1,7 @@
 package pt.up.fe.cmov.traincompany;
 
 import Structures.*;
+import Utils.UI;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.view.View;
@@ -34,6 +35,8 @@ public class Global {
 
 		loading = ProgressDialog.show(activity, "", "Syncing info...");
 		Trip.getTrips(trips_path, activity, loading, R.id.list, false, false);
+		
+		UI.notificate(activity);
 	}
 	
 	public static void buttonAction(View v, Activity activity){
