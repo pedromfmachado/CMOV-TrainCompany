@@ -4,5 +4,8 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="android-integration-honeycomb.jar"/>
+	<classpathentry kind="lib" path="android-integration-supportv4.jar"/>
+	<classpathentry kind="lib" path="android-integration.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

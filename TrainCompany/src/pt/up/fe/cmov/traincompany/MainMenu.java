@@ -18,11 +18,7 @@ public class MainMenu extends Activity {
 			((TableRow)findViewById(R.id.reservations_row)).setVisibility(View.INVISIBLE);
 		}
 
-		if(Global.synced){
-			
-			Global.sync(this);
-			Global.synced = true;
-		}
+		Global.sync(this);
 	}
 
 	@Override

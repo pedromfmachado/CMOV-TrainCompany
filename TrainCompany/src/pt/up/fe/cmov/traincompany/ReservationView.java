@@ -18,6 +18,13 @@ public class ReservationView extends Activity {
 		setContentView(R.layout.list);
 
 		Reservation.populateReservationFromDb(this);
+		
+		Bundle b = getIntent().getExtras();
+		String id = b.getString("id");
+		
+		String uuid = Global.datasource.getReservation(Integer.parseInt("id")).uuid;
+		
+		
 	}
 
 	@Override

@@ -103,12 +103,12 @@ public class User extends Structure {
 					}
 				}
 				
-				if(errors.size() == 0 && !u.role.equals("admin")){
+				if(errors.size() == 0 && !u.role.equals(Global.ADMIN)){
 					
 					Intent i = new Intent(activity, MainMenu.class);
 					activity.startActivity(i);
 				}
-				else{
+				else if(u.role.equals(Global.ADMIN)){
 					
 					errors.add("This application is not to be used by admins");
 				}

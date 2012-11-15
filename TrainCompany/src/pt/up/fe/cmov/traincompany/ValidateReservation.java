@@ -4,11 +4,15 @@ import Structures.Reservation;
 import Structures.Station;
 import Structures.Trip;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 
 public class ValidateReservation extends Activity{
@@ -25,45 +29,45 @@ public class ValidateReservation extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.validate_reservation);
-		
+
 		Bundle b = getIntent().getExtras();
 		trip_id = b.getInt("id");
 
 
 	}
-	
+
 	public void onValidate(String uuid, int trip_id){
-		
+
 		Reservation r = Global.datasource.getReservationUUID(uuid);
 		Trip t = Global.datasource.getTrip(trip_id);
-		
+
 		TextView validity = (TextView)findViewById(R.id.tvValidity);
-		
+
 		if(r == null || t == null){
-			
+
 			validity.setText("NO RESERVATION FOUND");
 			validity.setTextColor(Color.RED);
 			((TextView)findViewById(R.id.tvTrip)).setText("N/A");
 			((TextView)findViewById(R.id.tvDate)).setText("N/A");
 			return;
-			
+
 		}
-		
+
 		boolean validated = Reservation.validate(r, t);
 
 		Station departure = Global.datasource.getStation(r.departureStation_id);
 		Station arrival = Global.datasource.getStation(r.arrivalStation_id);
-		
+
 		((TextView)findViewById(R.id.tvTrip)).setText(departure.name + " - " + arrival.name);
 		((TextView)findViewById(R.id.tvDate)).setText(r.date);
-		
+
 		if(validated){
 
 			validity.setText("CONFIRMED");
 			validity.setTextColor(Color.GREEN);
-			
+
 		}else{
-			
+
 			validity.setText("REJECTED");
 			validity.setTextColor(Color.RED);
 		}
@@ -76,14 +80,29 @@ public class ValidateReservation extends Activity{
 
 		switch (v.getId()) {
 		case R.id.btValidate:
-			
+
 			String uuid = ((EditText)findViewById(R.id.etUUID)).getText().toString();
 			onValidate(uuid, trip_id);
+			break;
+
+		case R.id.btQrCode:
+			
+			IntentIntegrator integrator = new IntentIntegrator(this);
+			integrator.initiateScan();
 
 			break;
 
 		default:
 			break;
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+		if (scanResult != null) {
+
+			((EditText)findViewById(R.id.etUUID)).setText(scanResult.getContents());
 		}
 	}
 

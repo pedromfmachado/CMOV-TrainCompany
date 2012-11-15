@@ -51,5 +51,6 @@
     <string name="label_validity">Validity</string>
     <string name="label_validate_trip">Validate reservations</string>
     <string name="button_validate">Validate Reservation</string>
+    <string name="button_qr_code">Scan QRCode</string>
 
 </resources>
