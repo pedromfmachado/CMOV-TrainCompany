@@ -20,6 +20,7 @@ public class MainMenu extends Activity {
 
 		if(Global.synced){
 			
+			ConfirmateTrip.mgr.notify();
 			Global.sync(this);
 			Global.synced = true;
 		}
