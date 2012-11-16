@@ -15,7 +15,6 @@ import Requests.ResponseCommand;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.util.Log;
 
 public class User extends Structure {
 
