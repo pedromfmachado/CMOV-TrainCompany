@@ -47,7 +47,7 @@ public class UI {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static void notificate(Activity activity){
+	public static void notificate(Activity activity, String title, String message){
 		
 		int count = 0;
 		NotificationManager mgr=(NotificationManager)activity.getSystemService(Activity.NOTIFICATION_SERVICE);
@@ -58,7 +58,7 @@ public class UI {
 		Intent messageIntent = new Intent(activity, NotificationMessage.class);
 		PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, messageIntent,0);
 		
-	    note.setLatestEventInfo(activity, "Trip","confirmed!", pendingIntent);
+	    note.setLatestEventInfo(activity, title, message, pendingIntent);
 	    note.number=++count;
 	    note.vibrate=new long[] {500L, 200L, 200L, 500L};
 	    note.flags|=Notification.FLAG_AUTO_CANCEL;

@@ -149,7 +149,6 @@ public class User extends Structure {
 
 				try{
 					JSONObject json = new JSONObject((String)results[0]);
-					Log.i("response",json.toString());
 
 					boolean success = json.optBoolean("success");
 					if(success){

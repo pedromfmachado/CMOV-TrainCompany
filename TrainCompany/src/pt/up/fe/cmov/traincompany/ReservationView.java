@@ -5,10 +5,13 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import Structures.Reservation;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class ReservationView extends Activity {
 
@@ -21,7 +24,14 @@ public class ReservationView extends Activity {
 
 		Reservation.populateReservationFromDb(this);
 
+		Bundle b = getIntent().getExtras();
+		String id = b.getString("id");
 
+		String uuid = Global.datasource.getReservation(Integer.parseInt(id)).uuid;
+		if(!uuid.equals("null"))
+			((TextView)findViewById(R.id.uuid)).setText(uuid);
+		else
+			((Button)findViewById(R.id.btGenQrCode)).setVisibility(View.INVISIBLE);
 	}
 
 	@Override
@@ -49,12 +59,12 @@ public class ReservationView extends Activity {
 
 		Global.buttonAction(v,this);
 
+
+		Bundle b = getIntent().getExtras();
+		String id = b.getString("id");
 		switch (v.getId()) {
 
 		case R.id.btGenQrCode:
-
-			Bundle b = getIntent().getExtras();
-			String id = b.getString("id");
 
 			String uuid = Global.datasource.getReservation(Integer.parseInt(id)).uuid;
 
@@ -64,7 +74,17 @@ public class ReservationView extends Activity {
 			}
 
 			break;
-
+			
+		case R.id.btPay:
+			
+			Global.datasource.payReservation(Integer.parseInt(id));
+			String path = getString(R.string.server_address) + "reservations/pay/" + id;
+			Reservation.payReservation(path);
+			((Button)findViewById(R.id.btPay)).setVisibility(View.INVISIBLE);
+			TextView status = ((TextView)findViewById(R.id.tvStatus));
+			status.setText("Paid");
+			status.setTextColor(Color.GREEN);
+			break;
 		default:
 			break;
 		}

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,11 +20,13 @@ import Requests.ResponseCommand;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -85,6 +88,34 @@ public class Reservation extends Structure{
 			}
 		}
 	}
+	
+	public static void payReservation(final String path){
+
+
+		for(Reservation r : Global.datasource.getReservations()){
+
+			String r_path = path + "/pay/" + r.id;
+			HashMap<String,String> values = new HashMap<String, String>();
+			values.put("id", ""+r.id);
+			values.put("token", Global.datasource.getToken());
+			Log.i("result","paid " + r.paid);
+			if(r.paid.equals("1")){
+
+				new AsyncPost(r_path, values, new ResponseCommand() {
+
+					public void onError(ERROR_TYPE error) {
+
+						Log.i("response", "not canceled");
+					}
+
+					public void onResultReceived(Object... results) {
+
+						Log.i("result", (String)results[0]);
+					}
+				}).execute();
+			}
+		}
+	}
 
 	public static void getTrips(final String path, final Activity activity, final ProgressDialog loading,
 			HashMap<String,String> values,final int list_id, final boolean finish_on_success, final boolean finish_on_error){
@@ -110,8 +141,31 @@ public class Reservation extends Structure{
 
 				try{
 
+					Log.i("result", (String)results[0]);
 					JSONObject json = new JSONObject((String)results[0]);
+					boolean success = json.getBoolean("success");
+
+					if(!success){
+
+						JSONObject errors_json = json.optJSONObject("errors");
+						if(errors_json != null){
+							Iterator<?> errors_itr = errors_json.keys();
+							while(errors_itr.hasNext()){
+
+								String key = errors_itr.next().toString();
+								errors.add( key + errors_json.getJSONArray(key).getString(0));
+
+							}
+						}
+
+						printErrors(activity, loading, finish_on_success, finish_on_error, R.string.message_registration_success);
+						return;
+					}
+
 					JSONArray jsonArray = json.getJSONArray("trips");
+					String price = json.getString("price");
+					
+					((TextView)activity.findViewById(R.id.tvPrice)).setText(price);
 
 					if(jsonArray.length() == 0){
 
@@ -125,6 +179,10 @@ public class Reservation extends Structure{
 						String departure = jsonArray.getJSONObject(i).getString("departure");
 						String arrival = jsonArray.getJSONObject(i).getString("arrival");
 						String time = jsonArray.getJSONObject(i).getString("time");
+						
+
+						if(i == 1)
+							activity.getIntent().putExtra("time", time);
 
 						JSONObject trip = jsonArray.getJSONObject(i).getJSONObject("trip");
 
@@ -169,10 +227,10 @@ public class Reservation extends Structure{
 
 		HashMap<String,String> values = new HashMap<String, String>();
 		values.put("token", Global.datasource.getToken());
-		
+
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date d = new Date();
-		
+
 		values.put("date", format.format(d));
 
 		new AsyncGet(path, values, new ResponseCommand() {
@@ -190,14 +248,14 @@ public class Reservation extends Structure{
 				try{
 					JSONObject json = new JSONObject((String)results[0]);
 					boolean success = json.getBoolean("success");
-					
+
 					if(!success){
 						errors.add("Response error");
 						printErrors(activity, loading, finish_on_success, finish_on_error, null);
 						return;
 					}
-						
-					
+
+
 					Global.datasource.clearReservations();
 					JSONArray reservationsJson = json.getJSONArray("reservations");
 
@@ -215,11 +273,11 @@ public class Reservation extends Structure{
 						reservation.date = rJson.getString("date");
 						reservation.user_id = rJson.getInt("user_id");
 						reservation.paid = rJson.getString("paid");
-						reservation.price = (float) rJson.getDouble("price");
-						
+						reservation.price = (float) obj.getDouble("price");
+
 
 						Global.datasource.createReservation(reservation.id, reservation.uuid, reservation.user_id,
-								false, reservation.date, reservation.departureStation_id, reservation.arrivalStation_id, /*reservation.paid,*/ reservation.price);
+								false, reservation.date, reservation.departureStation_id, reservation.arrivalStation_id, reservation.paid.equals("true"), reservation.price);
 
 						for(int j = 0; j < tripsArray.length(); j++){
 
@@ -269,7 +327,7 @@ public class Reservation extends Structure{
 		for(Reservation r : Global.datasource.getReservationsByUser(user.id)){
 
 			if(r.canceled.equals("0")){
-				
+
 				Station departure = Global.datasource.getStation(r.departureStation_id);
 				Station arrival = Global.datasource.getStation(r.arrivalStation_id);
 
@@ -306,10 +364,27 @@ public class Reservation extends Structure{
 		Bundle b = activity.getIntent().getExtras();
 		String id = b.getString("id");
 		String name = b.getString("name");
+		
+		Reservation r = Global.datasource.getReservation(Integer.parseInt(id));
+		((TextView)activity.findViewById(R.id.tvPrice)).setText(""+r.price + "€");
+		
+		if(r.paid.equals("1")){
+			
+			((Button)activity.findViewById(R.id.btPay)).setVisibility(View.INVISIBLE);
+			TextView status = ((TextView)activity.findViewById(R.id.tvStatus));
+			status.setText("Paid");
+			status.setTextColor(Color.GREEN);
+		}
+		else{
+			
+			TextView status = ((TextView)activity.findViewById(R.id.tvStatus));
+			status.setText("NOT PAID");
+			status.setTextColor(Color.RED);
+		}
 
 		((TextView)activity.findViewById(R.id.title)).setText(name);
 
-		ArrayList<ReservationTrip> rTrips = Global.datasource.getReservationTrip(Integer.parseInt(id));
+		ArrayList<ReservationTrip> rTrips = Global.datasource.getReservationTrips(Integer.parseInt(id));
 
 		for(ReservationTrip rt : rTrips){
 
@@ -330,23 +405,23 @@ public class Reservation extends Structure{
 		list.setAdapter(adapter);
 
 	}
-	
+
 	public static boolean validate(Reservation r, Trip t){
-		
+
 		boolean validated = false;
-		
+
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date d = new Date();
-		
+
 		if(!r.date.equals(format.format(d)))
 			return validated;
-		
-		for(ReservationTrip rt: Global.datasource.getReservationTrip(r.id)){
-			
+
+		for(ReservationTrip rt: Global.datasource.getReservationTrips(r.id)){
+
 			if(rt.trip_id == t.Trip_id)
 				validated = true;
 		}
-		
+
 		return validated;
 	}
 }

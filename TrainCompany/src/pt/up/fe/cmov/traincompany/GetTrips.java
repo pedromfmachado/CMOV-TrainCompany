@@ -1,6 +1,10 @@
 package pt.up.fe.cmov.traincompany;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -15,6 +19,7 @@ import Structures.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -74,6 +79,12 @@ public class GetTrips extends Activity {
 
 	public void makeReservation(){
 
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DAY_OF_MONTH, +1);
+		Date plus24 = cal.getTime();
+
 		String server = getString(R.string.server_address)+"reservations";
 
 		String departure_id = bundle.getString("departure_id");
@@ -89,6 +100,20 @@ public class GetTrips extends Activity {
 		values.put("[reservation][user_id]", ""+user.id);
 		values.put("token", user.token);
 		values.put("time", time.trim());
+		
+		try {
+			Date departure_date = format.parse(date + " " + bundle.getString("time"));
+			
+			Log.i("result",format.format(departure_date) + " < " + format.format(new Date()));
+			if(plus24.after(departure_date))
+				values.put("[reservation][paid]", "true");
+			
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+			
 
 		if(values.containsValue("")){
 			Toast.makeText(GetTrips.this, "Please fill all fields", Toast.LENGTH_LONG).show();

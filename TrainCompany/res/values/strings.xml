@@ -53,5 +53,8 @@
     <string name="button_validate">Validate Reservation</string>
     <string name="button_qr_code">Scan QRCode</string>
     <string name="button_gen_qr_code">Generate validation QRCode</string>
+    <string name="label_price">Price</string>
+    <string name="label_pay_reservation">Pay Reservation</string>
+    <string name="label_status">Status</string>
 
 </resources>

@@ -1,9 +1,5 @@
 package Database;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -32,26 +28,7 @@ public class DatabaseAdapter {
 	public DatabaseAdapter(Context context) {
 		dbHelper = new DatabaseHelper(context);
 	}
-
-	public String CalcHashedPassword(String password) {
-		try {
-			byte[] bytesOfMessage = password.getBytes("UTF-8");
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			byte[] hash = md.digest(bytesOfMessage);
-			String ret =  String.format("%0" + (hash.length * 2) + 'x', new BigInteger(1, hash));
-			android.util.Log.d("debug","digest " + ret + " password: " + password);
-			return ret;
-
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		android.util.Log.d("debug","nao calculei digest" );
-		return null;
-	}
+	
 	
 	/**
 	 * creates a ReservationTrip
@@ -99,11 +76,24 @@ public class DatabaseAdapter {
 
 	}
 	
+
+	public long payReservation(int id){
+		
+		final SQLiteDatabase database = dbHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+
+		values.put("Reservation_id", id);
+		values.put("paid", true);
+
+		return database.update("Reservations", values, null, null);
+		
+	}
+	
 	/**
 	 * @param reservation_id
 	 * @return ArrayList of ReservationTrips with the Reservation_id passed as argument
 	 */
-	public ArrayList<ReservationTrip> getReservationTrip(int reservation_id){
+	public ArrayList<ReservationTrip> getReservationTrips(int reservation_id){
 		
 		final SQLiteDatabase database = dbHelper.getReadableDatabase();
 		String query = "SELECT * FROM ReservationTrips WHERE Reservation_id = " + reservation_id;
