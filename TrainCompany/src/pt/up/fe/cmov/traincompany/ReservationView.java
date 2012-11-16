@@ -78,7 +78,7 @@ public class ReservationView extends Activity {
 		case R.id.btPay:
 			
 			Global.datasource.payReservation(Integer.parseInt(id));
-			String path = getString(R.string.server_address) + "reservations/pay/" + id;
+			String path = getString(R.string.server_address) + "reservations/";
 			Reservation.payReservation(path);
 			((Button)findViewById(R.id.btPay)).setVisibility(View.INVISIBLE);
 			TextView status = ((TextView)findViewById(R.id.tvStatus));
@@ -87,6 +87,7 @@ public class ReservationView extends Activity {
 			break;
 		default:
 			break;
+			
 		}
 	}
 }

@@ -94,7 +94,7 @@ public class Reservation extends Structure{
 
 		for(Reservation r : Global.datasource.getReservations()){
 
-			String r_path = path + "/pay/" + r.id;
+			String r_path = path + "/pay";
 			HashMap<String,String> values = new HashMap<String, String>();
 			values.put("id", ""+r.id);
 			values.put("token", Global.datasource.getToken());
