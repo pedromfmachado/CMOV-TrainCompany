@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class ValidateReservation extends Activity{
 		TextView validity = (TextView)findViewById(R.id.tvValidity);
 
 		if(r == null || t == null){
-
+			
 			validity.setText("NO RESERVATION FOUND");
 			validity.setTextColor(Color.RED);
 			((TextView)findViewById(R.id.tvTrip)).setText("N/A");

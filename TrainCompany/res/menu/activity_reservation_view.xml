@@ -2,5 +2,5 @@
     <item android:id="@+id/menu_cancel_reservation"
         android:title="@string/label_cancel_reservation"
         android:orderInCategory="100"
-        android:showAsAction="never" android:onClick="onOptionsItemSelected"/>
+        android:showAsAction="never"/>
 </menu>
